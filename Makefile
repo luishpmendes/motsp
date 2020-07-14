@@ -28,7 +28,20 @@ $(BIN)/test/instance_test : $(BIN)/instance/instance.o \
 
 instance_test : $(BIN)/test/instance_test
 
-tests : instance_test
+$(BIN)/test/solution_test : $(BIN)/instance/instance.o \
+                            $(BIN)/solution/solution.o \
+                            $(BIN)/test/solution_test.o
+	@echo "--> Linking objects..."
+	$(CPP) -o $@ $^ $(CARGS) $(INC)
+	@echo
+	@echo "--> Running test..."
+	$(BIN)/test/solution_test
+	@echo
+
+solution_test : $(BIN)/test/solution_test
+
+tests : instance_test \
+        solution_test
 
 all : tests
 
