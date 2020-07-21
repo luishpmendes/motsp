@@ -133,6 +133,23 @@ $(BIN)/test/NSGA2_Solver_Test : $(BIN)/instance/Instance.o \
 
 NSGA2_Solver_Test : clean $(BIN)/test/NSGA2_Solver_Test
 
+$(BIN)/exec/NSGA2_Solver_Exec : $(BIN)/instance/Instance.o \
+                                $(BIN)/solution/Solution.o \
+                                $(BIN)/solver/local_search/TwoOpt.o \
+                                $(BIN)/solver/Solver.o \
+                                $(BIN)/solver/weighted_sum/christofides/Christofides_Solver.o \
+                                $(BIN)/solver/weighted_sum/branch-and-cut/BnC_Callback.o \
+                                $(BIN)/solver/weighted_sum/branch-and-cut/BnC_Solver.o \
+                                $(BIN)/solver/nsga2/Problem.o \
+                                $(BIN)/solver/nsga2/NSGA2_Solver.o \
+                                $(BIN)/utils/ArgumentParser.o \
+                                $(BIN)/exec/NSGA2_Solver_Exec.o 
+	@echo "--> Linking objects..."
+	$(CPP) -o $@ $^ $(CARGS) $(PAGMOINC) $(GRBINC)
+	@echo
+
+NSGA2_Solver_Exec : clean $(BIN)/exec/NSGA2_Solver_Exec
+
 tests : Instance_Test \
         Solution_Test \
         TwoOpt_Test \
@@ -141,7 +158,8 @@ tests : Instance_Test \
         NSGA2_Solver_Test
 
 execs : Christofides_Solver_Exec \
-        BnC_Solver_Exec
+        BnC_Solver_Exec \
+        NSGA2_Solver_Exec
 
 all : tests execs
 
