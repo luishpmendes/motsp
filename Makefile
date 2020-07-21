@@ -132,6 +132,23 @@ $(BIN)/test/nsga2_solver_test : $(BIN)/instance/instance.o \
 
 nsga2_solver_test : $(BIN)/test/nsga2_solver_test
 
+$(BIN)/exec/nsga2_solver_exec : $(BIN)/instance/instance.o \
+                                $(BIN)/solution/solution.o \
+                                $(BIN)/solver/local_search/two_opt.o \
+                                $(BIN)/solver/solver.o \
+                                $(BIN)/solver/weighted_sum/christofides/christofides_solver.o \
+                                $(BIN)/solver/weighted_sum/branch_and_cut/branch_and_cut_callback.o \
+                                $(BIN)/solver/weighted_sum/branch_and_cut/branch_and_cut_solver.o \
+                                $(BIN)/solver/nsga2/problem.o \
+                                $(BIN)/solver/nsga2/nsga2_solver.o \
+                                $(BIN)/utils/argument_parser.o \
+                                $(BIN)/exec/nsga2_solver_exec.o
+	@echo "--> Linking objects..."
+	$(CPP) -o $@ $^ $(CARGS) $(INC)
+	@echo
+
+nsga2_solver_exec : $(BIN)/exec/nsga2_solver_exec
+
 tests : instance_test \
         solution_test \
         two_opt_test \
@@ -140,7 +157,8 @@ tests : instance_test \
         nsga2_solver_test
 
 execs : christofides_solver_exec \
-        branch_and_cut_solver_exec
+        branch_and_cut_solver_exec \
+        nsga2_solver_exec
 
 all : tests execs
 
