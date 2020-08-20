@@ -149,12 +149,29 @@ $(BIN)/exec/nsga2_solver_exec : $(BIN)/instance/instance.o \
 
 nsga2_solver_exec : $(BIN)/exec/nsga2_solver_exec
 
+$(BIN)/test/nspso_solver_test : $(BIN)/instance/instance.o \
+                                $(BIN)/solution/solution.o \
+                                $(BIN)/solver/local_search/two_opt.o \
+                                $(BIN)/solver/solver.o \
+                                $(BIN)/solver/nspso/problem.o \
+                                $(BIN)/solver/nspso/nspso_solver.o \
+                                $(BIN)/test/nspso_solver_test.o
+	@echo "--> Linking objects..."
+	$(CPP) -o $@ $^ $(CARGS) $(INC)
+	@echo
+	@echo "--> Running test..."
+	$(BIN)/test/nspso_solver_test
+	@echo
+
+nspso_solver_test : $(BIN)/test/nspso_solver_test
+
 tests : instance_test \
         solution_test \
         two_opt_test \
         christofides_solver_test \
         branch_and_cut_solver_test \
-        nsga2_solver_test
+        nsga2_solver_test \
+        nspso_solver_test
 
 execs : christofides_solver_exec \
         branch_and_cut_solver_exec \
