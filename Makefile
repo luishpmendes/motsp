@@ -3,7 +3,9 @@ CARGS=-std=c++17 -Wall -Werror -O0 -g3 -m64
 BRKGAINC=-I ../nsmpbrkga/nsmpbrkga
 LEMONINC=-I /opt/lemon/include -L /opt/lemon/lib -lemon
 GRBINC=-I /opt/gurobi911/linux64/include/ -L /opt/gurobi911/linux64/lib -lgurobi_c++ -lgurobi91 -lm
-INC=-I src $(BRKGAINC) $(LEMONINC) $(GRBINC)
+BOOSTINC=-I /opt/boost/include -L /opt/boost/lib -lboost_serialization
+PAGMOINC=-I /opt/pagmo/include -L /opt/pagmo/lib -Wl,-R/opt/pagmo/lib -lpagmo -ltbb -pthread
+INC=-I src $(BRKGAINC) $(LEMONINC) $(GRBINC) $(BOOSTINC) $(PAGMOINC)
 MKDIR=mkdir -p
 RM=rm -rf
 SRC=$(PWD)/src
@@ -114,11 +116,28 @@ $(BIN)/exec/branch_and_cut_solver_exec : $(BIN)/instance/instance.o \
 
 branch_and_cut_solver_exec : $(BIN)/exec/branch_and_cut_solver_exec
 
+$(BIN)/test/nsga2_solver_test : $(BIN)/instance/instance.o \
+                                $(BIN)/solution/solution.o \
+                                $(BIN)/solver/local_search/two_opt.o \
+                                $(BIN)/solver/solver.o \
+                                $(BIN)/solver/nsga2/problem.o \
+                                $(BIN)/solver/nsga2/nsga2_solver.o \
+                                $(BIN)/test/nsga2_solver_test.o
+	@echo "--> Linking objects..."
+	$(CPP) -o $@ $^ $(CARGS) $(INC)
+	@echo
+	@echo "--> Running test..."
+	$(BIN)/test/nsga2_solver_test
+	@echo
+
+nsga2_solver_test : $(BIN)/test/nsga2_solver_test
+
 tests : instance_test \
         solution_test \
         two_opt_test \
         christofides_solver_test \
-        branch_and_cut_solver_test
+        branch_and_cut_solver_test \
+        nsga2_solver_test
 
 execs : christofides_solver_exec \
         branch_and_cut_solver_exec
