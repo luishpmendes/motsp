@@ -40,8 +40,22 @@ $(BIN)/test/solution_test : $(BIN)/instance/instance.o \
 
 solution_test : $(BIN)/test/solution_test
 
+$(BIN)/test/two_opt_test : $(BIN)/instance/instance.o \
+                           $(BIN)/solution/solution.o \
+                           $(BIN)/solver/local_search/two_opt.o \
+                           $(BIN)/test/two_opt_test.o
+	@echo "--> Linking objects..."
+	$(CPP) -o $@ $^ $(CARGS) $(INC)
+	@echo
+	@echo "--> Running test..."
+	$(BIN)/test/two_opt_test
+	@echo
+
+two_opt_test : $(BIN)/test/two_opt_test
+
 tests : instance_test \
-        solution_test
+        solution_test \
+        two_opt_test
 
 all : tests
 
