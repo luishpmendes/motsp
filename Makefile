@@ -281,6 +281,22 @@ $(BIN)/exec/ihs_solver_exec : $(BIN)/instance/instance.o \
 
 ihs_solver_exec : $(BIN)/exec/ihs_solver_exec
 
+$(BIN)/test/nsmpbrkga_solver_test : $(BIN)/instance/instance.o \
+                                    $(BIN)/solution/solution.o \
+                                    $(BIN)/solver/local_search/two_opt.o \
+                                    $(BIN)/solver/solver.o \
+                                    $(BIN)/solver/nsmpbrkga/decoder.o \
+                                    $(BIN)/solver/nsmpbrkga/nsmpbrkga_solver.o \
+                                    $(BIN)/test/nsmpbrkga_solver_test.o
+	@echo "--> Linking objects..."
+	$(CPP) -o $@ $^ $(CARGS) $(INC)
+	@echo
+	@echo "--> Running test..."
+	$(BIN)/test/nsmpbrkga_solver_test
+	@echo
+
+nsmpbrkga_solver_test : $(BIN)/test/nsmpbrkga_solver_test
+
 tests : instance_test \
         solution_test \
         two_opt_test \
@@ -290,7 +306,8 @@ tests : instance_test \
         nspso_solver_test \
         moead_solver_test \
         mhaco_solver_test \
-        ihs_solver_test
+        ihs_solver_test \
+        nsmpbrkga_solver_test
 
 execs : christofides_solver_exec \
         branch_and_cut_solver_exec \
