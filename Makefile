@@ -150,12 +150,32 @@ $(BIN)/exec/NSGA2_Solver_Exec : $(BIN)/instance/Instance.o \
 
 NSGA2_Solver_Exec : clean $(BIN)/exec/NSGA2_Solver_Exec
 
+$(BIN)/test/NSPSO_Solver_Test : $(BIN)/instance/Instance.o \
+                                $(BIN)/solution/Solution.o \
+                                $(BIN)/solver/local_search/TwoOpt.o \
+                                $(BIN)/solver/Solver.o \
+                                $(BIN)/solver/weighted_sum/christofides/Christofides_Solver.o \
+                                $(BIN)/solver/weighted_sum/branch-and-cut/BnC_Callback.o \
+                                $(BIN)/solver/weighted_sum/branch-and-cut/BnC_Solver.o \
+                                $(BIN)/solver/nspso/Problem.o \
+                                $(BIN)/solver/nspso/NSPSO_Solver.o \
+                                $(BIN)/test/NSPSO_Solver_Test.o 
+	@echo "--> Linking objects..." 
+	$(CPP) -o $@ $^ $(CARGS) $(PAGMOINC) $(GRBINC)
+	@echo
+	@echo "--> Running test..."
+	$(BIN)/test/NSPSO_Solver_Test
+	@echo
+
+NSPSO_Solver_Test : clean $(BIN)/test/NSPSO_Solver_Test
+
 tests : Instance_Test \
         Solution_Test \
         TwoOpt_Test \
         Christofides_Solver_Test \
         BnC_Solver_Test \
-        NSGA2_Solver_Test
+        NSGA2_Solver_Test \
+        NSPSO_Solver_Test
 
 execs : Christofides_Solver_Exec \
         BnC_Solver_Exec \
