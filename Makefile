@@ -3,6 +3,7 @@ CARGS=-std=c++17 -Wall -Werror -O0 -g3 -m64
 BRKGAINC=-I ../nsbrkga_mp_ipr/nsbrkga_mp_ipr
 LEMONINC=-I /opt/lemon/include -L /opt/lemon/lib -lemon
 GRBINC=-I /opt/gurobi911/linux64/include/ -L /opt/gurobi911/linux64/lib -lgurobi_c++ -lgurobi91 -lm
+PAGMOINC=-pthread -lpagmo -lboost_serialization -ltbb -I /opt/pagmo/include -I /opt/boost/include -L /opt/pagmo/lib -L /opt/boost/lib -Wl,-R/opt/pagmo/lib
 MKDIR=mkdir -p
 RM=rm -rf
 SRC=$(PWD)/src
@@ -16,7 +17,7 @@ clean:
 $(BIN)/%.o: $(SRC)/%.cpp
 	@echo "--> Compiling $<..."
 	$(MKDIR) $(@D)
-	$(CPP) $(CARGS) -c $< -o $@ $(BRKGAINC) $(LEMONINC) $(GRBINC)
+	$(CPP) $(CARGS) -c $< -o $@ $(BRKGAINC) $(LEMONINC) $(GRBINC) $(PAGMOINC)
 	@echo
 
 $(BIN)/test/Instance_Test : $(BIN)/instance/Instance.o \
@@ -113,11 +114,31 @@ $(BIN)/exec/BnC_Solver_Exec : $(BIN)/instance/Instance.o \
 
 BnC_Solver_Exec : clean $(BIN)/exec/BnC_Solver_Exec
 
+$(BIN)/test/NSGA2_Solver_Test : $(BIN)/instance/Instance.o \
+                                $(BIN)/solution/Solution.o \
+                                $(BIN)/solver/local_search/TwoOpt.o \
+                                $(BIN)/solver/Solver.o \
+                                $(BIN)/solver/weighted_sum/christofides/Christofides_Solver.o \
+                                $(BIN)/solver/weighted_sum/branch-and-cut/BnC_Callback.o \
+                                $(BIN)/solver/weighted_sum/branch-and-cut/BnC_Solver.o \
+                                $(BIN)/solver/nsga2/Problem.o \
+                                $(BIN)/solver/nsga2/NSGA2_Solver.o \
+                                $(BIN)/test/NSGA2_Solver_Test.o 
+	@echo "--> Linking objects..." 
+	$(CPP) -o $@ $^ $(CARGS) $(PAGMOINC) $(GRBINC)
+	@echo
+	@echo "--> Running test..."
+	$(BIN)/test/NSGA2_Solver_Test
+	@echo
+
+NSGA2_Solver_Test : clean $(BIN)/test/NSGA2_Solver_Test
+
 tests : Instance_Test \
         Solution_Test \
         TwoOpt_Test \
         Christofides_Solver_Test \
-        BnC_Solver_Test
+        BnC_Solver_Test \
+        NSGA2_Solver_Test
 
 execs : Christofides_Solver_Exec \
         BnC_Solver_Exec
