@@ -39,8 +39,22 @@ $(BIN)/test/Solution_Test : $(BIN)/instance/Instance.o \
 
 Solution_Test : clean $(BIN)/test/Solution_Test
 
+$(BIN)/test/TwoOpt_Test : $(BIN)/instance/Instance.o \
+                          $(BIN)/solution/Solution.o \
+                          $(BIN)/solver/local_search/TwoOpt.o \
+                          $(BIN)/test/TwoOpt_Test.o
+	@echo "--> Linking objects..." 
+	$(CPP) -o $@ $^ $(CARGS)
+	@echo
+	@echo "--> Running test..."
+	$(BIN)/test/TwoOpt_Test
+	@echo
+
+TwoOpt_Test : clean $(BIN)/test/TwoOpt_Test
+
 tests : Instance_Test \
-        Solution_Test
+        Solution_Test \
+        TwoOpt_Test
 
 all : tests
 
