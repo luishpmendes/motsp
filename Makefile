@@ -205,6 +205,23 @@ $(BIN)/test/NSBRKGA_MP_IPR_Solver_Test : $(BIN)/instance/Instance.o \
 
 NSBRKGA_MP_IPR_Solver_Test : clean $(BIN)/test/NSBRKGA_MP_IPR_Solver_Test
 
+$(BIN)/exec/NSBRKGA_MP_IPR_Solver_Exec : $(BIN)/instance/Instance.o \
+                                         $(BIN)/solution/Solution.o \
+                                         $(BIN)/solver/local_search/TwoOpt.o \
+                                         $(BIN)/solver/Solver.o \
+                                         $(BIN)/solver/weighted_sum/christofides/Christofides_Solver.o \
+                                         $(BIN)/solver/weighted_sum/branch-and-cut/BnC_Callback.o \
+                                         $(BIN)/solver/weighted_sum/branch-and-cut/BnC_Solver.o \
+                                         $(BIN)/solver/nsbrkga_mp_ipr/Decoder.o \
+                                         $(BIN)/solver/nsbrkga_mp_ipr/NSBRKGA_MP_IPR_Solver.o \
+                                         $(BIN)/utils/ArgumentParser.o \
+                                         $(BIN)/exec/NSBRKGA_MP_IPR_Solver_Exec.o 
+	@echo "--> Linking objects..."
+	$(CPP) -o $@ $^ $(CARGS) $(PAGMOINC) $(GRBINC)
+	@echo
+
+NSBRKGA_MP_IPR_Solver_Exec : clean $(BIN)/exec/NSBRKGA_MP_IPR_Solver_Exec
+
 tests : Instance_Test \
         Solution_Test \
         TwoOpt_Test \
@@ -217,7 +234,8 @@ tests : Instance_Test \
 execs : Christofides_Solver_Exec \
         BnC_Solver_Exec \
         NSGA2_Solver_Exec \
-        NSPSO_Solver_Exec
+        NSPSO_Solver_Exec \
+        NSBRKGA_MP_IPR_Solver_Exec
 
 all : tests execs
 
