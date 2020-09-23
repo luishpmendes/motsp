@@ -1,5 +1,7 @@
 CPP=g++
 CARGS=-std=c++17 -Wall -Werror -O0 -g3 -m64
+BRKGAINC=-I ../nsbrkga_mp_ipr/nsbrkga_mp_ipr
+LEMONINC=-I /opt/lemon/include -L /opt/lemon/lib -lemon
 MKDIR=mkdir -p
 RM=rm -rf
 SRC=$(PWD)/src
@@ -13,7 +15,7 @@ clean:
 $(BIN)/%.o: $(SRC)/%.cpp
 	@echo "--> Compiling $<..."
 	$(MKDIR) $(@D)
-	$(CPP) $(CARGS) -c $< -o $@
+	$(CPP) $(CARGS) -c $< -o $@ $(BRKGAINC) $(LEMONINC)
 	@echo
 
 $(BIN)/test/Instance_Test : $(BIN)/instance/Instance.o \
@@ -52,9 +54,25 @@ $(BIN)/test/TwoOpt_Test : $(BIN)/instance/Instance.o \
 
 TwoOpt_Test : clean $(BIN)/test/TwoOpt_Test
 
+$(BIN)/test/Christofides_Solver_Test : $(BIN)/instance/Instance.o \
+                                       $(BIN)/solution/Solution.o \
+                                       $(BIN)/solver/local_search/TwoOpt.o \
+                                       $(BIN)/solver/Solver.o \
+                                       $(BIN)/solver/weighted_sum/christofides/Christofides_Solver.o \
+                                       $(BIN)/test/Christofides_Solver_Test.o 
+	@echo "--> Linking objects..." 
+	$(CPP) -o $@ $^ $(CARGS)
+	@echo
+	@echo "--> Running test..."
+	$(BIN)/test/Christofides_Solver_Test
+	@echo
+
+Christofides_Solver_Test : clean $(BIN)/test/Christofides_Solver_Test
+
 tests : Instance_Test \
         Solution_Test \
-        TwoOpt_Test
+        TwoOpt_Test \
+        Christofides_Solver_Test
 
 all : tests
 
