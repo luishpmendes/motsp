@@ -70,10 +70,25 @@ $(BIN)/test/christofides_solver_test : $(BIN)/instance/instance.o \
 
 christofides_solver_test : $(BIN)/test/christofides_solver_test
 
+$(BIN)/exec/christofides_solver_exec : $(BIN)/instance/instance.o \
+                                       $(BIN)/solution/solution.o \
+                                       $(BIN)/solver/local_search/two_opt.o \
+                                       $(BIN)/solver/solver.o \
+                                       $(BIN)/solver/weighted_sum/christofides/christofides_solver.o \
+                                       $(BIN)/utils/argument_parser.o \
+                                       $(BIN)/exec/christofides_solver_exec.o
+	@echo "--> Linking objects..."
+	$(CPP) -o $@ $^ $(CARGS) $(INC)
+	@echo
+
+christofides_solver_exec : $(BIN)/exec/christofides_solver_exec
+
 tests : instance_test \
         solution_test \
         two_opt_test \
         christofides_solver_test
 
-all : tests
+execs : christofides_solver_exec
+
+all : tests execs
 
