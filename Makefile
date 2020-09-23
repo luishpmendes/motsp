@@ -1,6 +1,8 @@
 CPP=g++
 CARGS=-std=c++17 -Wall -Werror -O0 -g3 -m64
-INC=-I src
+BRKGAINC=-I ../nsmpbrkga/nsmpbrkga
+LEMONINC=-I /opt/lemon/include -L /opt/lemon/lib -lemon
+INC=-I src $(BRKGAINC) $(LEMONINC)
 MKDIR=mkdir -p
 RM=rm -rf
 SRC=$(PWD)/src
@@ -53,9 +55,25 @@ $(BIN)/test/two_opt_test : $(BIN)/instance/instance.o \
 
 two_opt_test : $(BIN)/test/two_opt_test
 
+$(BIN)/test/christofides_solver_test : $(BIN)/instance/instance.o \
+                                       $(BIN)/solution/solution.o \
+                                       $(BIN)/solver/local_search/two_opt.o \
+                                       $(BIN)/solver/solver.o \
+                                       $(BIN)/solver/weighted_sum/christofides/christofides_solver.o \
+                                       $(BIN)/test/christofides_solver_test.o
+	@echo "--> Linking objects..."
+	$(CPP) -o $@ $^ $(CARGS) $(INC)
+	@echo
+	@echo "--> Running test..."
+	$(BIN)/test/christofides_solver_test
+	@echo
+
+christofides_solver_test : $(BIN)/test/christofides_solver_test
+
 tests : instance_test \
         solution_test \
-        two_opt_test
+        two_opt_test \
+        christofides_solver_test
 
 all : tests
 
