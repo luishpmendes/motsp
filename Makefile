@@ -100,13 +100,28 @@ $(BIN)/test/branch_and_cut_solver_test : $(BIN)/instance/instance.o \
 
 branch_and_cut_solver_test : $(BIN)/test/branch_and_cut_solver_test
 
+$(BIN)/exec/branch_and_cut_solver_exec : $(BIN)/instance/instance.o \
+                                         $(BIN)/solution/solution.o \
+                                         $(BIN)/solver/local_search/two_opt.o \
+                                         $(BIN)/solver/solver.o \
+                                         $(BIN)/solver/weighted_sum/branch_and_cut/branch_and_cut_callback.o \
+                                         $(BIN)/solver/weighted_sum/branch_and_cut/branch_and_cut_solver.o \
+                                         $(BIN)/utils/argument_parser.o \
+                                         $(BIN)/exec/branch_and_cut_solver_exec.o
+	@echo "--> Linking objects..."
+	$(CPP) -o $@ $^ $(CARGS) $(INC)
+	@echo
+
+branch_and_cut_solver_exec : $(BIN)/exec/branch_and_cut_solver_exec
+
 tests : instance_test \
         solution_test \
         two_opt_test \
         christofides_solver_test \
         branch_and_cut_solver_test
 
-execs : christofides_solver_exec
+execs : christofides_solver_exec \
+        branch_and_cut_solver_exec
 
 all : tests execs
 
