@@ -2,6 +2,7 @@ CPP=g++
 CARGS=-std=c++17 -Wall -Werror -O0 -g3 -m64
 BRKGAINC=-I ../nsbrkga_mp_ipr/nsbrkga_mp_ipr
 LEMONINC=-I /opt/lemon/include -L /opt/lemon/lib -lemon
+GRBINC=-I /opt/gurobi911/linux64/include/ -L /opt/gurobi911/linux64/lib -lgurobi_c++ -lgurobi91 -lm
 MKDIR=mkdir -p
 RM=rm -rf
 SRC=$(PWD)/src
@@ -15,7 +16,7 @@ clean:
 $(BIN)/%.o: $(SRC)/%.cpp
 	@echo "--> Compiling $<..."
 	$(MKDIR) $(@D)
-	$(CPP) $(CARGS) -c $< -o $@ $(BRKGAINC) $(LEMONINC)
+	$(CPP) $(CARGS) -c $< -o $@ $(BRKGAINC) $(LEMONINC) $(GRBINC)
 	@echo
 
 $(BIN)/test/Instance_Test : $(BIN)/instance/Instance.o \
@@ -82,10 +83,27 @@ $(BIN)/exec/Christofides_Solver_Exec : $(BIN)/instance/Instance.o \
 
 Christofides_Solver_Exec : clean $(BIN)/exec/Christofides_Solver_Exec
 
+$(BIN)/test/BnC_Solver_Test : $(BIN)/instance/Instance.o \
+                              $(BIN)/solution/Solution.o \
+                              $(BIN)/solver/local_search/TwoOpt.o \
+                              $(BIN)/solver/Solver.o \
+                              $(BIN)/solver/weighted_sum/branch-and-cut/BnC_Callback.o \
+                              $(BIN)/solver/weighted_sum/branch-and-cut/BnC_Solver.o \
+                              $(BIN)/test/BnC_Solver_Test.o 
+	@echo "--> Linking objects..." 
+	$(CPP) -o $@ $^ $(CARGS) $(GRBINC)
+	@echo
+	@echo "--> Running test..."
+	$(BIN)/test/BnC_Solver_Test
+	@echo
+
+BnC_Solver_Test : clean $(BIN)/test/BnC_Solver_Test
+
 tests : Instance_Test \
         Solution_Test \
         TwoOpt_Test \
-        Christofides_Solver_Test
+        Christofides_Solver_Test \
+        BnC_Solver_Test
 
 execs : Christofides_Solver_Exec
 
