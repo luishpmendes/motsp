@@ -99,13 +99,28 @@ $(BIN)/test/BnC_Solver_Test : $(BIN)/instance/Instance.o \
 
 BnC_Solver_Test : clean $(BIN)/test/BnC_Solver_Test
 
+$(BIN)/exec/BnC_Solver_Exec : $(BIN)/instance/Instance.o \
+                              $(BIN)/solution/Solution.o \
+                              $(BIN)/solver/local_search/TwoOpt.o \
+                              $(BIN)/solver/Solver.o \
+                              $(BIN)/solver/weighted_sum/branch-and-cut/BnC_Callback.o \
+                              $(BIN)/solver/weighted_sum/branch-and-cut/BnC_Solver.o \
+                              $(BIN)/utils/ArgumentParser.o \
+                              $(BIN)/exec/BnC_Solver_Exec.o 
+	@echo "--> Linking objects..." 
+	$(CPP) -o $@ $^ $(CARGS) $(GRBINC)
+	@echo
+
+BnC_Solver_Exec : clean $(BIN)/exec/BnC_Solver_Exec
+
 tests : Instance_Test \
         Solution_Test \
         TwoOpt_Test \
         Christofides_Solver_Test \
         BnC_Solver_Test
 
-execs : Christofides_Solver_Exec
+execs : Christofides_Solver_Exec \
+        BnC_Solver_Exec
 
 all : tests execs
 
