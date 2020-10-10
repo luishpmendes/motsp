@@ -2,7 +2,8 @@ CPP=g++
 CARGS=-std=c++17 -Wall -Werror -O0 -g3 -m64
 BRKGAINC=-I ../nsmpbrkga/nsmpbrkga
 LEMONINC=-I /opt/lemon/include -L /opt/lemon/lib -lemon
-INC=-I src $(BRKGAINC) $(LEMONINC)
+GRBINC=-I /opt/gurobi911/linux64/include/ -L /opt/gurobi911/linux64/lib -lgurobi_c++ -lgurobi91 -lm
+INC=-I src $(BRKGAINC) $(LEMONINC) $(GRBINC)
 MKDIR=mkdir -p
 RM=rm -rf
 SRC=$(PWD)/src
@@ -83,10 +84,27 @@ $(BIN)/exec/christofides_solver_exec : $(BIN)/instance/instance.o \
 
 christofides_solver_exec : $(BIN)/exec/christofides_solver_exec
 
+$(BIN)/test/branch_and_cut_solver_test : $(BIN)/instance/instance.o \
+                                         $(BIN)/solution/solution.o \
+                                         $(BIN)/solver/local_search/two_opt.o \
+                                         $(BIN)/solver/solver.o \
+                                         $(BIN)/solver/weighted_sum/branch_and_cut/branch_and_cut_callback.o \
+                                         $(BIN)/solver/weighted_sum/branch_and_cut/branch_and_cut_solver.o \
+                                         $(BIN)/test/branch_and_cut_solver_test.o
+	@echo "--> Linking objects..."
+	$(CPP) -o $@ $^ $(CARGS) $(INC)
+	@echo
+	@echo "--> Running test..."
+	$(BIN)/test/branch_and_cut_solver_test
+	@echo
+
+branch_and_cut_solver_test : $(BIN)/test/branch_and_cut_solver_test
+
 tests : instance_test \
         solution_test \
         two_opt_test \
-        christofides_solver_test
+        christofides_solver_test \
+        branch_and_cut_solver_test
 
 execs : christofides_solver_exec
 
