@@ -222,6 +222,15 @@ $(BIN)/exec/NSBRKGA_MP_IPR_Solver_Exec : $(BIN)/instance/Instance.o \
 
 NSBRKGA_MP_IPR_Solver_Exec : clean $(BIN)/exec/NSBRKGA_MP_IPR_Solver_Exec
 
+$(BIN)/exec/Hypervolume_Calculator_Exec : $(BIN)/instance/Instance.o \
+                                          $(BIN)/utils/ArgumentParser.o \
+                                          $(BIN)/exec/Hypervolume_Calculator_Exec.o
+	@echo "--> Linking objects..." 
+	$(CPP) -o $@ $^ $(CARGS) $(PAGMOINC)
+	@echo
+
+Hypervolume_Calculator_Exec : clean $(BIN)/exec/Hypervolume_Calculator_Exec
+
 tests : Instance_Test \
         Solution_Test \
         TwoOpt_Test \
@@ -235,7 +244,8 @@ execs : Christofides_Solver_Exec \
         BnC_Solver_Exec \
         NSGA2_Solver_Exec \
         NSPSO_Solver_Exec \
-        NSBRKGA_MP_IPR_Solver_Exec
+        NSBRKGA_MP_IPR_Solver_Exec \
+        Hypervolume_Calculator_Exec
 
 all : tests execs
 
