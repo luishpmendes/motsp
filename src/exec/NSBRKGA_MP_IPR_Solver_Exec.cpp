@@ -21,6 +21,8 @@ int main (int argc, char * argv[]) {
         unsigned numTotalParents = 5;
         unsigned numEliteParents = 3;
         BRKGA::BiasFunctionType biasType = BRKGA::BiasFunctionType::LOGINVERSE;
+        BRKGA::DiversityFunctionType diversityType = 
+            BRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID;
         unsigned numPopulations = 1;
         double prPercentagePairs = 0.75;
         double prMinDist = 0.15;
@@ -96,6 +98,11 @@ int main (int argc, char * argv[]) {
             ss >> biasType;
         }
 
+        if(argParser.cmdOptionExists("--diversity-type")) {
+            std::stringstream ss(argParser.getCmdOption("--diversity-type"));
+            ss >> diversityType;
+        }
+
         if(argParser.cmdOptionExists("--num-populations")) {
             numPopulations =
                 std::stoul(argParser.getCmdOption("--num-populations"));
@@ -156,6 +163,7 @@ int main (int argc, char * argv[]) {
                                             numTotalParents,
                                             numEliteParents,
                                             biasType,
+                                            diversityType,
                                             numPopulations,
                                             prPercentagePairs,
                                             prMinDist,
@@ -253,6 +261,7 @@ int main (int argc, char * argv[]) {
                   << "--num-total-parents <numTotalParents> "
                   << "--num-elite-parents <numEliteParents> "
                   << "--bias-type <biasType> "
+                  << "--diversity-type <diversityType> "
                   << "--num-populations <numPopulations> "
                   << "--pr-percentage-pairs <prPercentagePairs> "
                   << "--pr-min-dist <prMinDist> "
