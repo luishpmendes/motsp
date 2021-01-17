@@ -1,0 +1,12 @@
++ seed=666
++ timeLimit=3600
++ mkdir -p statistics
++ mkdir -p solutions
++ mkdir -p pareto
++ mkdir -p capturedParetos
++ mkdir -p hypervolume
++ mkdir -p capturedHypervolumes
++ ./bin/exec/BnC_Solver_Exec --instance instances/kroAC100.txt --seed 666 --time-limit 3600 --max-num-solutions 1000 --capture-enabled --max-num-weights 1000 --statistics statistics/bncA.txt --solutions solutions/bncA --pareto pareto/bncA.txt --captured-paretos capturedParetos/bncA
+Academic license - for non-commercial use only - expires 2021-03-14
++ ./bin/exec/BnC_Solver_Exec --instance instances/kroAC100.txt --seed 666 --time-limit 360 --max-num-solutions 100 --capture-enabled --max-num-weights 100 --statistics statistics/bncB.txt --solutions solutions/bncB --pareto pareto/bncB.txt --captured-paretos capturedParetos/bncB
+Academic license - for non-commercial use only - expires 2021-03-14

@@ -1,0 +1,16 @@
+Number of objectives: 2
+Number of vertices: 1084
+Seed: 666
+Time limit: 3600
+Maximum number of solutions: 4294967295
+Solutions obtained: 104
+Solving time: 3601.1
+Captured Paretos: 1183
+Population size: 1000
+Initial solutions method: 1
+Initial solutions time percentage: 0.1
+Crossover probability: 0.95
+Distribution index for crossover: 10
+Mutation probability: 0.01
+Distribution index for mutation: 50
+Number of generations: 2455

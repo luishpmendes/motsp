@@ -1,0 +1,10 @@
+Number of objectives: 2
+Number of vertices: 100
+Seed: 666
+Time limit: 360
+Maximum number of solutions: 100
+Solutions obtained: 91
+Solving time: 360.27
+Captured Paretos: 92
+Maximum number of threads: 1
+All solutions found: 100

@@ -1,0 +1,12 @@
++ seed=666
++ timeLimit=3600
++ mkdir -p statistics
++ mkdir -p solutions
++ mkdir -p pareto
++ mkdir -p capturedParetos
++ mkdir -p hypervolume
++ mkdir -p capturedHypervolumes
++ ./bin/exec/BnC_Solver_Exec --instance instances/vm1084AB.txt --seed 666 --time-limit 3600 --max-num-solutions 1000 --capture-enabled --max-num-weights 1000 --statistics statistics/bncC.txt --solutions solutions/bncC --pareto pareto/bncC.txt --captured-paretos capturedParetos/bncC
+Academic license - for non-commercial use only - expires 2021-03-14
++ ./bin/exec/BnC_Solver_Exec --instance instances/vm1084AB.txt --seed 666 --time-limit 360 --max-num-solutions 100 --capture-enabled --max-num-weights 100 --statistics statistics/bncD.txt --solutions solutions/bncD --pareto pareto/bncD.txt --captured-paretos capturedParetos/bncD
+Academic license - for non-commercial use only - expires 2021-03-14
