@@ -23,6 +23,8 @@ int main() {
     assert(solver.getNumTotalParents() == 5);
     assert(solver.getNumEliteParents() == 3);
     assert(solver.getBiasType() == BRKGA::BiasFunctionType::LOGINVERSE);
+    assert(solver.getDiversityType() ==
+            BRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID);
     assert(solver.getNumPopulations() == 1);
     assert(fabs(solver.getPrPercentagePairs() - 0.75) <
             std::numeric_limits<double>::epsilon());
