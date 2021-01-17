@@ -58,6 +58,11 @@ namespace MOTSP {
              **********************************/
             BRKGA::BiasFunctionType biasType;
 
+            /*******************************************
+             * Type of diversity that will be used.
+             *******************************************/
+            BRKGA::DiversityFunctionType diversityType;
+
             /**********************************************
              * Number of independent parallel populations.
              **********************************************/
@@ -214,6 +219,8 @@ namespace MOTSP {
              *                                         parents for mating.
              * @param biasType                         the type of bias that
              *                                         will be used.
+             * @param diversityType                    the type of diversity
+             *                                         that will be used.
              * @param numPopulations                   the number of
              *                                         independent parallel
              *                                         populations.
@@ -259,6 +266,8 @@ namespace MOTSP {
                                   unsigned numEliteParents = 3,
                                   BRKGA::BiasFunctionType biasType =
                                         BRKGA::BiasFunctionType::LOGINVERSE,
+                                  BRKGA::DiversityFunctionType diversityType =
+                                        BRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID,
                                   unsigned numPopulations = 1,
                                   double prPercentagePairs = 0.75,
                                   double prMinDist = 0.15,
@@ -444,6 +453,22 @@ namespace MOTSP {
              * @param biasType the new type of bias that will be used.
              ***********************************************************/
             void setBiasType(const BRKGA::BiasFunctionType & biasType);
+
+            /******************************************************
+             * Returns the type of diversity that will be used.
+             *
+             * @return the type of diversity that will be used.
+             ******************************************************/
+            BRKGA::DiversityFunctionType getDiversityType() const;
+
+            /**************************************************************
+             * Sets the type of diversity that will be used.
+             *
+             * @param diversityType the new type of diversity that will be 
+             *                      used.
+             **************************************************************/
+            void setDiversityType(
+                    const BRKGA::DiversityFunctionType & diversityType);
 
             /**********************************************************
              * Returns the number of independent parallel populations.

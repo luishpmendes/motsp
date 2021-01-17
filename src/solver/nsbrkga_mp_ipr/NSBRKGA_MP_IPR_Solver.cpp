@@ -19,6 +19,7 @@ namespace MOTSP {
             unsigned numTotalParents,
             unsigned numEliteParents,
             BRKGA::BiasFunctionType biasType,
+            BRKGA::DiversityFunctionType diversityType,
             unsigned numPopulations,
             double prPercentagePairs,
             double prMinDist,
@@ -36,6 +37,7 @@ namespace MOTSP {
                          captureEnabled),
           populationSize(populationSize),
           biasType(biasType),
+          diversityType(diversityType),
           prSelection(prSelection),
           prInterval(prInterval),
           shakeInterval(shakeInterval),
@@ -192,6 +194,16 @@ namespace MOTSP {
     void NSBRKGA_MP_IPR_Solver::setBiasType(
             const BRKGA::BiasFunctionType & biasType) {
         this->biasType = biasType;
+    }
+
+    BRKGA::DiversityFunctionType NSBRKGA_MP_IPR_Solver::getDiversityType() 
+        const {
+        return this->diversityType;
+    }
+
+    void NSBRKGA_MP_IPR_Solver::setDiversityType(
+            const BRKGA::DiversityFunctionType & diversityType) {
+        this->diversityType = diversityType;
     }
 
     unsigned NSBRKGA_MP_IPR_Solver::getNumPopulations() const {
@@ -355,6 +367,7 @@ namespace MOTSP {
         params.total_parents = this->numTotalParents;
         params.num_elite_parents = this->numEliteParents;
         params.bias_type = this->biasType;
+        params.diversity_type = this->diversityType;
         params.num_independent_populations = this->numPopulations;
         params.pr_number_pairs = this->prPercentagePairs *
             (this->maxNumSolutions * this->elitePercentage) *
@@ -662,6 +675,8 @@ namespace MOTSP {
            << "Number of elite parents for mating: " << this->numEliteParents 
            << std::endl
            << "Type of bias that will be used: " << this->biasType << std::endl
+           << "Type of diversity that will be used: " << this->diversityType 
+           << std::endl
            << "Number of independent parallel populations: "
            << this->numPopulations << std::endl
            << "Percentage of pairs of chromosomes to be tested to path-relinking: " 
