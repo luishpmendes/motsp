@@ -231,6 +231,23 @@ $(BIN)/test/mhaco_solver_test : $(BIN)/instance/instance.o \
 
 mhaco_solver_test : $(BIN)/test/mhaco_solver_test
 
+$(BIN)/exec/mhaco_solver_exec : $(BIN)/instance/instance.o \
+                                $(BIN)/solution/solution.o \
+                                $(BIN)/solver/local_search/two_opt.o \
+                                $(BIN)/solver/solver.o \
+                                $(BIN)/solver/weighted_sum/christofides/christofides_solver.o \
+                                $(BIN)/solver/weighted_sum/branch_and_cut/branch_and_cut_callback.o \
+                                $(BIN)/solver/weighted_sum/branch_and_cut/branch_and_cut_solver.o \
+                                $(BIN)/solver/mhaco/problem.o \
+                                $(BIN)/solver/mhaco/mhaco_solver.o \
+                                $(BIN)/utils/argument_parser.o \
+                                $(BIN)/exec/mhaco_solver_exec.o
+	@echo "--> Linking objects..."
+	$(CPP) -o $@ $^ $(CARGS) $(INC)
+	@echo
+
+mhaco_solver_exec : $(BIN)/exec/mhaco_solver_exec
+
 tests : instance_test \
         solution_test \
         two_opt_test \
@@ -245,7 +262,8 @@ execs : christofides_solver_exec \
         branch_and_cut_solver_exec \
         nsga2_solver_exec \
         nspso_solver_exec \
-        moead_solver_exec
+        moead_solver_exec \
+        mhaco_solver_exec
 
 all : tests execs
 
