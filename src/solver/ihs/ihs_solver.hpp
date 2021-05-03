@@ -1,0 +1,85 @@
+#pragma once
+
+#include "solver/solver.hpp"
+#include <pagmo/population.hpp>
+
+namespace motsp {
+/**********************************************
+ * The IHS_Solver represents a solver for the
+ * Multi-Objective Travelling Salesman Problem
+ * using the Improved Harmony Search.
+ **********************************************/
+class IHS_Solver : public Solver {
+    public:
+    /********************************
+     * Size of the population.
+     ********************************/
+    unsigned population_size = 1000;
+
+    /***************************************
+     * Probability of choosing from memory.
+     ***************************************/
+    double phmcr = 0.85;
+
+    /*********************************
+     * Minimum pitch adjustment rate.
+     *********************************/
+    double ppar_min = 0.35;
+
+    /*********************************
+     * Maximum pitch adjustment rate.
+     *********************************/
+    double ppar_max = 0.99;
+
+    /******************************
+     * Minimum distance bandwidth.
+     ******************************/
+    double bw_min = 1E-5;
+
+    /******************************
+     * Maximum distance bandwidth.
+     ******************************/
+    double bw_max = 1.0;
+
+    /*********************************************
+     * Constructs a new solver.
+     *
+     * @param instance the instance to be solved.
+     *********************************************/
+    IHS_Solver(const Instance & instance);
+
+    /**********************************************************************
+     * Update the best individuals found so far.
+     *
+     * @param pop the new solutions.
+     *
+     * @return true if the best individuals are modified; false otherwise.
+     **********************************************************************/
+    bool update_best_individuals(const pagmo::population & pop);
+
+    /*****************************************************
+     * Capture a snapshot of the current population.
+     *
+     * @param pop the current population.
+     *****************************************************/
+    void capture_snapshot(const pagmo::population & pop);
+
+    /**********************
+     * Solve the instance.
+     **********************/
+    void solve();
+
+    /***************************************************************
+     * Standard stream operator.
+     *
+     * @param os the standard output stream object.
+     * @param solver the solver.
+     *
+     * @return the stream object.
+     ***************************************************************/
+    friend std::ostream & operator <<(std::ostream & os,
+                                      const IHS_Solver & solver);
+};
+
+}
+
