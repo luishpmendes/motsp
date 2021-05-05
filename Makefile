@@ -334,6 +334,15 @@ $(BIN)/exec/hypervolume_calculator_exec : $(BIN)/instance/instance.o \
 
 hypervolume_calculator_exec : $(BIN)/exec/hypervolume_calculator_exec
 
+$(BIN)/exec/results_aggregator_exec : $(BIN)/utils/argument_parser.o \
+                                      $(BIN)/utils/statistics.o \
+                                      $(BIN)/exec/results_aggregator_exec.o
+	@echo "--> Linking objects..."
+	$(CPP) -o $@ $^ $(CARGS) $(INC)
+	@echo
+
+results_aggregator_exec : $(BIN)/exec/results_aggregator_exec
+
 tests : instance_test \
         solution_test \
         two_opt_test \
@@ -355,7 +364,8 @@ execs : christofides_solver_exec \
         mhaco_solver_exec \
         ihs_solver_exec \
         nsmpbrkga_solver_exec \
-        hypervolume_calculator_exec
+        hypervolume_calculator_exec \
+        results_aggregator_exec
 
 all : tests execs
 
