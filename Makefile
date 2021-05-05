@@ -314,6 +314,17 @@ $(BIN)/exec/nsmpbrkga_solver_exec : $(BIN)/instance/instance.o \
 
 nsmpbrkga_solver_exec : $(BIN)/exec/nsmpbrkga_solver_exec
 
+$(BIN)/test/statistics_test : $(BIN)/utils/statistics.o \
+                              $(BIN)/test/statistics_test.o
+	@echo "--> Linking objects..."
+	$(CPP) -o $@ $^ $(CARGS) $(INC)
+	@echo
+	@echo "--> Running test..."
+	$(BIN)/test/statistics_test
+	@echo
+
+statistics_test : $(BIN)/test/statistics_test
+
 tests : instance_test \
         solution_test \
         two_opt_test \
@@ -324,7 +335,8 @@ tests : instance_test \
         moead_solver_test \
         mhaco_solver_test \
         ihs_solver_test \
-        nsmpbrkga_solver_test
+        nsmpbrkga_solver_test \
+        statistics_test
 
 execs : christofides_solver_exec \
         branch_and_cut_solver_exec \
