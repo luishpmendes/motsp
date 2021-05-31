@@ -16,15 +16,25 @@ class NSMPBRKGA_Solver : public Solver {
      ********************************************/
     unsigned population_size = 1000;
 
-    /************************************************************
-     * Percentage of individuals to become the elite set (0, 1].
-     ************************************************************/
-    double elite_percentage = 0.30;
+    /********************************************************************
+     * Minimum percentage of individuals to become the elite set (0, 1].
+     ********************************************************************/
+    double min_elites_percentage = 0.10;
 
-    /*************************************************************
-     * Percentage of mutants to be inserted into each population.
-     *************************************************************/
-    double mutant_percentage = 0.15;
+    /********************************************************************
+     * Maximum percentage of individuals to become the elite set (0, 1].
+     ********************************************************************/
+    double max_elites_percentage = 0.50;
+
+    /*********************************************************************
+     * Minimum percentage of mutants to be inserted into each population.
+     *********************************************************************/
+    double min_mutants_percentage = 0.05;
+
+    /*********************************************************************
+     * Maximum percentage of mutants to be inserted into each population.
+     *********************************************************************/
+    double max_mutants_percentage = 0.25;
 
     /**************************************
      * Number of total parents for mating.
@@ -53,9 +63,9 @@ class NSMPBRKGA_Solver : public Solver {
     unsigned num_populations = 1;
 
     /*********************************************************************
-     * Percentage of pairs of chromosomes to be tested to path-relinking.
+     * Number of pairs of chromosomes to be tested to path-relinking.
      *********************************************************************/
-    double pr_percentage_pairs = 0.75;
+    unsigned pr_number_pairs = 100;
 
     /*******************************************************************
      * Minimum distance between chromosomes selected to path-relinking.

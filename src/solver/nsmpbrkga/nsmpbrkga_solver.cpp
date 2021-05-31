@@ -23,12 +23,10 @@ void NSMPBRKGA_Solver::capture_snapshot(
     this->elite_sizes.resize(this->num_populations);
 
     for(unsigned i = 0; i < this->num_populations; i++) {
-        this->fronts = BRKGA::Population::nonDominatedSort(
-                algorithm.getCurrentPopulation(i).fitness,
-                this->senses);
-        this->num_non_dominated[i] = this->fronts.front().size();
-        this->num_fronts[i] = this->fronts.size();
-        this->elite_sizes[i] = algorithm.getCurrentPopulation(i).getEliteSize();
+        this->num_non_dominated[i] =
+            algorithm.getCurrentPopulation(i).num_non_dominated;
+        this->num_fronts[i] = algorithm.getCurrentPopulation(i).num_fronts;
+        this->elite_sizes[i] = algorithm.getCurrentPopulation(i).num_elites;
     }
 
     this->non_dominated_snapshots.push_back(std::make_tuple(
@@ -62,16 +60,16 @@ void NSMPBRKGA_Solver::solve() {
     BRKGA::BrkgaParams params;
     params.num_incumbent_solutions = this->max_num_solutions;
     params.population_size = this->population_size;
-    params.elite_percentage = this->elite_percentage;
-    params.mutants_percentage = this->mutant_percentage;
+    params.min_elites_percentage = this->min_elites_percentage;
+    params.max_elites_percentage = this->max_elites_percentage;
+    params.min_mutants_percentage = this->min_mutants_percentage;
+    params.max_mutants_percentage = this->max_mutants_percentage;
     params.total_parents = this->num_total_parents;
     params.num_elite_parents = this->num_elite_parents;
     params.bias_type = this->bias_type;
     params.diversity_type = this->diversity_type;
     params.num_independent_populations = this->num_populations;
-    params.pr_number_pairs = this->pr_percentage_pairs *
-        (this->max_num_solutions * this->elite_percentage) *
-        (this->max_num_solutions * this->elite_percentage);
+    params.pr_number_pairs = this->pr_number_pairs;
     params.pr_minimum_distance = this->pr_min_dist;
     params.pr_type = BRKGA::PathRelinking::Type::PERMUTATION;
     params.pr_selection = this->pr_selection;
@@ -270,10 +268,14 @@ std::ostream & operator <<(std::ostream & os, const NSMPBRKGA_Solver & solver) {
     os << static_cast<const Solver &>(solver)
        << "Number of individuals in each population: " << solver.population_size
        << std::endl
-       << "Percentage of individuals to become the elite set: "
-       << solver.elite_percentage << std::endl
-       << "Percentage of mutants to be inserted in the population: "
-       << solver.mutant_percentage << std::endl
+       << "Minimum percentage of individuals to become the elite set: "
+       << solver.min_elites_percentage << std::endl
+       << "Maximum percentage of individuals to become the elite set: "
+       << solver.max_elites_percentage << std::endl
+       << "Minimum percentage of mutants to be inserted in the population: "
+       << solver.min_mutants_percentage << std::endl
+       << "Maximum percentage of mutants to be inserted in the population: "
+       << solver.max_mutants_percentage << std::endl
        << "Number of total parents for mating: " << solver.num_total_parents
        << std::endl
        << "Number of elite parents for mating: " << solver.num_elite_parents
@@ -286,8 +288,8 @@ std::ostream & operator <<(std::ostream & os, const NSMPBRKGA_Solver & solver) {
                static_cast<int>(solver.diversity_type)) << std::endl
        << "Number of independent parallel populations: "
        << solver.num_populations << std::endl
-       << "Percentage of pairs of chromosomes to be tested to path-relinking: "
-       << solver.pr_percentage_pairs << std::endl
+       << "Number of pairs of chromosomes to be tested to path-relinking: "
+       << solver.pr_number_pairs << std::endl
        << "Minimum distance between chromosomes selected to path-relinking: "
        << solver.pr_min_dist << std::endl
        << "Individual selection to path-relinking: "
