@@ -32,12 +32,12 @@ do
             command+="--max-num-solutions ${max_num_solutions} "
             command+="--max-num-snapshots ${max_num_snapshots} "
             command+="--population-size ${population_size} "
-            command+="--statistics statistics/${instance}_${solver}_${seed}.txt "
-            command+="--solutions solutions/${instance}_${solver}_${seed}_ "
-            command+="--pareto pareto/${instance}_${solver}_${seed}.txt "
-            command+="--pareto-snapshots pareto_snapshots/${instance}_${solver}_${seed}_ "
-            command+="--non-dominated-snapshots non_dominated_snapshots/${instance}_${solver}_${seed}.txt "
-            command+="--fronts-snapshots fronts_snapshots/${instance}_${solver}_${seed}.txt "
+            command+="--statistics statistics/${instance}_${solver}C_${seed}.txt "
+            command+="--solutions solutions/${instance}_${solver}C_${seed}_ "
+            command+="--pareto pareto/${instance}_${solver}C_${seed}.txt "
+            command+="--pareto-snapshots pareto_snapshots/${instance}_${solver}C_${seed}_ "
+            command+="--non-dominated-snapshots non_dominated_snapshots/${instance}_${solverc}_${seed}.txt "
+            command+="--fronts-snapshots fronts_snapshots/${instance}_${solver}C_${seed}.txt "
             if [ $solver = "nspso" ]
             then
                 command+="--memory "
@@ -52,7 +52,7 @@ do
             fi
             if [ $solver = "nsmpbrkga" ]
             then
-                command+="--elite-sizes-snapshots elite_sizes_snapshots/${instance}_${solver}_${seed}.txt "
+                command+="--elite-sizes-snapshots elite_sizes_snapshots/${instance}_${solver}C_${seed}.txt "
             fi
             eval $command
         done
