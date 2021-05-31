@@ -1,0 +1,74 @@
++ solvers=(nspso)
++ instances=(kroAB100)
++ seeds=(2351389233)
++ time_limit=3600
++ population_size=1000
++ max_num_solutions=2500
++ max_num_snapshots=60
++ mkdir -p statistics
++ mkdir -p solutions
++ mkdir -p pareto
++ mkdir -p pareto_snapshots
++ mkdir -p non_dominated_snapshots
++ mkdir -p fronts_snapshots
++ mkdir -p elite_sizes_snapshots
++ mkdir -p hypervolume
++ mkdir -p hypervolume_snapshots
++ for instance in ${instances[@]}
++ for solver in ${solvers[@]}
++ for seed in ${seeds[@]}
++ command='./bin/exec/nspso_solver_exec '
++ command+='--instance instances/kroAB100.txt '
++ command+='--seed 2351389233 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/kroAB100_nspso_2351389233.txt '
++ command+='--solutions solutions/kroAB100_nspso_2351389233_ '
++ command+='--pareto pareto/kroAB100_nspso_2351389233.txt '
++ command+='--pareto-snapshots pareto_snapshots/kroAB100_nspso_2351389233_ '
++ command+='--non-dominated-snapshots non_dominated_snapshots/kroAB100_nspso_2351389233.txt '
++ command+='--fronts-snapshots fronts_snapshots/kroAB100_nspso_2351389233.txt '
++ '[' nspso = nspso ']'
++ command+='--memory '
++ '[' nspso = moead ']'
++ '[' nspso = mhaco ']'
++ '[' nspso = nsmpbrkga ']'
++ eval ./bin/exec/nspso_solver_exec --instance instances/kroAB100.txt --seed 2351389233 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB100_nspso_2351389233.txt --solutions solutions/kroAB100_nspso_2351389233_ --pareto pareto/kroAB100_nspso_2351389233.txt --pareto-snapshots pareto_snapshots/kroAB100_nspso_2351389233_ --non-dominated-snapshots non_dominated_snapshots/kroAB100_nspso_2351389233.txt --fronts-snapshots fronts_snapshots/kroAB100_nspso_2351389233.txt --memory
+++ ./bin/exec/nspso_solver_exec --instance instances/kroAB100.txt --seed 2351389233 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB100_nspso_2351389233.txt --solutions solutions/kroAB100_nspso_2351389233_ --pareto pareto/kroAB100_nspso_2351389233.txt --pareto-snapshots pareto_snapshots/kroAB100_nspso_2351389233_ --non-dominated-snapshots non_dominated_snapshots/kroAB100_nspso_2351389233.txt --fronts-snapshots fronts_snapshots/kroAB100_nspso_2351389233.txt --memory
++ command='./bin/exec/hypervolume_calculator_exec '
++ command+='--instance instances/kroAB100.txt '
++ i=0
++ for solver in ${solvers[@]}
++ for seed in ${seeds[@]}
++ command+='--pareto-0 pareto/kroAB100_nspso_2351389233.txt '
++ command+='--pareto-snapshots-0 pareto_snapshots/kroAB100_nspso_2351389233_ '
++ command+='--hypervolume-0 hypervolume/kroAB100_nspso_2351389233.txt '
++ command+='--hypervolume-snapshots-0 hypervolume_snapshots/kroAB100_nspso_2351389233.txt '
++ i=1
++ for solver in ${solvers[@]}
++ command='./bin/exec/results_aggregator_exec '
++ command+='--hypervolumes hypervolume/kroAB100_nspso.txt '
++ command+='--hypervolume-statistics hypervolume/kroAB100_nspso_stats.txt '
++ command+='--statistics-best statistics/kroAB100_nspso_best.txt '
++ command+='--statistics-median statistics/kroAB100_nspso_median.txt '
++ command+='--pareto-best pareto/kroAB100_nspso_best.txt '
++ command+='--pareto-median pareto/kroAB100_nspso_median.txt '
++ command+='--hypervolume-snapshots-best hypervolume_snapshots/kroAB100_nspso_best.txt '
++ command+='--hypervolume-snapshots-median hypervolume_snapshots/kroAB100_nspso_median.txt '
++ command+='--non-dominated-snapshots-best non_dominated_snapshots/kroAB100_nspso_best.txt '
++ command+='--non-dominated-snapshots-median non_dominated_snapshots/kroAB100_nspso_median.txt '
++ command+='--fronts-snapshots-best fronts_snapshots/kroAB100_nspso_best.txt '
++ command+='--fronts-snapshots-median fronts_snapshots/kroAB100_nspso_median.txt '
++ '[' nspso = nsmpbrkga ']'
++ i=0
++ for seed in ${seeds[@]}
++ command+='--statistics-0 statistics/kroAB100_nspso_2351389233.txt '
++ command+='--pareto-0 pareto/kroAB100_nspso_2351389233.txt '
++ command+='--hypervolume-0 hypervolume/kroAB100_nspso_2351389233.txt '
++ command+='--hypervolume-snapshots-0 hypervolume_snapshots/kroAB100_nspso_2351389233.txt '
++ command+='--non-dominated-snapshots-0 non_dominated_snapshots/kroAB100_nspso_2351389233.txt '
++ command+='--fronts-snapshots-0 fronts_snapshots/kroAB100_nspso_2351389233.txt '
++ '[' nspso = nsmpbrkga ']'
++ i=1
