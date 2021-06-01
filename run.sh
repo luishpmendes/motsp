@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #solvers=(nsmpbrkga)
-solvers=(nsga2 nspso moead mhaco ihs nsmpbrkga nsmpbrkgaB nsmpbrkgaC)
+solvers=(nsga2 nspso moead mhaco ihs nsmpbrkga nsmpbrkgaB nsmpbrkgaC nsmpbrkgaD)
 instances=(kroAB100 kroAB200)
 seeds=(2351389233)
 
