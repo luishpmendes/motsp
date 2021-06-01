@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #solvers=(nsmpbrkga)
-solvers=(nsga2 nspso moead mhaco ihs nsmpbrkga)
-instances=(kroAC100)
+solvers=(nsga2 nspso moead mhaco ihs nsmpbrkga nsmpbrkgaB nsmpbrkgaC)
+instances=(kroAB100 kroAB200)
 seeds=(2351389233)
 
 time_limit=3600
@@ -93,6 +93,16 @@ do
             command+="--elite-sizes-snapshots-best elite_sizes_snapshots/${instance}_${solver}_best.txt "
             command+="--elite-sizes-snapshots-median elite_sizes_snapshots/${instance}_${solver}_median.txt "
         fi
+        if [ $solver = "nsmpbrkgaB" ]
+        then
+            command+="--elite-sizes-snapshots-best elite_sizes_snapshots/${instance}_${solver}_best.txt "
+            command+="--elite-sizes-snapshots-median elite_sizes_snapshots/${instance}_${solver}_median.txt "
+        fi
+        if [ $solver = "nsmpbrkgaC" ]
+        then
+            command+="--elite-sizes-snapshots-best elite_sizes_snapshots/${instance}_${solver}_best.txt "
+            command+="--elite-sizes-snapshots-median elite_sizes_snapshots/${instance}_${solver}_median.txt "
+        fi
         i=0;
         for seed in ${seeds[@]}
         do
@@ -103,6 +113,14 @@ do
             command+="--non-dominated-snapshots-${i} non_dominated_snapshots/${instance}_${solver}_${seed}.txt "
             command+="--fronts-snapshots-${i} fronts_snapshots/${instance}_${solver}_${seed}.txt "
             if [ $solver = "nsmpbrkga" ]
+            then
+                command+="--elite-sizes-snapshots-${i} elite_sizes_snapshots/${instance}_${solver}_${seed}.txt "
+            fi
+            if [ $solver = "nsmpbrkgaB" ]
+            then
+                command+="--elite-sizes-snapshots-${i} elite_sizes_snapshots/${instance}_${solver}_${seed}.txt "
+            fi
+            if [ $solver = "nsmpbrkgaC" ]
             then
                 command+="--elite-sizes-snapshots-${i} elite_sizes_snapshots/${instance}_${solver}_${seed}.txt "
             fi
