@@ -3,7 +3,7 @@ import csv
 
 instances = ["kroAB100", "kroAB200"]
 versions = ["best", "median"]
-solvers = ["nsga2", "nspso", "moead", "mhaco", "ihs", "nsmpbrkga", "nsmpbrkgaB", "nsmpbrkgaC"]
+solvers = ["nsga2", "nspso", "moead", "mhaco", "ihs", "nsmpbrkga", "nsmpbrkgaB", "nsmpbrkgaC", "nsmpbrkgaD"]
 
 for instance in instances:
     for version in versions:
