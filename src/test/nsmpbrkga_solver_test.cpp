@@ -37,7 +37,8 @@ int main() {
     assert(solver.num_total_parents == 3);
     assert(solver.num_elite_parents == 2);
     assert(solver.bias_type == BRKGA::BiasFunctionType::LOGINVERSE);
-    assert(solver.diversity_type == BRKGA::DiversityFunctionType::NONE);
+    assert(solver.diversity_type ==
+            BRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID);
     assert(solver.num_populations == 1);
     assert(solver.pr_number_pairs = 100);
     assert(fabs(solver.pr_min_dist - 0.15) <

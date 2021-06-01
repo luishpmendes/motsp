@@ -51,11 +51,11 @@ class NSMPBRKGA_Solver : public Solver {
      ************************************************************************/
     BRKGA::BiasFunctionType bias_type = BRKGA::BiasFunctionType::LOGINVERSE;
 
-    /*********************************************
+    /***************************************************************
      * Type of diversity that will be used.
-     *********************************************/
+     ***************************************************************/
     BRKGA::DiversityFunctionType diversity_type =
-        BRKGA::DiversityFunctionType::NONE;
+        BRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID;
 
     /**********************************************
      * Number of independent parallel populations.
