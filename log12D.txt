@@ -1,0 +1,77 @@
++ solvers=(nsmpbrkga)
++ instances=(kroAB200)
++ seeds=(2351389233)
++ time_limit=3600
++ population_size=1000
++ max_num_solutions=2500
++ max_num_snapshots=60
++ mkdir -p statistics
++ mkdir -p solutions
++ mkdir -p pareto
++ mkdir -p pareto_snapshots
++ mkdir -p non_dominated_snapshots
++ mkdir -p fronts_snapshots
++ mkdir -p elite_sizes_snapshots
++ mkdir -p hypervolume
++ mkdir -p hypervolume_snapshots
++ for instance in ${instances[@]}
++ for solver in ${solvers[@]}
++ for seed in ${seeds[@]}
++ command='./bin/exec/nsmpbrkga_solver_exec '
++ command+='--instance instances/kroAB200.txt '
++ command+='--seed 2351389233 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/kroAB200_nsmpbrkgaD_2351389233.txt '
++ command+='--solutions solutions/kroAB200_nsmpbrkgaD_2351389233_ '
++ command+='--pareto pareto/kroAB200_nsmpbrkgaD_2351389233.txt '
++ command+='--pareto-snapshots pareto_snapshots/kroAB200_nsmpbrkgaD_2351389233_ '
++ command+='--non-dominated-snapshots non_dominated_snapshots/kroAB200_nsmpbrkgaD_2351389233.txt '
++ command+='--fronts-snapshots fronts_snapshots/kroAB200_nsmpbrkgaD_2351389233.txt '
++ '[' nsmpbrkga = nspso ']'
++ '[' nsmpbrkga = moead ']'
++ '[' nsmpbrkga = mhaco ']'
++ '[' nsmpbrkga = nsmpbrkga ']'
++ command+='--elite-sizes-snapshots elite_sizes_snapshots/kroAB200_nsmpbrkgaD_2351389233.txt '
++ eval ./bin/exec/nsmpbrkga_solver_exec --instance instances/kroAB200.txt --seed 2351389233 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB200_nsmpbrkgaD_2351389233.txt --solutions solutions/kroAB200_nsmpbrkgaD_2351389233_ --pareto pareto/kroAB200_nsmpbrkgaD_2351389233.txt --pareto-snapshots pareto_snapshots/kroAB200_nsmpbrkgaD_2351389233_ --non-dominated-snapshots non_dominated_snapshots/kroAB200_nsmpbrkgaD_2351389233.txt --fronts-snapshots fronts_snapshots/kroAB200_nsmpbrkgaD_2351389233.txt --elite-sizes-snapshots elite_sizes_snapshots/kroAB200_nsmpbrkgaD_2351389233.txt
+++ ./bin/exec/nsmpbrkga_solver_exec --instance instances/kroAB200.txt --seed 2351389233 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB200_nsmpbrkgaD_2351389233.txt --solutions solutions/kroAB200_nsmpbrkgaD_2351389233_ --pareto pareto/kroAB200_nsmpbrkgaD_2351389233.txt --pareto-snapshots pareto_snapshots/kroAB200_nsmpbrkgaD_2351389233_ --non-dominated-snapshots non_dominated_snapshots/kroAB200_nsmpbrkgaD_2351389233.txt --fronts-snapshots fronts_snapshots/kroAB200_nsmpbrkgaD_2351389233.txt --elite-sizes-snapshots elite_sizes_snapshots/kroAB200_nsmpbrkgaD_2351389233.txt
++ command='./bin/exec/hypervolume_calculator_exec '
++ command+='--instance instances/kroAB200.txt '
++ i=0
++ for solver in ${solvers[@]}
++ for seed in ${seeds[@]}
++ command+='--pareto-0 pareto/kroAB200_nsmpbrkga_2351389233.txt '
++ command+='--pareto-snapshots-0 pareto_snapshots/kroAB200_nsmpbrkga_2351389233_ '
++ command+='--hypervolume-0 hypervolume/kroAB200_nsmpbrkga_2351389233.txt '
++ command+='--hypervolume-snapshots-0 hypervolume_snapshots/kroAB200_nsmpbrkga_2351389233.txt '
++ i=1
++ for solver in ${solvers[@]}
++ command='./bin/exec/results_aggregator_exec '
++ command+='--hypervolumes hypervolume/kroAB200_nsmpbrkga.txt '
++ command+='--hypervolume-statistics hypervolume/kroAB200_nsmpbrkga_stats.txt '
++ command+='--statistics-best statistics/kroAB200_nsmpbrkga_best.txt '
++ command+='--statistics-median statistics/kroAB200_nsmpbrkga_median.txt '
++ command+='--pareto-best pareto/kroAB200_nsmpbrkga_best.txt '
++ command+='--pareto-median pareto/kroAB200_nsmpbrkga_median.txt '
++ command+='--hypervolume-snapshots-best hypervolume_snapshots/kroAB200_nsmpbrkga_best.txt '
++ command+='--hypervolume-snapshots-median hypervolume_snapshots/kroAB200_nsmpbrkga_median.txt '
++ command+='--non-dominated-snapshots-best non_dominated_snapshots/kroAB200_nsmpbrkga_best.txt '
++ command+='--non-dominated-snapshots-median non_dominated_snapshots/kroAB200_nsmpbrkga_median.txt '
++ command+='--fronts-snapshots-best fronts_snapshots/kroAB200_nsmpbrkga_best.txt '
++ command+='--fronts-snapshots-median fronts_snapshots/kroAB200_nsmpbrkga_median.txt '
++ '[' nsmpbrkga = nsmpbrkga ']'
++ command+='--elite-sizes-snapshots-best elite_sizes_snapshots/kroAB200_nsmpbrkga_best.txt '
++ command+='--elite-sizes-snapshots-median elite_sizes_snapshots/kroAB200_nsmpbrkga_median.txt '
++ i=0
++ for seed in ${seeds[@]}
++ command+='--statistics-0 statistics/kroAB200_nsmpbrkga_2351389233.txt '
++ command+='--pareto-0 pareto/kroAB200_nsmpbrkga_2351389233.txt '
++ command+='--hypervolume-0 hypervolume/kroAB200_nsmpbrkga_2351389233.txt '
++ command+='--hypervolume-snapshots-0 hypervolume_snapshots/kroAB200_nsmpbrkga_2351389233.txt '
++ command+='--non-dominated-snapshots-0 non_dominated_snapshots/kroAB200_nsmpbrkga_2351389233.txt '
++ command+='--fronts-snapshots-0 fronts_snapshots/kroAB200_nsmpbrkga_2351389233.txt '
++ '[' nsmpbrkga = nsmpbrkga ']'
++ command+='--elite-sizes-snapshots-0 elite_sizes_snapshots/kroAB200_nsmpbrkga_2351389233.txt '
++ i=1
