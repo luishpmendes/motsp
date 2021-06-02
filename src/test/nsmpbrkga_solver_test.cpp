@@ -26,17 +26,21 @@ int main() {
     assert(solver.max_num_solutions == 128);
     assert(solver.population_size == 32);
     assert(solver.max_num_snapshots == 32);
-    assert(fabs(solver.elite_percentage - 0.30) <
+    assert(fabs(solver.min_elites_percentage - 0.10) <
             std::numeric_limits<double>::epsilon());
-    assert(fabs(solver.mutant_percentage - 0.15) <
+    assert(fabs(solver.max_elites_percentage - 0.50) <
+            std::numeric_limits<double>::epsilon());
+    assert(fabs(solver.min_mutants_percentage - 0.05) <
+            std::numeric_limits<double>::epsilon());
+    assert(fabs(solver.max_mutants_percentage - 0.25) <
             std::numeric_limits<double>::epsilon());
     assert(solver.num_total_parents == 3);
     assert(solver.num_elite_parents == 2);
     assert(solver.bias_type == BRKGA::BiasFunctionType::LOGINVERSE);
-    assert(solver.diversity_type == BRKGA::DiversityFunctionType::NONE);
+    assert(solver.diversity_type ==
+            BRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID);
     assert(solver.num_populations == 1);
-    assert(fabs(solver.pr_percentage_pairs - 0.75) <
-            std::numeric_limits<double>::epsilon());
+    assert(solver.pr_number_pairs = 100);
     assert(fabs(solver.pr_min_dist - 0.15) <
             std::numeric_limits<double>::epsilon());
     assert(solver.pr_selection ==

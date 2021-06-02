@@ -56,14 +56,24 @@ int main (int argc, char * argv[]) {
                 std::stoul(arg_parser.option_value("--population-size"));
         }
 
-        if(arg_parser.option_exists("--elite-percentage")) {
-            solver.elite_percentage =
-                std::stod(arg_parser.option_value("--elite-percentage"));
+        if(arg_parser.option_exists("--min-elites-percentage")) {
+            solver.min_elites_percentage =
+                std::stod(arg_parser.option_value("--min-elites-percentage"));
         }
 
-        if(arg_parser.option_exists("--mutant-percentage")) {
-            solver.mutant_percentage =
-                std::stod(arg_parser.option_value("--mutant-percentage"));
+        if(arg_parser.option_exists("--max-elites-percentage")) {
+            solver.max_elites_percentage =
+                std::stod(arg_parser.option_value("--max-elites-percentage"));
+        }
+
+        if(arg_parser.option_exists("--min-mutants-percentage")) {
+            solver.min_mutants_percentage =
+                std::stod(arg_parser.option_value("--min-mutants-percentage"));
+        }
+
+        if(arg_parser.option_exists("--max-mutants-percentage")) {
+            solver.max_mutants_percentage =
+                std::stod(arg_parser.option_value("--max-mutants-percentage"));
         }
 
         if(arg_parser.option_exists("--num-total-parents")) {
@@ -91,9 +101,9 @@ int main (int argc, char * argv[]) {
                 std::stoul(arg_parser.option_value("--num-populations"));
         }
 
-        if(arg_parser.option_exists("--pr-percentage-pairs")) {
-            solver.pr_percentage_pairs =
-                std::stod(arg_parser.option_value("--pr-percentage-pairs"));
+        if(arg_parser.option_exists("--pr-number-pairs")) {
+            solver.pr_number_pairs =
+                std::stoul(arg_parser.option_value("--pr-number-pairs"));
         }
 
         if(arg_parser.option_exists("--pr-min-dist")) {
@@ -438,14 +448,16 @@ int main (int argc, char * argv[]) {
                   << "--max-num-solutions <max_num_solutions> "
                   << "--max-num-snapshots <max_num_snapshots> "
                   << "--population-size <population_size> "
-                  << "--elite-percentage <elite_percentage> "
-                  << "--mutant-percentage <mutant_percentage> "
+                  << "--min-elites-percentage <min_elites_percentage> "
+                  << "--max-elites-percentage <max_elites_percentage> "
+                  << "--min-mutants-percentage <min_mutants_percentage> "
+                  << "--max-mutants-percentage <max_mutants_percentage> "
                   << "--num-total-parents <num_total_parents> "
                   << "--num-elite-parents <num_elite_parents> "
                   << "--bias-type <bias_type> "
                   << "--diversity-type <diversity_type> "
                   << "--num-populations <num_populations> "
-                  << "--pr-percentage-pairs <pr_percentage_pairs> "
+                  << "--pr-number-pairs <pr_number_pairs> "
                   << "--pr-min-dist <pr_min_dist> "
                   << "--pr-selection <pr_selection> "
                   << "--pr-percentage <pr_percentage> "
