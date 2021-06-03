@@ -6,8 +6,8 @@ seeds=(2351389233 840853377 405525247 583443166 76615162 145906556 237064314 779
 
 time_limit=3600
 population_size=1000
-max_num_solutions=10000
-max_num_snapshots=100
+max_num_solutions=2500
+max_num_snapshots=60
 
 mkdir -p statistics
 mkdir -p solutions
@@ -15,7 +15,8 @@ mkdir -p pareto
 mkdir -p pareto_snapshots
 mkdir -p non_dominated_snapshots
 mkdir -p fronts_snapshots
-mkdir -p elite_sizes_snapshots
+mkdir -p num_elites_snapshots
+mkdir -p num_mutants_snapshots
 mkdir -p hypervolume
 mkdir -p hypervolume_snapshots
 
@@ -52,7 +53,8 @@ do
             fi
             if [ $solver = "nsmpbrkga" ]
             then
-                command+="--elite-sizes-snapshots elite_sizes_snapshots/${instance}_${solver}_${seed}.txt "
+                command+="--num-elites-snapshots num_elites_snapshots/${instance}_${solver}_${seed}.txt "
+                command+="--num-mutants-snapshots num_mutants_snapshots/${instance}_${solver}_${seed}.txt "
             fi
             eval $command
         done
@@ -89,8 +91,10 @@ do
         command+="--fronts-snapshots-median fronts_snapshots/${instance}_${solver}_median.txt "
         if [ $solver = "nsmpbrkga" ]
         then
-            command+="--elite-sizes-snapshots-best elite_sizes_snapshots/${instance}_${solver}_best.txt "
-            command+="--elite-sizes-snapshots-median elite_sizes_snapshots/${instance}_${solver}_median.txt "
+            command+="--num-elites-snapshots-best num_elites_snapshots/${instance}_${solver}_best.txt "
+            command+="--num-elites-snapshots-median num_elites_snapshots/${instance}_${solver}_median.txt "
+            command+="--num-mutants-snapshots-best num_mutants_snapshots/${instance}_${solver}_best.txt "
+            command+="--num-mutants-snapshots-median num_mutants_snapshots/${instance}_${solver}_median.txt "
         fi
         i=0;
         for seed in ${seeds[@]}
@@ -103,7 +107,8 @@ do
             command+="--fronts-snapshots-${i} fronts_snapshots/${instance}_${solver}_${seed}.txt "
             if [ $solver = "nsmpbrkga" ]
             then
-                command+="--elite-sizes-snapshots-${i} elite_sizes_snapshots/${instance}_${solver}_${seed}.txt "
+                command+="--num-elites-snapshots-${i} num_elites_snapshots/${instance}_${solver}_${seed}.txt "
+                command+="--num-mutants-snapshots-${i} num_mutants_snapshots/${instance}_${solver}_${seed}.txt "
             fi
             i=$((i+1))
         done
