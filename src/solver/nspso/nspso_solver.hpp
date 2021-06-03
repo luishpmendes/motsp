@@ -1,7 +1,6 @@
 #pragma once
 
 #include "solver/solver.hpp"
-#include <pagmo/population.hpp>
 
 namespace motsp {
 /****************************************************
@@ -77,13 +76,6 @@ class NSPSO_Solver : public Solver {
      * @return true if the best individuals are modified; false otherwise.
      **********************************************************************/
     bool update_best_individuals(const pagmo::population & pop);
-
-    /*****************************************************
-     * Capture a snapshot of the current population.
-     *
-     * @param pop the current population.
-     *****************************************************/
-    void capture_snapshot(const pagmo::population & pop);
 
     /**********************
      * Solve the instance.

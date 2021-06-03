@@ -101,6 +101,46 @@ bool Solver::update_best_individuals(
     return result;
 }
 
+void Solver::capture_snapshot(const pagmo::population & pop) {
+    double time_snapshot = this->elapsed_time();
+
+    this->pareto.resize(this->best_individuals.size());
+    std::transform(this->best_individuals.begin(),
+                   this->best_individuals.end(),
+                   this->pareto.begin(),
+                   [](const auto & individual) {
+                        return individual.first;
+                   });
+    this->pareto_snapshots.push_back(std::make_tuple(this->num_iterations,
+                                                     time_snapshot,
+                                                     this->pareto));
+
+    this->current_individuals.resize(pop.size());
+
+    for(unsigned i = 0; i < pop.size(); i++) {
+        this->current_individuals[i] = std::make_pair(pop.get_f()[i],
+                                                      pop.get_x()[i]);
+    }
+
+    this->fronts = BRKGA::Population::nonDominatedSort<std::vector<double>>(
+            current_individuals,
+            this->senses);
+
+    this->non_dominated_snapshots.push_back(std::make_tuple(
+                this->num_iterations,
+                time_snapshot,
+                std::vector<unsigned>(1, fronts.front().size())));
+
+    this->fronts_snapshots.push_back(std::make_tuple(
+                this->num_iterations,
+                time_snapshot,
+                std::vector<unsigned>(1, fronts.size())));
+
+    this->time_last_snapshot = time_snapshot;
+    this->iteration_last_snapshot = this->num_iterations;
+    this->num_snapshots++;
+}
+
 std::ostream & operator <<(std::ostream & os, const Solver & solver) {
     os << "Number of objectives: " << solver.instance.num_objectives
        << std::endl

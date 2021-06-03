@@ -7,6 +7,8 @@ NSMPBRKGA_Solver::NSMPBRKGA_Solver(const Instance & instance)
 
 void NSMPBRKGA_Solver::capture_snapshot(
         const BRKGA::NSMPBRKGA<Decoder> & algorithm) {
+    double time_snapshot = this->elapsed_time();
+
     this->pareto.resize(this->best_individuals.size());
     std::transform(this->best_individuals.begin(),
                    this->best_individuals.end(),
@@ -15,7 +17,7 @@ void NSMPBRKGA_Solver::capture_snapshot(
                         return individual.first;
                    });
     this->pareto_snapshots.push_back(std::make_tuple(this->num_iterations,
-                                                     this->elapsed_time(),
+                                                     time_snapshot,
                                                      this->pareto));
 
     this->num_non_dominated.resize(this->num_populations);
@@ -33,22 +35,22 @@ void NSMPBRKGA_Solver::capture_snapshot(
 
     this->non_dominated_snapshots.push_back(std::make_tuple(
                 this->num_iterations,
-                this->elapsed_time(),
+                time_snapshot,
                 this->num_non_dominated));
 
     this->fronts_snapshots.push_back(std::make_tuple(this->num_iterations,
-                                                     this->elapsed_time(),
+                                                     time_snapshot,
                                                      this->num_fronts));
 
     this->num_elites_snapshots.push_back(std::make_tuple(this->num_iterations,
-                                                         this->elapsed_time(),
+                                                         time_snapshot,
                                                          this->num_elites));
 
     this->num_mutants_snapshots.push_back(std::make_tuple(this->num_iterations,
-                                                          this->elapsed_time(),
+                                                          time_snapshot,
                                                           this->num_mutants));
 
-    this->time_last_snapshot = this->elapsed_time();
+    this->time_last_snapshot = time_snapshot;
     this->iteration_last_snapshot = this->num_iterations;
     this->num_snapshots++;
 }

@@ -17,44 +17,6 @@ bool IHS_Solver::update_best_individuals(const pagmo::population & pop) {
     return Solver::update_best_individuals(new_individuals);
 }
 
-void IHS_Solver::capture_snapshot(const pagmo::population & pop) {
-    this->pareto.resize(this->best_individuals.size());
-    std::transform(this->best_individuals.begin(),
-                   this->best_individuals.end(),
-                   this->pareto.begin(),
-                   [](const auto & individual) {
-                        return individual.first;
-                   });
-    this->pareto_snapshots.push_back(std::make_tuple(this->num_iterations,
-                                                     this->elapsed_time(),
-                                                     this->pareto));
-
-    this->current_individuals.resize(pop.size());
-
-    for(unsigned i = 0; i < pop.size(); i++) {
-        this->current_individuals[i] = std::make_pair(pop.get_f()[i],
-                                                      pop.get_x()[i]);
-    }
-
-    this->fronts = BRKGA::Population::nonDominatedSort<std::vector<double>>(
-            current_individuals,
-            this->senses);
-
-    this->non_dominated_snapshots.push_back(std::make_tuple(
-                this->num_iterations,
-                this->elapsed_time(),
-                std::vector<unsigned>(1, fronts.front().size())));
-
-    this->fronts_snapshots.push_back(std::make_tuple(
-                this->num_iterations,
-                this->elapsed_time(),
-                std::vector<unsigned>(1, fronts.size())));
-
-    this->time_last_snapshot = this->elapsed_time();
-    this->iteration_last_snapshot = this->num_iterations;
-    this->num_snapshots++;
-}
-
 void IHS_Solver::solve() {
     this->start_time = std::chrono::steady_clock::now();
 

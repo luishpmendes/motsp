@@ -4,6 +4,7 @@
 
 #include "solution/solution.hpp"
 #include "nsmpbrkga.hpp"
+#include <pagmo/population.hpp>
 
 namespace motsp {
 /****************************************************
@@ -224,6 +225,13 @@ class Solver {
             const std::vector<
                 std::pair<std::vector<double>,
                           std::vector<double>>> & new_individuals);
+
+    /*****************************************************
+     * Capture a snapshot of the current population.
+     *
+     * @param pop the current population.
+     *****************************************************/
+    void capture_snapshot(const pagmo::population & pop);
 
     /*************************
      * Solve the instance.
