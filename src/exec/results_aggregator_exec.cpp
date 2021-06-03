@@ -310,17 +310,17 @@ int main(int argc, char * argv[]) {
         }
     }
 
-    if(arg_parser.option_exists("--elite-sizes-snapshots-best") &&
+    if(arg_parser.option_exists("--num-elites-snapshots-best") &&
        arg_parser.option_exists(
-           "--elite-sizes-snapshots-" + std::to_string(index_best))) {
+           "--num-elites-snapshots-" + std::to_string(index_best))) {
         std::ifstream ifs;
         ifs.open(arg_parser.option_value(
-                    "--elite-sizes-snapshots-" + std::to_string(index_best)),
+                    "--num-elites-snapshots-" + std::to_string(index_best)),
                  std::ios::binary);
 
         if(ifs.is_open()) {
             std::ofstream ofs;
-            ofs.open(arg_parser.option_value("--elite-sizes-snapshots-best"),
+            ofs.open(arg_parser.option_value("--num-elites-snapshots-best"),
                      std::ios::binary);
 
             if(ofs.is_open()) {
@@ -336,17 +336,69 @@ int main(int argc, char * argv[]) {
         }
     }
 
-    if(arg_parser.option_exists("--elite-sizes-snapshots-median") &&
+    if(arg_parser.option_exists("--num-elites-snapshots-median") &&
        arg_parser.option_exists(
-           "--elite-sizes-snapshots-" + std::to_string(index_median))) {
+           "--num-elites-snapshots-" + std::to_string(index_median))) {
         std::ifstream ifs;
         ifs.open(arg_parser.option_value(
-                    "--elite-sizes-snapshots-" + std::to_string(index_median)),
+                    "--num-elites-snapshots-" + std::to_string(index_median)),
                  std::ios::binary);
 
         if(ifs.is_open()) {
             std::ofstream ofs;
-            ofs.open(arg_parser.option_value("--elite-sizes-snapshots-median"),
+            ofs.open(arg_parser.option_value("--num-elites-snapshots-median"),
+                     std::ios::binary);
+
+            if(ofs.is_open()) {
+                ofs << ifs.rdbuf();
+                ofs.close();
+            } else {
+                throw "File not created.";
+            }
+
+            ifs.close();
+        } else {
+            throw "File not found.";
+        }
+    }
+
+    if(arg_parser.option_exists("--num-mutants-snapshots-best") &&
+       arg_parser.option_exists(
+           "--num-mutants-snapshots-" + std::to_string(index_best))) {
+        std::ifstream ifs;
+        ifs.open(arg_parser.option_value(
+                    "--num-mutants-snapshots-" + std::to_string(index_best)),
+                 std::ios::binary);
+
+        if(ifs.is_open()) {
+            std::ofstream ofs;
+            ofs.open(arg_parser.option_value("--num-mutants-snapshots-best"),
+                     std::ios::binary);
+
+            if(ofs.is_open()) {
+                ofs << ifs.rdbuf();
+                ofs.close();
+            } else {
+                throw "File not created.";
+            }
+
+            ifs.close();
+        } else {
+            throw "File not found.";
+        }
+    }
+
+    if(arg_parser.option_exists("--num-mutants-snapshots-median") &&
+       arg_parser.option_exists(
+           "--num-mutants-snapshots-" + std::to_string(index_median))) {
+        std::ifstream ifs;
+        ifs.open(arg_parser.option_value(
+                    "--num-mutants-snapshots-" + std::to_string(index_median)),
+                 std::ios::binary);
+
+        if(ifs.is_open()) {
+            std::ofstream ofs;
+            ofs.open(arg_parser.option_value("--num-mutants-snapshots-median"),
                      std::ios::binary);
 
             if(ofs.is_open()) {
