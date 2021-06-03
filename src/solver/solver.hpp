@@ -226,6 +226,15 @@ class Solver {
                 std::pair<std::vector<double>,
                           std::vector<double>>> & new_individuals);
 
+    /**********************************************************************
+     * Update the best individuals found so far.
+     *
+     * @param pop the new solutions.
+     *
+     * @return true if the best individuals are modified; false otherwise.
+     **********************************************************************/
+    bool update_best_individuals(const pagmo::population & pop);
+
     /*****************************************************
      * Capture a snapshot of the current population.
      *

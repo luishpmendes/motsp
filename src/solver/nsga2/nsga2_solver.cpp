@@ -7,17 +7,6 @@ namespace motsp {
 NSGA2_Solver::NSGA2_Solver(const Instance & instance)
     : Solver::Solver(instance) {}
 
-bool NSGA2_Solver::update_best_individuals(const pagmo::population & pop) {
-    std::vector<std::pair<std::vector<double>, std::vector<double>>>
-        new_individuals(pop.size());
-
-    for(unsigned i = 0; i < pop.size(); i++) {
-        new_individuals[i] = std::make_pair(pop.get_f()[i], pop.get_x()[i]);
-    }
-
-    return Solver::update_best_individuals(new_individuals);
-}
-
 void NSGA2_Solver::solve() {
     this->start_time = std::chrono::steady_clock::now();
 

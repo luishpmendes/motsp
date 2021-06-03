@@ -47,15 +47,6 @@ class IHS_Solver : public Solver {
      *********************************************/
     IHS_Solver(const Instance & instance);
 
-    /**********************************************************************
-     * Update the best individuals found so far.
-     *
-     * @param pop the new solutions.
-     *
-     * @return true if the best individuals are modified; false otherwise.
-     **********************************************************************/
-    bool update_best_individuals(const pagmo::population & pop);
-
     /**********************
      * Solve the instance.
      **********************/

@@ -101,6 +101,17 @@ bool Solver::update_best_individuals(
     return result;
 }
 
+bool Solver::update_best_individuals(const pagmo::population & pop) {
+    std::vector<std::pair<std::vector<double>, std::vector<double>>>
+        new_individuals(pop.size());
+
+    for(unsigned i = 0; i < pop.size(); i++) {
+        new_individuals[i] = std::make_pair(pop.get_f()[i], pop.get_x()[i]);
+    }
+
+    return this->update_best_individuals(new_individuals);
+}
+
 void Solver::capture_snapshot(const pagmo::population & pop) {
     double time_snapshot = this->elapsed_time();
 

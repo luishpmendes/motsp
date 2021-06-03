@@ -68,15 +68,6 @@ class NSPSO_Solver : public Solver {
      *********************************************/
     NSPSO_Solver(const Instance & instance);
 
-    /**********************************************************************
-     * Update the best individuals found so far.
-     *
-     * @param pop the new individuals.
-     *
-     * @return true if the best individuals are modified; false otherwise.
-     **********************************************************************/
-    bool update_best_individuals(const pagmo::population & pop);
-
     /**********************
      * Solve the instance.
      **********************/
