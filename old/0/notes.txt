@@ -1,0 +1,4 @@
+2021-06-02
+
+Temporary results on kroAB100 and kroAB200 to compare some versions of NSMPBRKGA
+
