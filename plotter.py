@@ -96,8 +96,8 @@ for instance in instances:
         plt.figure()
         plt.title(instance)
         plt.xlabel("Time (s)")
-        plt.ylabel("Elite Size")
-        filename = "elite_sizes_snapshots/" + instance + "_nsmpbrkga_" + version + ".txt"
+        plt.ylabel("Number of elites")
+        filename = "num_elites_snapshots/" + instance + "_nsmpbrkga_" + version + ".txt"
         x = []
         y = []
         with open(filename) as csv_file:
@@ -109,9 +109,30 @@ for instance in instances:
         plt.xlim(left = 0)
         plt.ylim(bottom = 0)
         plt.legend(loc = 'best')
-        plt.savefig("elite_sizes_snapshots/" + instance + "_" + version + ".svg", format = "svg")
-        plt.savefig("elite_sizes_snapshots/" + instance + "_" + version + ".eps", format = "eps")
-        plt.savefig("elite_sizes_snapshots/" + instance + "_" + version + ".png", format = "png")
+        plt.savefig("num_elites_snapshots/" + instance + "_" + version + ".svg", format = "svg")
+        plt.savefig("num_elites_snapshots/" + instance + "_" + version + ".eps", format = "eps")
+        plt.savefig("num_elites_snapshots/" + instance + "_" + version + ".png", format = "png")
+        plt.close()
+
+        plt.figure()
+        plt.title(instance)
+        plt.xlabel("Time (s)")
+        plt.ylabel("Number of mutants")
+        filename = "num_mutants_snapshots/" + instance + "_nsmpbrkga_" + version + ".txt"
+        x = []
+        y = []
+        with open(filename) as csv_file:
+            data = csv.reader(csv_file, delimiter = " ")
+            for row in data:
+                x.append(float(row[1]))
+                y.append(float(row[2]))
+        plt.plot(x, y, label = solver.upper())
+        plt.xlim(left = 0)
+        plt.ylim(bottom = 0)
+        plt.legend(loc = 'best')
+        plt.savefig("num_mutants_snapshots/" + instance + "_" + version + ".svg", format = "svg")
+        plt.savefig("num_mutants_snapshots/" + instance + "_" + version + ".eps", format = "eps")
+        plt.savefig("num_mutants_snapshots/" + instance + "_" + version + ".png", format = "png")
         plt.close()
 
     plt.figure()
