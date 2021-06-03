@@ -64,13 +64,10 @@ std::vector<double> Decoder::decode(BRKGA::Chromosome & chromosome,
 
     for(unsigned i = 0; i < this->instance.num_objectives; i++) {
         cost[i] = 0;
-        for(unsigned j = 0; j < this->instance.num_vertices; j++) {
-            unsigned k = (j + 1) % this->instance.num_vertices,
-                     u = cycle[j],
-                     v = cycle[k];
-
-            cost[i] += this->instance.adj[i][u][v];
+        for(unsigned j = 0; j < this->instance.num_vertices - 1; j++) {
+            cost[i] += this->instance.adj[i][cycle[j]][cycle[j + 1]];
         }
+        cost[i] += this->instance.adj[i][cycle.back()][cycle.front()];
     }
 
     return cost;

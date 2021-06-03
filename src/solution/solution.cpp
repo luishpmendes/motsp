@@ -63,13 +63,10 @@ void Solution::init(const Instance & instance) {
     // compute the cost
     this->cost = std::vector<double>(instance.num_objectives, 0.0);
     for(unsigned i = 0; i < instance.num_objectives; i++) {
-        for(unsigned j = 0; j < instance.num_vertices; j++) {
-            unsigned k = (j + 1) % instance.num_vertices,
-                     u = this->cycle[j],
-                     v = this->cycle[k];
-
-            this->cost[i] += instance.adj[i][u][v];
+        for(unsigned j = 0; j < instance.num_vertices - 1; j++) {
+            this->cost[i] += instance.adj[i][this->cycle[j]][this->cycle[j + 1]];
         }
+        this->cost[i] += instance.adj[i][this->cycle.back()][this->cycle.front()];
     }
 }
 
