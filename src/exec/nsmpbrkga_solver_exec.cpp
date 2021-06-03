@@ -400,14 +400,14 @@ int main (int argc, char * argv[]) {
             }
         }
 
-        if(arg_parser.option_exists("--elite-sizes-snapshots")) {
+        if(arg_parser.option_exists("--num-elites-snapshots")) {
             std::ofstream ofs;
-            ofs.open(arg_parser.option_value("--elite-sizes-snapshots"));
+            ofs.open(arg_parser.option_value("--num-elites-snapshots"));
 
             if(ofs.is_open()) {
-                std::transform(solver.elite_sizes_snapshots.begin(),
-                               solver.elite_sizes_snapshots.end(),
-                               solver.elite_sizes_snapshots.begin(),
+                std::transform(solver.num_elites_snapshots.begin(),
+                               solver.num_elites_snapshots.end(),
+                               solver.num_elites_snapshots.begin(),
                                [&](const auto & snapshot) {
                                     auto result = snapshot;
                                     std::get<0>(result) += initial_iterations;
@@ -416,22 +416,62 @@ int main (int argc, char * argv[]) {
                                });
 
                 for(unsigned i = 0;
-                    i < solver.elite_sizes_snapshots.size();
+                    i < solver.num_elites_snapshots.size();
                     i++) {
                     unsigned iteration =
-                        std::get<0>(solver.elite_sizes_snapshots[i]);
-                    double time = std::get<1>(solver.elite_sizes_snapshots[i]);
-                    std::vector<unsigned> elite_sizes =
-                        std::get<2>(solver.elite_sizes_snapshots[i]);
+                        std::get<0>(solver.num_elites_snapshots[i]);
+                    double time = std::get<1>(solver.num_elites_snapshots[i]);
+                    std::vector<unsigned> num_elites =
+                        std::get<2>(solver.num_elites_snapshots[i]);
 
                     ofs << iteration << " "
                         << time << " ";
 
-                    for(unsigned j = 0; j < elite_sizes.size() - 1; j++) {
-                        ofs << elite_sizes[j] << " ";
+                    for(unsigned j = 0; j < num_elites.size() - 1; j++) {
+                        ofs << num_elites[j] << " ";
                     }
 
-                    ofs << elite_sizes.back() << std::endl;
+                    ofs << num_elites.back() << std::endl;
+                }
+
+                ofs.close();
+            } else {
+                throw "File not created.";
+            }
+        }
+
+        if(arg_parser.option_exists("--num-mutants-snapshots")) {
+            std::ofstream ofs;
+            ofs.open(arg_parser.option_value("--num-mutants-snapshots"));
+
+            if(ofs.is_open()) {
+                std::transform(solver.num_mutants_snapshots.begin(),
+                               solver.num_mutants_snapshots.end(),
+                               solver.num_mutants_snapshots.begin(),
+                               [&](const auto & snapshot) {
+                                    auto result = snapshot;
+                                    std::get<0>(result) += initial_iterations;
+                                    std::get<1>(result) += initial_time;
+                                    return result;
+                               });
+
+                for(unsigned i = 0;
+                    i < solver.num_mutants_snapshots.size();
+                    i++) {
+                    unsigned iteration =
+                        std::get<0>(solver.num_mutants_snapshots[i]);
+                    double time = std::get<1>(solver.num_mutants_snapshots[i]);
+                    std::vector<unsigned> num_mutants =
+                        std::get<2>(solver.num_mutants_snapshots[i]);
+
+                    ofs << iteration << " "
+                        << time << " ";
+
+                    for(unsigned j = 0; j < num_mutants.size() - 1; j++) {
+                        ofs << num_mutants[j] << " ";
+                    }
+
+                    ofs << num_mutants.back() << std::endl;
                 }
 
                 ofs.close();
@@ -475,7 +515,8 @@ int main (int argc, char * argv[]) {
                   << "--pareto-snapshots <pareto_snapshots_filename> "
                   << "--non-dominated-snapshots <non_dominated_snapshots_filename> "
                   << "--fronts-snapshots <fronts_snapshots_filename> "
-                  << "--elite-sizes-snapshots <elite_sizes_snapshots_filename> "
+                  << "--num-elites-snapshots <num_elites_snapshots_filename> "
+                  << "--num-mutants-snapshots <num_mutants_snapshots_filename> "
                   << std::endl;
     }
 

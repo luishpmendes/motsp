@@ -20,13 +20,15 @@ void NSMPBRKGA_Solver::capture_snapshot(
 
     this->num_non_dominated.resize(this->num_populations);
     this->num_fronts.resize(this->num_populations);
-    this->elite_sizes.resize(this->num_populations);
+    this->num_elites.resize(this->num_populations);
+    this->num_mutants.resize(this->num_populations);
 
     for(unsigned i = 0; i < this->num_populations; i++) {
         this->num_non_dominated[i] =
             algorithm.getCurrentPopulation(i).num_non_dominated;
         this->num_fronts[i] = algorithm.getCurrentPopulation(i).num_fronts;
-        this->elite_sizes[i] = algorithm.getCurrentPopulation(i).num_elites;
+        this->num_elites[i] = algorithm.getCurrentPopulation(i).num_elites;
+        this->num_mutants[i] = algorithm.getCurrentPopulation(i).num_mutants;
     }
 
     this->non_dominated_snapshots.push_back(std::make_tuple(
@@ -38,9 +40,13 @@ void NSMPBRKGA_Solver::capture_snapshot(
                                                      this->elapsed_time(),
                                                      this->num_fronts));
 
-    this->elite_sizes_snapshots.push_back(std::make_tuple(this->num_iterations,
+    this->num_elites_snapshots.push_back(std::make_tuple(this->num_iterations,
+                                                         this->elapsed_time(),
+                                                         this->num_elites));
+
+    this->num_mutants_snapshots.push_back(std::make_tuple(this->num_iterations,
                                                           this->elapsed_time(),
-                                                          this->elite_sizes));
+                                                          this->num_mutants));
 
     this->time_last_snapshot = this->elapsed_time();
     this->iteration_last_snapshot = this->num_iterations;

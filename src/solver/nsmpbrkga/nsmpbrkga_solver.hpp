@@ -159,16 +159,23 @@ class NSMPBRKGA_Solver : public Solver {
      ************************/
     unsigned num_resets = 0;
 
-    /****************************************************************
-     * Snapshots of the elite set sizes, containing the iteration,
-     * time and elite set sizes.
-     ****************************************************************/
+    /******************************************************************
+     * Snapshots of the number of elite individuals,
+     * containing the iteration, time and number of elite individuals.
+     ******************************************************************/
     std::vector<std::tuple<unsigned, double, std::vector<unsigned>>>
-        elite_sizes_snapshots = {};
+        num_elites_snapshots = {};
 
-    /***************************************************************
-     * Number of non-dominated solution in each current population.
-     ***************************************************************/
+    /******************************************************************
+     * Snapshots of the number of mutant individuals,
+     * containing the iteration, time and number of mutant individuals.
+     ******************************************************************/
+    std::vector<std::tuple<unsigned, double, std::vector<unsigned>>>
+        num_mutants_snapshots = {};
+
+    /******************************************************************
+     * Number of non-dominated individuals in each current population.
+     ******************************************************************/
     std::vector<unsigned> num_non_dominated = {};
 
     /**********************************************
@@ -176,16 +183,21 @@ class NSMPBRKGA_Solver : public Solver {
      **********************************************/
     std::vector<unsigned> num_fronts = {};
 
-    /*********************************************
-     * Elite set size of each current population.
-     *********************************************/
-    std::vector<unsigned> elite_sizes = {};
+    /**********************************************************
+     * Number of elite individuals in each current population.
+     **********************************************************/
+    std::vector<unsigned> num_elites = {};
 
     /*************************************************************************
      * The fronts of each current population.
      *************************************************************************/
     std::vector<std::vector<std::pair<std::vector<double>, unsigned>>> fronts
         = {};
+
+    /***********************************************************
+     * Number of mutant individuals in each current population.
+     ***********************************************************/
+    std::vector<unsigned> num_mutants = {};
 
     /*********************************************
      * Constructs a new solver.
