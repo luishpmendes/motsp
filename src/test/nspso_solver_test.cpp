@@ -78,7 +78,23 @@ int main() {
 
     std::cout << solver << std::endl;
 
-    std::cout << "NSPSO Solver Test PASSED" << std::endl;
+    std::cout << "Non dominated snapshots: ";
+    for(unsigned i = 0; i < solver.non_dominated_snapshots.size() - 1; i++) {
+        std::cout << std::get<2>(solver.non_dominated_snapshots[i]).front()
+                  << " ";
+    }
+    std::cout << std::get<2>(solver.non_dominated_snapshots.back()).front()
+              << std::endl;
+
+    std::cout << "Fronts snapshots: ";
+    for(unsigned i = 0; i < solver.fronts_snapshots.size() - 1; i++) {
+        std::cout << std::get<2>(solver.fronts_snapshots[i]).front()
+                  << " ";
+    }
+    std::cout << std::get<2>(solver.fronts_snapshots.back()).front()
+              << std::endl;
+
+    std::cout << std::endl << "NSPSO Solver Test PASSED" << std::endl;
 
     return 0;
 }
