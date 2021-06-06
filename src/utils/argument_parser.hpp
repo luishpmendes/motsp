@@ -3,20 +3,20 @@
 #include <string>
 #include <vector>
 
-class ArgumentParser {
+class Argument_Parser {
 public:
     /********************************
      * The tokens.
      ********************************/
     std::vector<std::string> tokens;
 
-    /****************************************
+    /*****************************************
      * Constructs a new argument parser.
      *
      * @param argc the number of arguments.
      * @param argv the array of arguments.
-     ****************************************/
-    ArgumentParser(int argc, char * argv[]);
+     *****************************************/
+    Argument_Parser(int argc, char * argv[]);
 
     /***********************************************************
      * Returns the value of the specified option.

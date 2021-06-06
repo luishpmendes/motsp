@@ -2,7 +2,7 @@
 #include "solver/weighted_sum/christofides/christofides_solver.hpp"
 
 int main (int argc, char * argv[]) {
-    ArgumentParser arg_parser (argc, argv);
+    Argument_Parser arg_parser (argc, argv);
 
     if(arg_parser.option_exists("--instance")) {
         std::ifstream ifs;

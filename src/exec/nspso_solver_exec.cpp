@@ -5,7 +5,7 @@
 #include <fstream>
 
 int main (int argc, char * argv[]) {
-    ArgumentParser arg_parser(argc, argv);
+    Argument_Parser arg_parser(argc, argv);
 
     if(arg_parser.option_exists("--instance")) {
         std::ifstream ifs;
@@ -163,8 +163,15 @@ int main (int argc, char * argv[]) {
         if(arg_parser.option_exists("--statistics")) {
             std::ofstream ofs;
             ofs.open(arg_parser.option_value("--statistics"));
-            ofs << solver;
-            ofs.close();
+
+            if(ofs.is_open()) {
+                ofs << solver;
+                ofs.close();
+            } else {
+                throw std::runtime_error(
+                        "File " + arg_parser.option_value("--statistics") +
+                        " not created.");
+            }
         }
 
         if(arg_parser.option_exists("--solutions")) {
@@ -174,8 +181,15 @@ int main (int argc, char * argv[]) {
             for(unsigned i = 0; i < solver.best_solutions.size(); i++) {
                 std::ofstream ofs;
                 ofs.open(solution_filename + std::to_string(i) + ".sol");
-                ofs << solver.best_solutions[i];
-                ofs.close();
+
+                if(ofs.is_open()) {
+                    ofs << solver.best_solutions[i];
+                    ofs.close();
+                } else {
+                    throw std::runtime_error("File " + solution_filename +
+                                             std::to_string(i) +
+                                             ".sol not created.");
+                }
             }
         }
 
@@ -194,7 +208,9 @@ int main (int argc, char * argv[]) {
 
                 ofs.close();
             } else {
-                throw "File not created.";
+                throw std::runtime_error("File " +
+                                         arg_parser.option_value("--pareto") +
+                                         " not created.");
             }
         }
 
@@ -245,7 +261,10 @@ int main (int argc, char * argv[]) {
 
                     ofs.close();
                 } else {
-                    throw "File not created.";
+                    throw std::runtime_error("File " +
+                                             pareto_snapshots_filename +
+                                             std::to_string(i) +
+                                             ".txt not created.");
                 }
             }
         }
@@ -295,7 +314,10 @@ int main (int argc, char * argv[]) {
 
                 ofs.close();
             } else {
-                throw "File not created.";
+                throw std::runtime_error(
+                        "File " +
+                        arg_parser.option_value("--non-dominated-snapshots") +
+                        " not created.");
             }
         }
 
@@ -338,7 +360,10 @@ int main (int argc, char * argv[]) {
                     ofs << num_fronts.back() << std::endl;
                 }
             } else {
-                throw "File not created.";
+                throw std::runtime_error(
+                        "File " +
+                        arg_parser.option_value("--fronts-snapshots") +
+                        " not created.");
             }
         }
     } else {

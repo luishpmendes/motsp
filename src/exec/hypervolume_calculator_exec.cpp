@@ -4,7 +4,7 @@
 #include <fstream>
 
 int main(int argc, char * argv[]) {
-    ArgumentParser arg_parser(argc, argv);
+    Argument_Parser arg_parser(argc, argv);
 
     if(arg_parser.option_exists("--instance")) {
         std::ifstream ifs;
@@ -53,7 +53,9 @@ int main(int argc, char * argv[]) {
 
                         for(unsigned j = 0; j < instance.num_objectives; j++) {
                             if(!(iss >> costs[j])) {
-                                throw "Error reading file.";
+                                throw std::runtime_error("Error reading file "
+                                        + arg_parser.option_value("--pareto-" +
+                                            std::to_string(i)) + ".");
                             }
 
                             if(min_costs[j] > costs[j]) {
@@ -70,7 +72,9 @@ int main(int argc, char * argv[]) {
 
                     ifs.close();
                 } else {
-                    throw "File not found.";
+                    throw std::runtime_error("File " +
+                            arg_parser.option_value("--pareto-" +
+                                std::to_string(i)) + " not found.");
                 }
             }
         }
@@ -78,7 +82,6 @@ int main(int argc, char * argv[]) {
         for(unsigned i = 0; i < num_solvers; i++) {
             if(arg_parser.option_exists(
                         "--pareto-snapshots-" + std::to_string(i))) {
-
                 std::string pareto_snapshots_filename =
                     arg_parser.option_value(
                             "--pareto-snapshots-" + std::to_string(i));
@@ -108,7 +111,10 @@ int main(int argc, char * argv[]) {
                                 j < instance.num_objectives;
                                 j++) {
                                 if(!(iss >> costs[j])) {
-                                    throw "Error reading file.";
+                                    throw std::runtime_error(
+                                            "Error reading file" +
+                                            pareto_snapshots_filename +
+                                            std::to_string(j) + ".txt" + ".");
                                 }
 
                                 if(min_costs[j] > costs[j]) {
@@ -154,7 +160,9 @@ int main(int argc, char * argv[]) {
                 ofs << hypervolume << std::endl;
                 ofs.close();
             } else {
-                throw "File not created.";
+                throw std::runtime_error("File " +
+                        arg_parser.option_value("--hypervolume-" +
+                            std::to_string(i)) + " not created.");
             }
         }
 
@@ -190,7 +198,9 @@ int main(int argc, char * argv[]) {
 
                 ofs.close();
             } else {
-                throw "File not created.";
+                throw std::runtime_error("File " +
+                        arg_parser.option_value("--hypervolume-snapshots-" +
+                            std::to_string(i)) + " not created.");
             }
         }
     } else {

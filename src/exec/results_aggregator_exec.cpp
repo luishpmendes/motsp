@@ -4,7 +4,7 @@
 #include <fstream>
 
 int main(int argc, char * argv[]) {
-    ArgumentParser arg_parser(argc, argv);
+    Argument_Parser arg_parser(argc, argv);
     Statistics stats;
 
     unsigned num_hypervolumes, index_best, index_median;
