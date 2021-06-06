@@ -16,12 +16,12 @@ void Solver::set_seed(unsigned seed) {
 
 double Solver::elapsed_time(
         const std::chrono::steady_clock::time_point & start_time) {
-    std::chrono::steady_clock::time_point currentTime =
+    std::chrono::steady_clock::time_point current_time =
         std::chrono::steady_clock::now();
-    std::chrono::nanoseconds elapsedTime =
+    std::chrono::nanoseconds elapsed_time =
         std::chrono::duration_cast<std::chrono::nanoseconds> (
-                currentTime - start_time);
-    return (double(elapsedTime.count()))/(double(1e9));
+                current_time - start_time);
+    return (double(elapsed_time.count()))/(double(1e9));
 }
 
 double Solver::elapsed_time() const {
@@ -163,16 +163,12 @@ std::ostream & operator <<(std::ostream & os, const Solver & solver) {
        << std::endl
        << "Maximum number of solutions: " << solver.max_num_solutions
        << std::endl
-       << "Maximum number of snapshots: " << solver.max_num_snapshots <<
-       std::endl
+       << "Maximum number of snapshots: " << solver.max_num_snapshots
+       << std::endl
        << "Number of iterations: " << solver.num_iterations << std::endl
        << "Solutions obtained: " << solver.best_solutions.size() << std::endl
        << "Solving time: " << solver.solving_time << std::endl
-       << "Number of snapshots: " << solver.num_snapshots << std::endl
-       << "Pareto Snapshots: " << solver.pareto_snapshots.size() << std::endl
-       << "Non Dominated Snapshots: " << solver.non_dominated_snapshots.size()
-       << std::endl
-       << "Fronts Snapshots: " << solver.fronts_snapshots.size() << std::endl;
+       << "Number of snapshots: " << solver.num_snapshots << std::endl;
     return os;
 }
 

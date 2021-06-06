@@ -151,11 +151,6 @@ class Solver {
      ****************************************/
     std::vector<std::vector<double>> pareto;
 
-    /******************************
-     * Constructs an empty solver.
-     ******************************/
-    Solver();
-
     /*********************************************
      * Constructs a new solver.
      *
@@ -210,17 +205,17 @@ class Solver {
      * Verifies whether the termination criteria have been met.
      *
      * @return true if the termination criteria have been met;
-     * false otherwise.
+     *         false otherwise.
      ***********************************************************/
     bool are_termination_criteria_met() const;
 
-    /*************************************************************************
+    /*********************************************************************
      * Update the best individuals found so far.
      *
      * @param new_individuals the new individuals found.
      *
      * @return true if the best individual are modified; false otherwise.
-     *************************************************************************/
+     *********************************************************************/
     bool update_best_individuals(
             const std::vector<
                 std::pair<std::vector<double>,

@@ -112,17 +112,9 @@ void NSMPBRKGA_Solver::solve() {
     std::shared_ptr<BRKGA::DistanceFunctionBase> dist_func(
             new BRKGA::KendallTauDistance());
 
-    this->num_iterations = 0;
-    this->last_update_generation = 0;
-    this->large_offset = 0;
-
-    this->path_relink_time = 0.0;
-    this->num_path_relink_calls = 0;
-    this->num_homogeneities = 0;
-    this->num_best_improvements = 0;
-    this->num_elite_improvments = 0;
-    this->num_shakings = 0;
-    this->num_resets = 0;
+    std::uniform_int_distribution<unsigned> distribution(
+            1,
+            this->instance.num_vertices - 1);
 
     if(this->max_num_snapshots > 0) {
         this->time_between_snapshots = this->time_limit /
@@ -131,10 +123,6 @@ void NSMPBRKGA_Solver::solve() {
             this->max_num_snapshots;
         this->capture_snapshot(algorithm);
     }
-
-    std::uniform_int_distribution<unsigned> distribution(
-            1,
-            this->instance.num_vertices - 1);
 
     while(!this->are_termination_criteria_met()) {
         this->num_iterations++;
@@ -221,8 +209,7 @@ void NSMPBRKGA_Solver::solve() {
         if(this->shake_interval > 0 && generations_without_improvement > 0 &&
                 (generations_without_improvement % this->shake_interval == 0)) {
             this->num_shakings++;
-            unsigned intensity = distribution(this->rng);
-            algorithm.shake(intensity, BRKGA::ShakingType::SWAP);
+            algorithm.shake(distribution(this->rng), BRKGA::ShakingType::SWAP);
         }
 
         if(this->reset_interval > 0 && generations_without_improvement > 0 &&
@@ -274,8 +261,8 @@ void NSMPBRKGA_Solver::solve() {
 }
 std::ostream & operator <<(std::ostream & os, const NSMPBRKGA_Solver & solver) {
     os << static_cast<const Solver &>(solver)
-       << "Number of individuals in each population: " << solver.population_size
-       << std::endl
+       << "Number of individuals in each population: "
+       << solver.population_size << std::endl
        << "Minimum percentage of individuals to become the elite set: "
        << solver.min_elites_percentage << std::endl
        << "Maximum percentage of individuals to become the elite set: "
