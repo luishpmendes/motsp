@@ -106,28 +106,36 @@ class Solver {
      **************************************************/
     unsigned iteration_last_snapshot = 0;
 
-    /***************************************************************
-     * Snapshots of the paretos, containing the iteration, time and
+    /**********************************************************************
+     * Snapshots of the best solutions, containing the iteration, time and
      * Solutions' costs.
-     ***************************************************************/
+     **********************************************************************/
     std::vector<std::tuple<unsigned, double,
-        std::vector<std::vector<double>>>> pareto_snapshots = {};
+        std::vector<std::vector<double>>>> best_solutions_snapshots = {};
 
     /*****************************************************************
-     * Snapshots of the non-dominated individuals in each population,
-     * containing the iterations, time and number of non-dominated
-     * individuals in each population.
+     * Snapshots of the number of non-dominated individuals in each
+     * population, containing the iterations, time and number of
+     * non-dominated individuals in each population.
      *****************************************************************/
     std::vector<std::tuple<unsigned, double, std::vector<unsigned>>>
-        non_dominated_snapshots = {};
+        num_non_dominated_snapshots = {};
 
     /***********************************************************************
-     * Snapshots of the non-dominated fronts in each population, containing
-     * the iterations, time and number of non-dominated fronts in each
-     * population.
+     * Snapshots of the number of non-dominated fronts in each population,
+     * containing the iterations, time and number of non-dominated fronts in
+     * each population.
      ***********************************************************************/
     std::vector<std::tuple<unsigned, double, std::vector<unsigned>>>
-        fronts_snapshots = {};
+        num_fronts_snapshots = {};
+
+    /*******************************************************************
+     * Snapshots of the populations, containing the iteration, time and
+     * Solutions' costs.
+     *******************************************************************/
+    std::vector<std::tuple<unsigned, double,
+        std::vector<std::vector<std::vector<double>>>>>
+            populations_snapshots = {};
 
     /*************************************************
      * The start time.
@@ -145,11 +153,6 @@ class Solver {
      ****************************************************************/
     std::vector<std::vector<std::pair<std::vector<double>,
                                       std::vector<double>>>> fronts;
-
-    /****************************************
-     * The current pareto.
-     ****************************************/
-    std::vector<std::vector<double>> pareto;
 
     /*********************************************
      * Constructs a new solver.

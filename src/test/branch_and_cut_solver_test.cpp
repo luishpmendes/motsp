@@ -36,12 +36,13 @@ int main() {
     assert(solver.num_snapshots > 0);
     assert(solver.num_snapshots <= solver.max_num_snapshots + 2);
 
-    assert(solver.pareto_snapshots.size() == solver.num_snapshots);
-    assert(solver.non_dominated_snapshots.size() == solver.num_snapshots);
-    assert(solver.fronts_snapshots.size() == solver.num_snapshots);
+    assert(solver.best_solutions_snapshots.size() == solver.num_snapshots);
+    assert(solver.num_non_dominated_snapshots.size() == solver.num_snapshots);
+    assert(solver.num_fronts_snapshots.size() == solver.num_snapshots);
 
     for(const auto & s1 : solver.best_solutions) {
         assert(s1.is_feasible());
+        assert(s1.cost.size() == instance.num_objectives);
         assert(s1.cost[0] >= 21282);
         assert(s1.cost[1] >= 20749);
         assert(s1.cost[2] >= 21294);
@@ -51,7 +52,91 @@ int main() {
         }
     }
 
+    for(const auto & snapshot : solver.best_solutions_snapshots) {
+        assert(std::get<0>(snapshot) >= 0);
+        assert(std::get<0>(snapshot) <= solver.num_iterations);
+        assert(std::get<1>(snapshot) >= 0.0);
+        assert(std::get<1>(snapshot) <= solver.solving_time);
+        assert(std::get<2>(snapshot).size() > 0);
+        assert(std::get<2>(snapshot).size() <= solver.max_num_solutions);
+
+        for(const auto & s : std::get<2>(snapshot)) {
+            assert(s.size() == instance.num_objectives);
+            assert(s[0] >= 21282);
+            assert(s[1] >= 20749);
+            assert(s[2] >= 21294);
+        }
+    }
+
+    for(const auto & snapshot : solver.num_non_dominated_snapshots) {
+        assert(std::get<0>(snapshot) >= 0);
+        assert(std::get<0>(snapshot) <= solver.num_iterations);
+        assert(std::get<1>(snapshot) >= 0.0);
+        assert(std::get<1>(snapshot) <= solver.solving_time);
+        assert(std::get<2>(snapshot).size() > 0);
+        assert(std::get<2>(snapshot).size() <= solver.max_num_solutions);
+
+        for(const unsigned & num_non_dominated : std::get<2>(snapshot)) {
+            assert(num_non_dominated > 0);
+//            assert(num_non_dominated <= solver.max_num_solutions);
+        }
+    }
+
+    for(const auto & snapshot : solver.num_fronts_snapshots) {
+        assert(std::get<0>(snapshot) >= 0);
+        assert(std::get<0>(snapshot) <= solver.num_iterations);
+        assert(std::get<1>(snapshot) >= 0.0);
+        assert(std::get<1>(snapshot) <= solver.solving_time);
+        assert(std::get<2>(snapshot).size() > 0);
+        assert(std::get<2>(snapshot).size() <= solver.max_num_solutions);
+
+        for(const unsigned & num_fronts : std::get<2>(snapshot)) {
+            assert(num_fronts > 0);
+            assert(num_fronts < solver.max_num_solutions);
+        }
+    }
+
+    for(const auto & snapshot : solver.populations_snapshots) {
+        assert(std::get<0>(snapshot) >= 0);
+        assert(std::get<0>(snapshot) <= solver.num_iterations);
+        assert(std::get<1>(snapshot) >= 0.0);
+        assert(std::get<1>(snapshot) <= solver.solving_time);
+        assert(std::get<2>(snapshot).size() > 0);
+        assert(std::get<2>(snapshot).size() <= solver.max_num_solutions);
+
+        for(const auto & population : std::get<2>(snapshot)) {
+            assert(population.size() == solver.max_num_solutions);
+
+            for(const auto & s : population) {
+                assert(s.size() == instance.num_objectives);
+                assert(s[0] >= 21282);
+                assert(s[1] >= 20749);
+                assert(s[2] >= 21294);
+            }
+        }
+    }
+
     std::cout << solver << std::endl;
+
+    std::cout << "Num non dominated snapshots: ";
+    for(unsigned i = 0;
+        i < solver.num_non_dominated_snapshots.size() - 1;
+        i++) {
+        std::cout << std::get<2>(solver.num_non_dominated_snapshots[i]).front()
+                  << " ";
+    }
+    std::cout << std::get<2>(solver.num_non_dominated_snapshots.back()).front()
+              << std::endl;
+
+    std::cout << "Num fronts snapshots: ";
+    for(unsigned i = 0; i < solver.num_fronts_snapshots.size() - 1; i++) {
+        std::cout << std::get<2>(solver.num_fronts_snapshots[i]).front()
+                  << " ";
+    }
+    std::cout << std::get<2>(solver.num_fronts_snapshots.back()).front()
+              << std::endl;
+
+    std::cout << std::endl << "NSGA2 Solver Test PASSED" << std::endl;
 
     std::cout << "Branch-and-Cut Solver Test PASSED" << std::endl;
 

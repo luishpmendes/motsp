@@ -19,11 +19,14 @@ int main (int argc, char * argv[]) {
         double initial_time = 0.0;
         unsigned initial_iterations = 0;
         std::vector<std::tuple<unsigned, double,
-            std::vector<std::vector<double>>>> initial_pareto_snapshots;
+            std::vector<std::vector<double>>>> initial_best_solutions_snapshots;
         std::vector<std::tuple<unsigned, double, std::vector<unsigned>>>
-            initial_non_dominated_snapshots;
+            initial_num_non_dominated_snapshots;
         std::vector<std::tuple<unsigned, double, std::vector<unsigned>>>
-            initial_fronts_snapshots;
+            initial_num_fronts_snapshots;
+        std::vector<std::tuple<unsigned, double,
+            std::vector<std::vector<std::vector<double>>>>>
+                initial_populations_snapshots;
 
         motsp::MOEAD_Solver solver(instance);
 
@@ -127,11 +130,13 @@ int main (int argc, char * argv[]) {
             solver.initial_individuals = initial_solver.best_individuals;
             initial_time = initial_solver.solving_time;
             initial_iterations = initial_solver.num_iterations;
-            initial_pareto_snapshots = initial_solver.pareto_snapshots;
-            initial_non_dominated_snapshots =
-                initial_solver.non_dominated_snapshots;
-            initial_fronts_snapshots = initial_solver.fronts_snapshots;
-            solver.num_snapshots = initial_solver.num_snapshots;
+            initial_best_solutions_snapshots =
+                initial_solver.best_solutions_snapshots;
+            initial_num_non_dominated_snapshots =
+                initial_solver.num_non_dominated_snapshots;
+            initial_num_fronts_snapshots = initial_solver.num_fronts_snapshots;
+            initial_populations_snapshots =
+                initial_solver.populations_snapshots;
             solver.num_snapshots = initial_solver.num_snapshots;
             solver.max_num_snapshots -= initial_solver.num_snapshots;
         } else if (initial_individuals_method == 2) {
@@ -152,10 +157,13 @@ int main (int argc, char * argv[]) {
             solver.initial_individuals = initial_solver.best_individuals;
             initial_time = initial_solver.solving_time;
             initial_iterations = initial_solver.num_iterations;
-            initial_pareto_snapshots = initial_solver.pareto_snapshots;
-            initial_non_dominated_snapshots =
-                initial_solver.non_dominated_snapshots;
-            initial_fronts_snapshots = initial_solver.fronts_snapshots;
+            initial_best_solutions_snapshots =
+                initial_solver.best_solutions_snapshots;
+            initial_num_non_dominated_snapshots =
+                initial_solver.num_non_dominated_snapshots;
+            initial_num_fronts_snapshots = initial_solver.num_fronts_snapshots;
+            initial_populations_snapshots =
+                initial_solver.populations_snapshots;
             solver.num_snapshots = initial_solver.num_snapshots;
             solver.max_num_snapshots -= initial_solver.num_snapshots;
         }
@@ -219,13 +227,13 @@ int main (int argc, char * argv[]) {
             }
         }
 
-        if(arg_parser.option_exists("--pareto-snapshots")) {
-            std::string pareto_snapshots_filename =
-                arg_parser.option_value("--pareto-snapshots");
+        if(arg_parser.option_exists("--best-solutions-snapshots")) {
+            std::string best_solutions_snapshots_filename =
+                arg_parser.option_value("--best_solutions-snapshots");
 
-            std::transform(solver.pareto_snapshots.begin(),
-                           solver.pareto_snapshots.end(),
-                           solver.pareto_snapshots.begin(),
+            std::transform(solver.best_solutions_snapshots.begin(),
+                           solver.best_solutions_snapshots.end(),
+                           solver.best_solutions_snapshots.begin(),
                            [&](const auto & snapshot) {
                                 auto result = snapshot;
                                 std::get<0>(result) += initial_iterations;
@@ -233,55 +241,60 @@ int main (int argc, char * argv[]) {
                                 return result;
                            });
 
-            initial_pareto_snapshots.insert(initial_pareto_snapshots.end(),
-                                            solver.pareto_snapshots.begin(),
-                                            solver.pareto_snapshots.end());
+            initial_best_solutions_snapshots.insert(
+                    initial_best_solutions_snapshots.end(),
+                    solver.best_solutions_snapshots.begin(),
+                    solver.best_solutions_snapshots.end());
 
-            solver.pareto_snapshots = initial_pareto_snapshots;
+            solver.best_solutions_snapshots = initial_best_solutions_snapshots;
 
-            for(unsigned i = 0; i < solver.pareto_snapshots.size(); i++) {
+            for(unsigned i = 0;
+                    i < solver.best_solutions_snapshots.size();
+                    i++) {
                 std::ofstream ofs;
-                ofs.open(pareto_snapshots_filename + std::to_string(i) +
-                        ".txt");
+                ofs.open(best_solutions_snapshots_filename + std::to_string(i)
+                        + ".txt");
 
                 if(ofs.is_open()) {
                     unsigned iteration =
-                        std::get<0>(solver.pareto_snapshots[i]);
-                    double time = std::get<1>(solver.pareto_snapshots[i]);
-                    std::vector<std::vector<double>> pareto =
-                        std::get<2>(solver.pareto_snapshots[i]);
+                        std::get<0>(solver.best_solutions_snapshots[i]);
+                    double time =
+                        std::get<1>(solver.best_solutions_snapshots[i]);
+                    std::vector<std::vector<double>> best_solutions =
+                        std::get<2>(solver.best_solutions_snapshots[i]);
 
                     ofs << iteration << " "
                         << time << std::endl;
 
-                    for(unsigned j = 0; j < pareto.size(); j++) {
+                    for(unsigned j = 0; j < best_solutions.size(); j++) {
                         for(unsigned k = 0;
-                            k < pareto[j].size() - 1;
+                            k < best_solutions[j].size() - 1;
                             k++) {
-                            ofs << pareto[j][k] << " ";
+                            ofs << best_solutions[j][k] << " ";
                         }
 
-                        ofs << pareto[j].back() << std::endl;
+                        ofs << best_solutions[j].back() << std::endl;
                     }
 
                     ofs.close();
                 } else {
-                    throw std::runtime_error("File " +
-                                             pareto_snapshots_filename +
-                                             std::to_string(i) +
-                                             ".txt not created.");
+                    throw std::runtime_error(
+                            "File " +
+                            best_solutions_snapshots_filename +
+                            std::to_string(i) +
+                            ".txt not created.");
                 }
             }
         }
 
-        if(arg_parser.option_exists("--non-dominated-snapshots")) {
+        if(arg_parser.option_exists("--num-non-dominated-snapshots")) {
             std::ofstream ofs;
-            ofs.open(arg_parser.option_value("--non-dominated-snapshots"));
+            ofs.open(arg_parser.option_value("--num-non-dominated-snapshots"));
 
             if(ofs.is_open()) {
-                std::transform(solver.non_dominated_snapshots.begin(),
-                               solver.non_dominated_snapshots.end(),
-                               solver.non_dominated_snapshots.begin(),
+                std::transform(solver.num_non_dominated_snapshots.begin(),
+                               solver.num_non_dominated_snapshots.end(),
+                               solver.num_non_dominated_snapshots.begin(),
                                [&](const auto & snapshot) {
                                     auto result = snapshot;
                                     std::get<0>(result) += initial_iterations;
@@ -289,51 +302,52 @@ int main (int argc, char * argv[]) {
                                     return result;
                                });
 
-                initial_non_dominated_snapshots.insert(
-                        initial_non_dominated_snapshots.end(),
-                        solver.non_dominated_snapshots.begin(),
-                        solver.non_dominated_snapshots.end());
+                initial_num_non_dominated_snapshots.insert(
+                        initial_num_non_dominated_snapshots.end(),
+                        solver.num_non_dominated_snapshots.begin(),
+                        solver.num_non_dominated_snapshots.end());
 
-                solver.non_dominated_snapshots =
-                    initial_non_dominated_snapshots;
+                solver.num_non_dominated_snapshots =
+                    initial_num_non_dominated_snapshots;
 
                 for(unsigned i = 0;
-                    i < solver.non_dominated_snapshots.size();
+                    i < solver.num_non_dominated_snapshots.size();
                     i++) {
                     unsigned iteration =
-                        std::get<0>(solver.non_dominated_snapshots[i]);
+                        std::get<0>(solver.num_non_dominated_snapshots[i]);
                     double time =
-                        std::get<1>(solver.non_dominated_snapshots[i]);
-                    std::vector<unsigned> non_dominated =
-                        std::get<2>(solver.non_dominated_snapshots[i]);
+                        std::get<1>(solver.num_non_dominated_snapshots[i]);
+                    std::vector<unsigned> num_non_dominated =
+                        std::get<2>(solver.num_non_dominated_snapshots[i]);
 
                     ofs << iteration << " "
                         << time << " ";
 
-                    for(unsigned j = 0; j < non_dominated.size() - 1; j++) {
-                        ofs << non_dominated[j] << " ";
+                    for(unsigned j = 0; j < num_non_dominated.size() - 1; j++) {
+                        ofs << num_non_dominated[j] << " ";
                     }
 
-                    ofs << non_dominated.back() << std::endl;
+                    ofs << num_non_dominated.back() << std::endl;
                 }
 
                 ofs.close();
             } else {
                 throw std::runtime_error(
                         "File " +
-                        arg_parser.option_value("--non-dominated-snapshots") +
+                        arg_parser.option_value(
+                            "--num-non-dominated-snapshots") +
                         " not created.");
             }
         }
 
-        if(arg_parser.option_exists("--fronts-snapshots")) {
+        if(arg_parser.option_exists("--num-fronts-snapshots")) {
             std::ofstream ofs;
-            ofs.open(arg_parser.option_value("--fronts-snapshots"));
+            ofs.open(arg_parser.option_value("--num-fronts-snapshots"));
 
             if(ofs.is_open()) {
-                std::transform(solver.fronts_snapshots.begin(),
-                               solver.fronts_snapshots.end(),
-                               solver.fronts_snapshots.begin(),
+                std::transform(solver.num_fronts_snapshots.begin(),
+                               solver.num_fronts_snapshots.end(),
+                               solver.num_fronts_snapshots.begin(),
                                [&](const auto & snapshot) {
                                     auto result = snapshot;
                                     std::get<0>(result) += initial_iterations;
@@ -341,18 +355,21 @@ int main (int argc, char * argv[]) {
                                     return result;
                                });
 
-                initial_fronts_snapshots.insert(initial_fronts_snapshots.end(),
-                                                solver.fronts_snapshots.begin(),
-                                                solver.fronts_snapshots.end());
+                initial_num_fronts_snapshots.insert(
+                        initial_num_fronts_snapshots.end(),
+                        solver.num_fronts_snapshots.begin(),
+                        solver.num_fronts_snapshots.end());
 
-                solver.fronts_snapshots = initial_fronts_snapshots;
+                solver.num_fronts_snapshots = initial_num_fronts_snapshots;
 
-                for(unsigned i = 0; i < solver.fronts_snapshots.size(); i++) {
+                for(unsigned i = 0;
+                    i < solver.num_fronts_snapshots.size();
+                    i++) {
                     unsigned iteration =
-                        std::get<0>(solver.fronts_snapshots[i]);
-                    double time = std::get<1>(solver.fronts_snapshots[i]);
+                        std::get<0>(solver.num_fronts_snapshots[i]);
+                    double time = std::get<1>(solver.num_fronts_snapshots[i]);
                     std::vector<unsigned> num_fronts =
-                        std::get<2>(solver.fronts_snapshots[i]);
+                        std::get<2>(solver.num_fronts_snapshots[i]);
 
                     ofs << iteration << " "
                         << time << " ";
@@ -368,8 +385,67 @@ int main (int argc, char * argv[]) {
             } else {
                 throw std::runtime_error(
                         "File " +
-                        arg_parser.option_value("--fronts-snapshots") +
+                        arg_parser.option_value("--num-fronts-snapshots") +
                         " not created.");
+            }
+        }
+
+        if(arg_parser.option_exists("--populations-snapshots")) {
+            std::string populations_snapshots_filename =
+                arg_parser.option_value("--populations-snapshots");
+
+            std::transform(solver.populations_snapshots.begin(),
+                           solver.populations_snapshots.end(),
+                           solver.populations_snapshots.begin(),
+                           [&](const auto & snapshot) {
+                                auto result = snapshot;
+                                std::get<0>(result) += initial_iterations;
+                                std::get<1>(result) += initial_time;
+                                return result;
+                           });
+
+            initial_populations_snapshots.insert(
+                    initial_populations_snapshots.end(),
+                    solver.populations_snapshots.begin(),
+                    solver.populations_snapshots.end());
+
+            solver.populations_snapshots = initial_populations_snapshots;
+
+            for(unsigned i = 0;
+                i < solver.populations_snapshots.size();
+                i++) {
+                std::ofstream ofs;
+                ofs.open(populations_snapshots_filename + std::to_string(i) +
+                        ".txt");
+
+                if(ofs.is_open()) {
+                    unsigned iteration =
+                        std::get<0>(solver.populations_snapshots[i]);
+                    double time =
+                        std::get<1>(solver.populations_snapshots[i]);
+                    std::vector<std::vector<std::vector<double>>> population =
+                        std::get<2>(solver.populations_snapshots[i]);
+
+                    ofs << iteration << " "
+                        << time << std::endl;
+
+                    for(unsigned j = 0; j < population.front().size(); j++) {
+                        for(unsigned k = 0;
+                            k < population.front()[j].size() - 1;
+                            k++) {
+                            ofs << population.front()[j][k] << " ";
+                        }
+
+                        ofs << population.front()[j].back() << std::endl;
+                    }
+
+                    ofs.close();
+                } else {
+                    throw std::runtime_error("File " +
+                                             populations_snapshots_filename +
+                                             std::to_string(i) +
+                                             ".txt not created.");
+                }
             }
         }
     } else {
@@ -396,9 +472,10 @@ int main (int argc, char * argv[]) {
                   << "--statistics <statistics_filename> "
                   << "--solutions <solutions_filename> "
                   << "--pareto <pareto_filename> "
-                  << "--pareto-snapshots <pareto_snapshots_filename> "
-                  << "--non-dominated-snapshots <non_dominated_snapshots_filename> "
-                  << "--fronts-snapshots <fronts_snapshots_filename> "
+                  << "--best-solutions-snapshots <best_solutions_snapshots_filename> "
+                  << "--num-non-dominated-snapshots <num_non_dominated_snapshots_filename> "
+                  << "--num-fronts-snapshots <num_fronts_snapshots_filename> "
+                  << "--populations-snapshots <populations_snapshots_filename> "
                   << std::endl;
     }
 

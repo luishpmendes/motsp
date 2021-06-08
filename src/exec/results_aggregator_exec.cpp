@@ -9,7 +9,6 @@ int main(int argc, char * argv[]) {
 
     unsigned num_hypervolumes, index_best, index_median;
     std::vector<std::pair<double, unsigned>> hypervolumes;
-    std::string pareto_snapshots_filename, hypervolume_snapshots_filename;
 
     for(num_hypervolumes = 0;
         arg_parser.option_exists("--hypervolume-" +
@@ -205,17 +204,17 @@ int main(int argc, char * argv[]) {
         }
     }
 
-    if(arg_parser.option_exists("--non-dominated-snapshots-best") &&
+    if(arg_parser.option_exists("--num-non-dominated-snapshots-best") &&
        arg_parser.option_exists(
-           "--non-dominated-snapshots-" + std::to_string(index_best))) {
+           "--num-non-dominated-snapshots-" + std::to_string(index_best))) {
         std::ifstream ifs;
         ifs.open(arg_parser.option_value(
-                    "--non-dominated-snapshots-" + std::to_string(index_best)),
+                    "--num-non-dominated-snapshots-" + std::to_string(index_best)),
                  std::ios::binary);
 
         if(ifs.is_open()) {
             std::ofstream ofs;
-            ofs.open(arg_parser.option_value("--non-dominated-snapshots-best"),
+            ofs.open(arg_parser.option_value("--num-non-dominated-snapshots-best"),
                      std::ios::binary);
 
             if(ofs.is_open()) {
@@ -231,18 +230,18 @@ int main(int argc, char * argv[]) {
         }
     }
 
-    if(arg_parser.option_exists("--non-dominated-snapshots-median") &&
+    if(arg_parser.option_exists("--num-non-dominated-snapshots-median") &&
        arg_parser.option_exists(
-           "--non-dominated-snapshots-" + std::to_string(index_median))) {
+           "--num-non-dominated-snapshots-" + std::to_string(index_median))) {
         std::ifstream ifs;
-        ifs.open(arg_parser.option_value("--non-dominated-snapshots-"
+        ifs.open(arg_parser.option_value("--num-non-dominated-snapshots-"
                     + std::to_string(index_median)),
                  std::ios::binary);
 
         if(ifs.is_open()) {
             std::ofstream ofs;
             ofs.open(arg_parser.option_value(
-                        "--non-dominated-snapshots-median"),
+                        "--num-non-dominated-snapshots-median"),
                      std::ios::binary);
 
             if(ofs.is_open()) {
@@ -258,17 +257,17 @@ int main(int argc, char * argv[]) {
         }
     }
 
-    if(arg_parser.option_exists("--fronts-snapshots-best") &&
+    if(arg_parser.option_exists("--num-fronts-snapshots-best") &&
        arg_parser.option_exists(
-           "--fronts-snapshots-" + std::to_string(index_best))) {
+           "--num-fronts-snapshots-" + std::to_string(index_best))) {
         std::ifstream ifs;
         ifs.open(arg_parser.option_value(
-                    "--fronts-snapshots-" + std::to_string(index_best)),
+                    "--num-fronts-snapshots-" + std::to_string(index_best)),
                  std::ios::binary);
 
         if(ifs.is_open()) {
             std::ofstream ofs;
-            ofs.open(arg_parser.option_value("--fronts-snapshots-best"),
+            ofs.open(arg_parser.option_value("--num-fronts-snapshots-best"),
                      std::ios::binary);
 
             if(ofs.is_open()) {
@@ -284,17 +283,17 @@ int main(int argc, char * argv[]) {
         }
     }
 
-    if(arg_parser.option_exists("--fronts-snapshots-median") &&
+    if(arg_parser.option_exists("--num-fronts-snapshots-median") &&
        arg_parser.option_exists(
-           "--fronts-snapshots-" + std::to_string(index_median))) {
+           "--num-fronts-snapshots-" + std::to_string(index_median))) {
         std::ifstream ifs;
         ifs.open(arg_parser.option_value(
-                    "--fronts-snapshots-" + std::to_string(index_median)),
+                    "--num-fronts-snapshots-" + std::to_string(index_median)),
                  std::ios::binary);
 
         if(ifs.is_open()) {
             std::ofstream ofs;
-            ofs.open(arg_parser.option_value("--fronts-snapshots-median"),
+            ofs.open(arg_parser.option_value("--num-fronts-snapshots-median"),
                      std::ios::binary);
 
             if(ofs.is_open()) {

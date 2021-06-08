@@ -54,7 +54,7 @@ for instance in instances:
         plt.xlabel("Time (s)")
         plt.ylabel("Non-dominated Solutions")
         for solver in solvers:
-            filename = "non_dominated_snapshots/" + instance + "_" + solver + "_" + version + ".txt"
+            filename = "num_non_dominated_snapshots/" + instance + "_" + solver + "_" + version + ".txt"
             x = []
             y = []
             with open(filename) as csv_file:
@@ -66,9 +66,9 @@ for instance in instances:
         plt.xlim(left = 0)
         plt.ylim(bottom = 0)
         plt.legend(loc = 'best')
-        plt.savefig("non_dominated_snapshots/" + instance + "_" + version + ".svg", format = "svg")
-        plt.savefig("non_dominated_snapshots/" + instance + "_" + version + ".eps", format = "eps")
-        plt.savefig("non_dominated_snapshots/" + instance + "_" + version + ".png", format = "png")
+        plt.savefig("num_non_dominated_snapshots/" + instance + "_" + version + ".svg", format = "svg")
+        plt.savefig("num_non_dominated_snapshots/" + instance + "_" + version + ".eps", format = "eps")
+        plt.savefig("num_non_dominated_snapshots/" + instance + "_" + version + ".png", format = "png")
         plt.close()
 
         plt.figure()
@@ -76,7 +76,7 @@ for instance in instances:
         plt.xlabel("Time (s)")
         plt.ylabel("Non-dominated Fronts")
         for solver in solvers:
-            filename = "fronts_snapshots/" + instance + "_" + solver + "_" + version + ".txt"
+            filename = "num_fronts_snapshots/" + instance + "_" + solver + "_" + version + ".txt"
             x = []
             y = []
             with open(filename) as csv_file:
@@ -88,9 +88,9 @@ for instance in instances:
         plt.xlim(left = 0)
         plt.ylim(bottom = 0)
         plt.legend(loc = 'best')
-        plt.savefig("fronts_snapshots/" + instance + "_" + version + ".svg", format = "svg")
-        plt.savefig("fronts_snapshots/" + instance + "_" + version + ".eps", format = "eps")
-        plt.savefig("fronts_snapshots/" + instance + "_" + version + ".png", format = "png")
+        plt.savefig("num_fronts_snapshots/" + instance + "_" + version + ".svg", format = "svg")
+        plt.savefig("num_fronts_snapshots/" + instance + "_" + version + ".eps", format = "eps")
+        plt.savefig("num_fronts_snapshots/" + instance + "_" + version + ".png", format = "png")
         plt.close()
 
         plt.figure()

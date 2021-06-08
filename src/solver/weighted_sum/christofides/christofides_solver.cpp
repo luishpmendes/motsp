@@ -8,32 +8,33 @@ Christofides_Solver::Christofides_Solver(const Instance & instance) :
     Solver::Solver(instance) {}
 
 void Christofides_Solver::capture_snapshot() {
-    this->pareto.resize(this->best_individuals.size());
-    std::transform(this->best_individuals.begin(),
-                   this->best_individuals.end(),
-                   this->pareto.begin(),
-                   [](const auto & individual) {
-                        return individual.first;
-                   });
-    this->pareto_snapshots.push_back(std::make_tuple(this->num_iterations,
-                                                     this->elapsed_time(),
-                                                     this->pareto));
+    double time_snapshot = this->elapsed_time();
+
+    this->best_solutions_snapshots.emplace_back(std::make_tuple(
+                this->num_iterations,
+                time_snapshot,
+                std::vector<std::vector<double>>(
+                    this->best_individuals.size())));
+    for(unsigned i = 0; i < this->best_individuals.size(); i++) {
+        std::get<2>(this->best_solutions_snapshots.back())[i] =
+            this->best_individuals[i].first;
+    }
 
     this->fronts = BRKGA::Population::nonDominatedSort<std::vector<double>>(
             all_individuals,
             this->senses);
 
-    this->non_dominated_snapshots.push_back(std::make_tuple(
+    this->num_non_dominated_snapshots.push_back(std::make_tuple(
                 this->num_iterations,
-                this->elapsed_time(),
+                time_snapshot,
                 std::vector<unsigned>(1, fronts.front().size())));
 
-    this->fronts_snapshots.push_back(std::make_tuple(
+    this->num_fronts_snapshots.push_back(std::make_tuple(
                 this->num_iterations,
-                this->elapsed_time(),
+                time_snapshot,
                 std::vector<unsigned>(1, fronts.size())));
 
-    this->time_last_snapshot = this->elapsed_time();
+    this->time_last_snapshot = time_snapshot;
     this->iteration_last_snapshot = this->num_iterations;
     this->num_snapshots++;
 }

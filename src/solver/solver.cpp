@@ -115,16 +115,15 @@ bool Solver::update_best_individuals(const pagmo::population & pop) {
 void Solver::capture_snapshot(const pagmo::population & pop) {
     double time_snapshot = this->elapsed_time();
 
-    this->pareto.resize(this->best_individuals.size());
-    std::transform(this->best_individuals.begin(),
-                   this->best_individuals.end(),
-                   this->pareto.begin(),
-                   [](const auto & individual) {
-                        return individual.first;
-                   });
-    this->pareto_snapshots.push_back(std::make_tuple(this->num_iterations,
-                                                     time_snapshot,
-                                                     this->pareto));
+    this->best_solutions_snapshots.emplace_back(std::make_tuple(
+                this->num_iterations,
+                time_snapshot,
+                std::vector<std::vector<double>>(
+                    this->best_individuals.size())));
+    for(unsigned i = 0; i < this->best_individuals.size(); i++) {
+        std::get<2>(this->best_solutions_snapshots.back())[i] =
+            this->best_individuals[i].first;
+    }
 
     this->current_individuals.resize(pop.size());
 
@@ -137,15 +136,20 @@ void Solver::capture_snapshot(const pagmo::population & pop) {
             current_individuals,
             this->senses);
 
-    this->non_dominated_snapshots.push_back(std::make_tuple(
+    this->num_non_dominated_snapshots.push_back(std::make_tuple(
                 this->num_iterations,
                 time_snapshot,
                 std::vector<unsigned>(1, fronts.front().size())));
 
-    this->fronts_snapshots.push_back(std::make_tuple(
+    this->num_fronts_snapshots.push_back(std::make_tuple(
                 this->num_iterations,
                 time_snapshot,
                 std::vector<unsigned>(1, fronts.size())));
+
+    this->populations_snapshots.push_back(std::make_tuple(
+                this->num_iterations,
+                time_snapshot,
+                std::vector<std::vector<std::vector<double>>>(1, pop.get_f())));
 
     this->time_last_snapshot = time_snapshot;
     this->iteration_last_snapshot = this->num_iterations;

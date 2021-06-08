@@ -12,9 +12,9 @@ max_num_snapshots=60
 mkdir -p statistics
 mkdir -p solutions
 mkdir -p pareto
-mkdir -p pareto_snapshots
-mkdir -p non_dominated_snapshots
-mkdir -p fronts_snapshots
+mkdir -p best_solutions_snapshots
+mkdir -p num_non_dominated_snapshots
+mkdir -p num_fronts_snapshots
 mkdir -p num_elites_snapshots
 mkdir -p num_mutants_snapshots
 mkdir -p hypervolume
@@ -36,9 +36,9 @@ do
             command+="--statistics statistics/${instance}_${solver}_${seed}.txt "
             command+="--solutions solutions/${instance}_${solver}_${seed}_ "
             command+="--pareto pareto/${instance}_${solver}_${seed}.txt "
-            command+="--pareto-snapshots pareto_snapshots/${instance}_${solver}_${seed}_ "
-            command+="--non-dominated-snapshots non_dominated_snapshots/${instance}_${solver}_${seed}.txt "
-            command+="--fronts-snapshots fronts_snapshots/${instance}_${solver}_${seed}.txt "
+            command+="--best-solutions-snapshots best_solutions_snapshots/${instance}_${solver}_${seed}_ "
+            command+="--num-non-dominated-snapshots num_non_dominated_snapshots/${instance}_${solver}_${seed}.txt "
+            command+="--num-fronts-snapshots num_fronts_snapshots/${instance}_${solver}_${seed}.txt "
             if [ $solver = "nspso" ]
             then
                 command+="--memory "
@@ -67,7 +67,7 @@ do
         for seed in ${seeds[@]}
         do
             command+="--pareto-${i} pareto/${instance}_${solver}_${seed}.txt "
-            command+="--pareto-snapshots-${i} pareto_snapshots/${instance}_${solver}_${seed}_ "
+            command+="--best-solutions-snapshots-${i} best_solutions_snapshots/${instance}_${solver}_${seed}_ "
             command+="--hypervolume-${i} hypervolume/${instance}_${solver}_${seed}.txt "
             command+="--hypervolume-snapshots-${i} hypervolume_snapshots/${instance}_${solver}_${seed}.txt "
             i=$((i+1))
@@ -85,10 +85,10 @@ do
         command+="--pareto-median pareto/${instance}_${solver}_median.txt "
         command+="--hypervolume-snapshots-best hypervolume_snapshots/${instance}_${solver}_best.txt "
         command+="--hypervolume-snapshots-median hypervolume_snapshots/${instance}_${solver}_median.txt "
-        command+="--non-dominated-snapshots-best non_dominated_snapshots/${instance}_${solver}_best.txt "
-        command+="--non-dominated-snapshots-median non_dominated_snapshots/${instance}_${solver}_median.txt "
-        command+="--fronts-snapshots-best fronts_snapshots/${instance}_${solver}_best.txt "
-        command+="--fronts-snapshots-median fronts_snapshots/${instance}_${solver}_median.txt "
+        command+="--num-non-dominated-snapshots-best num_non_dominated_snapshots/${instance}_${solver}_best.txt "
+        command+="--num-non-dominated-snapshots-median num_non_dominated_snapshots/${instance}_${solver}_median.txt "
+        command+="--num-fronts-snapshots-best num_fronts_snapshots/${instance}_${solver}_best.txt "
+        command+="--num-fronts-snapshots-median num_fronts_snapshots/${instance}_${solver}_median.txt "
         if [ $solver = "nsmpbrkga" ]
         then
             command+="--num-elites-snapshots-best num_elites_snapshots/${instance}_${solver}_best.txt "
@@ -103,8 +103,8 @@ do
             command+="--pareto-${i} pareto/${instance}_${solver}_${seed}.txt "
             command+="--hypervolume-${i} hypervolume/${instance}_${solver}_${seed}.txt "
             command+="--hypervolume-snapshots-${i} hypervolume_snapshots/${instance}_${solver}_${seed}.txt "
-            command+="--non-dominated-snapshots-${i} non_dominated_snapshots/${instance}_${solver}_${seed}.txt "
-            command+="--fronts-snapshots-${i} fronts_snapshots/${instance}_${solver}_${seed}.txt "
+            command+="--num-non-dominated-snapshots-${i} num_non_dominated_snapshots/${instance}_${solver}_${seed}.txt "
+            command+="--num-fronts-snapshots-${i} num_fronts_snapshots/${instance}_${solver}_${seed}.txt "
             if [ $solver = "nsmpbrkga" ]
             then
                 command+="--num-elites-snapshots-${i} num_elites_snapshots/${instance}_${solver}_${seed}.txt "

@@ -17,7 +17,7 @@ int main(int argc, char * argv[]) {
         std::vector<std::vector<unsigned>> iteration_snapshots;
         std::vector<std::vector<double>> time_snapshots;
         std::vector<std::vector<std::vector<std::vector<double>>>>
-            pareto_snapshots;
+            best_solutions_snapshots;
         std::vector<double> min_costs(instance.num_objectives,
                                       std::numeric_limits<double>::max()),
                             max_costs(instance.num_objectives,
@@ -28,7 +28,7 @@ int main(int argc, char * argv[]) {
         for(num_solvers = 0;
             arg_parser.option_exists("--pareto-" +
                                      std::to_string(num_solvers)) ||
-            arg_parser.option_exists("--pareto-snapshots-" +
+            arg_parser.option_exists("--best-solutions-snapshots-" +
                                      std::to_string(num_solvers)) ||
             arg_parser.option_exists("--hypervolume-" +
                                      std::to_string(num_solvers)) ||
@@ -39,7 +39,7 @@ int main(int argc, char * argv[]) {
         paretos.resize(num_solvers);
         iteration_snapshots.resize(num_solvers);
         time_snapshots.resize(num_solvers);
-        pareto_snapshots.resize(num_solvers);
+        best_solutions_snapshots.resize(num_solvers);
 
         for(unsigned i = 0; i < num_solvers; i++) {
             if(arg_parser.option_exists("--pareto-" + std::to_string(i))) {
@@ -81,14 +81,14 @@ int main(int argc, char * argv[]) {
 
         for(unsigned i = 0; i < num_solvers; i++) {
             if(arg_parser.option_exists(
-                        "--pareto-snapshots-" + std::to_string(i))) {
-                std::string pareto_snapshots_filename =
+                        "--best-solutions-snapshots-" + std::to_string(i))) {
+                std::string best_solutions_snapshots_filename =
                     arg_parser.option_value(
-                            "--pareto-snapshots-" + std::to_string(i));
+                            "--best-solutions-snapshots-" + std::to_string(i));
 
                 for(unsigned j = 0; ; j++) {
-                    ifs.open(pareto_snapshots_filename + std::to_string(j) +
-                            ".txt");
+                    ifs.open(best_solutions_snapshots_filename +
+                            std::to_string(j) + ".txt");
 
                     if(ifs.is_open()) {
                         unsigned iteration;
@@ -98,7 +98,7 @@ int main(int argc, char * argv[]) {
 
                         iteration_snapshots[i].push_back(iteration);
                         time_snapshots[i].push_back(time);
-                        pareto_snapshots[i].emplace_back();
+                        best_solutions_snapshots[i].emplace_back();
 
                         ifs.ignore();
 
@@ -113,7 +113,7 @@ int main(int argc, char * argv[]) {
                                 if(!(iss >> costs[j])) {
                                     throw std::runtime_error(
                                             "Error reading file" +
-                                            pareto_snapshots_filename +
+                                            best_solutions_snapshots_filename +
                                             std::to_string(j) + ".txt" + ".");
                                 }
 
@@ -126,7 +126,7 @@ int main(int argc, char * argv[]) {
                                 }
                             }
 
-                            pareto_snapshots[i].back().push_back(costs);
+                            best_solutions_snapshots[i].back().push_back(costs);
                         }
 
                         ifs.close();
@@ -173,18 +173,20 @@ int main(int argc, char * argv[]) {
 
             if(ofs.is_open()) {
                 for(unsigned j = 0;
-                    j < pareto_snapshots[i].size();
+                    j < best_solutions_snapshots[i].size();
                     j++) {
                     std::vector<std::vector<double>>
                         normalized_pareto_snapshot(
-                                pareto_snapshots[i][j].size());
-                    for(unsigned k = 0; k < pareto_snapshots[i][j].size(); k++) {
+                                best_solutions_snapshots[i][j].size());
+                    for(unsigned k = 0;
+                        k < best_solutions_snapshots[i][j].size();
+                        k++) {
                         normalized_pareto_snapshot[k] = std::vector<double>(
-                                pareto_snapshots[i][j][k].size(), 0.0);
+                                best_solutions_snapshots[i][j][k].size(), 0.0);
                         for(unsigned l = 0; l < instance.num_objectives; l++) {
                             normalized_pareto_snapshot[k][l] =
-                                (pareto_snapshots[i][j][k][l] - min_costs[l]) /
-                                (max_costs[l] - min_costs[l]);
+                                (best_solutions_snapshots[i][j][k][l] -
+                                 min_costs[l]) / (max_costs[l] - min_costs[l]);
                         }
                     }
 
@@ -207,7 +209,7 @@ int main(int argc, char * argv[]) {
         std::cerr << "./hypervolume_calculator_exec "
                   << "--instance <instance_filename> "
                   << "--pareto-i <pareto_filename> "
-                  << "--pareto-snapshots-i <pareto_snapshots_filename> "
+                  << "--best-solutions-snapshots-i <best_solutions_snapshots_filename> "
                   << "--hypervolume-i <hypervolume_filename> "
                   << "--hypervolume-snapshots-i <hypervolume_snapshots_filename> "
                   << std::endl;

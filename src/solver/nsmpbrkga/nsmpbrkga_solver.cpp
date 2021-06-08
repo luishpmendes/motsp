@@ -9,16 +9,15 @@ void NSMPBRKGA_Solver::capture_snapshot(
         const BRKGA::NSMPBRKGA<Decoder> & algorithm) {
     double time_snapshot = this->elapsed_time();
 
-    this->pareto.resize(this->best_individuals.size());
-    std::transform(this->best_individuals.begin(),
-                   this->best_individuals.end(),
-                   this->pareto.begin(),
-                   [](const auto & individual) {
-                        return individual.first;
-                   });
-    this->pareto_snapshots.push_back(std::make_tuple(this->num_iterations,
-                                                     time_snapshot,
-                                                     this->pareto));
+    this->best_solutions_snapshots.emplace_back(std::make_tuple(
+                this->num_iterations,
+                time_snapshot,
+                std::vector<std::vector<double>>(
+                    this->best_individuals.size())));
+    for(unsigned i = 0; i < this->best_individuals.size(); i++) {
+        std::get<2>(this->best_solutions_snapshots.back())[i] =
+            this->best_individuals[i].first;
+    }
 
     this->num_non_dominated.resize(this->num_populations);
     this->num_fronts.resize(this->num_populations);
@@ -33,14 +32,26 @@ void NSMPBRKGA_Solver::capture_snapshot(
         this->num_mutants[i] = algorithm.getCurrentPopulation(i).num_mutants;
     }
 
-    this->non_dominated_snapshots.push_back(std::make_tuple(
+    this->num_non_dominated_snapshots.push_back(std::make_tuple(
                 this->num_iterations,
                 time_snapshot,
                 this->num_non_dominated));
 
-    this->fronts_snapshots.push_back(std::make_tuple(this->num_iterations,
-                                                     time_snapshot,
-                                                     this->num_fronts));
+    this->num_fronts_snapshots.push_back(std::make_tuple(this->num_iterations,
+                                                         time_snapshot,
+                                                         this->num_fronts));
+
+    this->populations_snapshots.emplace_back(std::make_tuple(
+                this->num_iterations,
+                time_snapshot,
+                std::vector<std::vector<std::vector<double>>>()));
+    for(unsigned i = 0; i < this->num_populations; i++) {
+        std::get<2>(this->populations_snapshots.back()).emplace_back();
+        for(unsigned j = 0; j < this->population_size; j++) {
+            std::get<2>(this->populations_snapshots.back()).back().push_back(
+                    algorithm.getCurrentPopulation(i).getFitness(i));
+        }
+    }
 
     this->num_elites_snapshots.push_back(std::make_tuple(this->num_iterations,
                                                          time_snapshot,

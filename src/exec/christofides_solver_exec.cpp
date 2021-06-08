@@ -77,33 +77,36 @@ int main (int argc, char * argv[]) {
             }
         }
 
-        if(arg_parser.option_exists("--pareto-snapshots")) {
-            std::string pareto_snapshots_filename =
-                arg_parser.option_value("--pareto-snapshots");
+        if(arg_parser.option_exists("--best-solutions-snapshots")) {
+            std::string best_solutions_snapshots_filename =
+                arg_parser.option_value("--best-solutions-snapshots");
 
-            for(unsigned i = 0; i < solver.pareto_snapshots.size(); i++) {
+            for(unsigned i = 0;
+                i < solver.best_solutions_snapshots.size();
+                i++) {
                 std::ofstream ofs;
-                ofs.open(pareto_snapshots_filename + std::to_string(i) +
-                        ".txt");
+                ofs.open(best_solutions_snapshots_filename + std::to_string(i)
+                        + ".txt");
 
                 if(ofs.is_open()) {
                     unsigned iteration =
-                        std::get<0>(solver.pareto_snapshots[i]);
-                    double time = std::get<1>(solver.pareto_snapshots[i]);
-                    std::vector<std::vector<double>> pareto =
-                        std::get<2>(solver.pareto_snapshots[i]);
+                        std::get<0>(solver.best_solutions_snapshots[i]);
+                    double time =
+                        std::get<1>(solver.best_solutions_snapshots[i]);
+                    std::vector<std::vector<double>> best_solutions =
+                        std::get<2>(solver.best_solutions_snapshots[i]);
 
                     ofs << iteration << " "
                         << time << std::endl;
 
-                    for(unsigned j = 0; j < pareto.size(); j++) {
+                    for(unsigned j = 0; j < best_solutions.size(); j++) {
                         for(unsigned k = 0;
-                            k < pareto[j].size() - 1;
+                            k < best_solutions[j].size() - 1;
                             k++) {
-                            ofs << pareto[j][k] << " ";
+                            ofs << best_solutions[j][k] << " ";
                         }
 
-                        ofs << pareto[j].back() << std::endl;
+                        ofs << best_solutions[j].back() << std::endl;
                     }
 
                     ofs.close();
@@ -123,7 +126,7 @@ int main (int argc, char * argv[]) {
                   << "--statistics <statistics_filename> "
                   << "--solutions <solutions_filename> "
                   << "--pareto <pareto_filename> "
-                  << "--pareto-snapshots <pareto_snapshots_filename> "
+                  << "--best-solutions-snapshots <best_solutions_snapshots_filename> "
                   << std::endl;
     }
 
