@@ -1,0 +1,2 @@
+Results with reactive version of nsmpbrkga
+But it turns out that the number of mutants was not varying
