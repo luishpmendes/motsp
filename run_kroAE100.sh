@@ -1,7 +1,7 @@
 #!/bin/bash
 
-solvers=(nsga2 nspso moead mhaco ihs nsmpbrkga)
 instances=(kroAE100)
+solvers=(nsga2 nspso moead mhaco ihs nsmpbrkga)
 seeds=(2351389233 840853377 405525247 583443166 76615162 145906556 237064314 77957907 834621397 633844880 598092365)
 
 time_limit=3600
@@ -15,6 +15,7 @@ mkdir -p pareto
 mkdir -p best_solutions_snapshots
 mkdir -p num_non_dominated_snapshots
 mkdir -p num_fronts_snapshots
+mkdir -p populations_snapshots
 mkdir -p num_elites_snapshots
 mkdir -p num_mutants_snapshots
 mkdir -p hypervolume
@@ -39,6 +40,7 @@ do
             command+="--best-solutions-snapshots best_solutions_snapshots/${instance}_${solver}_${seed}_ "
             command+="--num-non-dominated-snapshots num_non_dominated_snapshots/${instance}_${solver}_${seed}.txt "
             command+="--num-fronts-snapshots num_fronts_snapshots/${instance}_${solver}_${seed}.txt "
+            command+="--populations-snapshots populations_snapshots/${instance}_${solver}_${seed}.txt "
             if [ $solver = "nspso" ]
             then
                 command+="--memory "
@@ -85,8 +87,12 @@ do
         command+="--pareto-median pareto/${instance}_${solver}_median.txt "
         command+="--hypervolume-snapshots-best hypervolume_snapshots/${instance}_${solver}_best.txt "
         command+="--hypervolume-snapshots-median hypervolume_snapshots/${instance}_${solver}_median.txt "
+        command+="--best-solutions-snapshots-best best_solutons_snapshots/${instance}_${solver}_best_ "
+        command+="--best-solutions-snapshots-median best_solutions_snapshots/${instance}_${solver}_median_ "
         command+="--num-non-dominated-snapshots-best num_non_dominated_snapshots/${instance}_${solver}_best.txt "
         command+="--num-non-dominated-snapshots-median num_non_dominated_snapshots/${instance}_${solver}_median.txt "
+        command+="--populations-snapshots-best populations/${instance}_${solver}_best_ "
+        command+="--populations-snapshots-median populations/${instance}_${solver}_median_ "
         command+="--num-fronts-snapshots-best num_fronts_snapshots/${instance}_${solver}_best.txt "
         command+="--num-fronts-snapshots-median num_fronts_snapshots/${instance}_${solver}_median.txt "
         if [ $solver = "nsmpbrkga" ]
@@ -103,9 +109,10 @@ do
             command+="--pareto-${i} pareto/${instance}_${solver}_${seed}.txt "
             command+="--hypervolume-${i} hypervolume/${instance}_${solver}_${seed}.txt "
             command+="--hypervolume-snapshots-${i} hypervolume_snapshots/${instance}_${solver}_${seed}.txt "
+            command+="--best-solutions-snapshots-${i} best_solutions_snapshots/${instance}_${solver}_${seed}_ "
             command+="--num-non-dominated-snapshots-${i} num_non_dominated_snapshots/${instance}_${solver}_${seed}.txt "
-            command+="--num-fronts-snapshots-${i} num_fronts_snapshots/${instance}_${solver}_${seed}.txt "
             if [ $solver = "nsmpbrkga" ]
+            command+="--populations-snapshots-${i} populations_snapshots/${instance}_${solver}_${seed}_ "
             then
                 command+="--num-elites-snapshots-${i} num_elites_snapshots/${instance}_${solver}_${seed}.txt "
                 command+="--num-mutants-snapshots-${i} num_mutants_snapshots/${instance}_${solver}_${seed}.txt "

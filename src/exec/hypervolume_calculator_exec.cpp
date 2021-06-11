@@ -10,8 +10,20 @@ int main(int argc, char * argv[]) {
         std::ifstream ifs;
         motsp::Instance instance;
         ifs.open(arg_parser.option_value("--instance"));
-        ifs >> instance;
-        ifs.close();
+
+        if(ifs.is_open()) {
+            ifs >> instance;
+
+            if(ifs.eof() || ifs.fail() || ifs.bad()) {
+                throw std::runtime_error("Error reading file " +
+                        arg_parser.option_value("--instance") + ".");
+            }
+
+            ifs.close();
+        } else {
+            throw std::runtime_error("File " +
+                    arg_parser.option_value("--instance") + " not found.");
+        }
 
         std::vector<std::vector<std::vector<double>>> paretos;
         std::vector<std::vector<unsigned>> iteration_snapshots;
@@ -43,8 +55,8 @@ int main(int argc, char * argv[]) {
 
         for(unsigned i = 0; i < num_solvers; i++) {
             if(arg_parser.option_exists("--pareto-" + std::to_string(i))) {
-                ifs.open(arg_parser.option_value(
-                            "--pareto-" + std::to_string(i)));
+                ifs.open(arg_parser.option_value("--pareto-" +
+                                                 std::to_string(i)));
 
                 if(ifs.is_open()) {
                     for(std::string line; std::getline(ifs, line);) {
@@ -52,10 +64,12 @@ int main(int argc, char * argv[]) {
                         std::vector<double> costs(instance.num_objectives, 0.0);
 
                         for(unsigned j = 0; j < instance.num_objectives; j++) {
-                            if(!(iss >> costs[j])) {
+                            iss >> costs[j];
+
+                            if(iss.eof() || iss.fail() || iss.bad()) {
                                 throw std::runtime_error("Error reading file "
-                                        + arg_parser.option_value("--pareto-" +
-                                            std::to_string(i)) + ".");
+                                        + arg_parser.option_value("--pareto-"
+                                            + std::to_string(i)) + ".");
                             }
 
                             if(min_costs[j] > costs[j]) {
@@ -80,21 +94,27 @@ int main(int argc, char * argv[]) {
         }
 
         for(unsigned i = 0; i < num_solvers; i++) {
-            if(arg_parser.option_exists(
-                        "--best-solutions-snapshots-" + std::to_string(i))) {
+            if(arg_parser.option_exists("--best-solutions-snapshots-" +
+                                        std::to_string(i))) {
                 std::string best_solutions_snapshots_filename =
-                    arg_parser.option_value(
-                            "--best-solutions-snapshots-" + std::to_string(i));
+                    arg_parser.option_value("--best-solutions-snapshots-" +
+                                            std::to_string(i));
 
                 for(unsigned j = 0; ; j++) {
                     ifs.open(best_solutions_snapshots_filename +
-                            std::to_string(j) + ".txt");
+                             std::to_string(j) + ".txt");
 
                     if(ifs.is_open()) {
                         unsigned iteration;
                         double time;
 
                         ifs >> iteration >> time;
+
+                        if(ifs.eof() || ifs.fail() || ifs.bad()) {
+                            throw std::runtime_error("Error reading file " +
+                                    best_solutions_snapshots_filename +
+                                    std::to_string(j) + ".txt.");
+                        }
 
                         iteration_snapshots[i].push_back(iteration);
                         time_snapshots[i].push_back(time);
@@ -110,7 +130,9 @@ int main(int argc, char * argv[]) {
                             for(unsigned j = 0;
                                 j < instance.num_objectives;
                                 j++) {
-                                if(!(iss >> costs[j])) {
+                                iss >> costs[j];
+
+                                if(iss.eof() || iss.fail() || iss.bad()) {
                                     throw std::runtime_error(
                                             "Error reading file" +
                                             best_solutions_snapshots_filename +
@@ -139,8 +161,8 @@ int main(int argc, char * argv[]) {
 
         for(unsigned i = 0; i < num_solvers; i++) {
             std::ofstream ofs;
-            ofs.open(arg_parser.option_value(
-                        "--hypervolume-" + std::to_string(i)));
+            ofs.open(arg_parser.option_value("--hypervolume-" +
+                                             std::to_string(i)));
 
             if(ofs.is_open()) {
                 std::vector<std::vector<double>> normalized_pareto(
@@ -158,6 +180,13 @@ int main(int argc, char * argv[]) {
                 pagmo::hypervolume hv(normalized_pareto);
                 double hypervolume = hv.compute(reference_point) / (1.1 * 1.1);
                 ofs << hypervolume << std::endl;
+
+                if(ofs.eof() || ofs.fail() || ofs.bad()) {
+                    throw std::runtime_error("Error writing file " +
+                            arg_parser.option_value("--hypervolume-" +
+                                std::to_string(i)) + ".");
+                }
+
                 ofs.close();
             } else {
                 throw std::runtime_error("File " +
@@ -168,8 +197,8 @@ int main(int argc, char * argv[]) {
 
         for(unsigned i = 0; i < num_solvers; i++) {
             std::ofstream ofs;
-            ofs.open(arg_parser.option_value(
-                        "--hypervolume-snapshots-" + std::to_string(i)));
+            ofs.open(arg_parser.option_value("--hypervolume-snapshots-" +
+                                             std::to_string(i)));
 
             if(ofs.is_open()) {
                 for(unsigned j = 0;
@@ -196,6 +225,13 @@ int main(int argc, char * argv[]) {
                     ofs << iteration_snapshots[i][j] << ","
                         << time_snapshots[i][j] << ","
                         << hypervolume << std::endl;
+
+                    if(ofs.eof() || ofs.fail() || ofs.bad()) {
+                        throw std::runtime_error("Error writing file " +
+                                arg_parser.option_value(
+                                    "--hypervolume-snapshots-" +
+                                    std::to_string(i)) + ".");
+                    }
                 }
 
                 ofs.close();

@@ -50,6 +50,7 @@ int main() {
     assert(solver.best_solutions_snapshots.size() == solver.num_snapshots);
     assert(solver.num_non_dominated_snapshots.size() == solver.num_snapshots);
     assert(solver.num_fronts_snapshots.size() == solver.num_snapshots);
+    assert(solver.populations_snapshots.size() == solver.num_snapshots);
 
     for(const auto & s1 : solver.best_solutions) {
         assert(s1.is_feasible());

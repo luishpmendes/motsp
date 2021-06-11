@@ -10,8 +10,20 @@ int main (int argc, char * argv[]) {
         std::ifstream ifs;
         motsp::Instance instance;
         ifs.open(arg_parser.option_value("--instance"));
-        ifs >> instance;
-        ifs.close();
+
+        if(ifs.is_open()) {
+            ifs >> instance;
+
+            if(ifs.eof() || ifs.fail() || ifs.bad()) {
+                throw std::runtime_error("Error reading file " +
+                        arg_parser.option_value("--instance") + ".");
+            }
+
+            ifs.close();
+        } else {
+            throw std::runtime_error("File " +
+                    arg_parser.option_value("--instance") + " not found.");
+        }
 
         unsigned initial_individuals_method = 0;
         double initial_individuals_percentage = 0.0;
@@ -84,15 +96,15 @@ int main (int argc, char * argv[]) {
                     arg_parser.option_value("--initial-individuals-method"));
         }
 
-        if(arg_parser.option_exists("--initial-individuals-time-percentage")) {
-            initial_individuals_time_percentage =
-                std::stod(arg_parser.option_value(
-                            "--initial-individuals-time-percentage"));
+        if(arg_parser.option_exists("--initial-individuals-percentage")) {
+            initial_individuals_percentage = std::stod(arg_parser.option_value(
+                        "--initial-individuals-percentage"));
         }
 
-        if(arg_parser.option_exists("--initial-individuals-percentage")) {
-            initial_individuals_percentage =std::stod(arg_parser.option_value(
-                        "--initial-individuals-percentage"));
+        if(arg_parser.option_exists("--initial-individuals-time-percentage")) {
+            initial_individuals_time_percentage = std::stod(
+                    arg_parser.option_value(
+                        "--initial-individuals-time-percentage"));
         }
 
         if(initial_individuals_method == 1) {
@@ -162,6 +174,12 @@ int main (int argc, char * argv[]) {
 
             if(ofs.is_open()) {
                 ofs << solver;
+
+                if(ofs.eof() || ofs.fail() || ofs.bad()) {
+                    throw std::runtime_error("Error writing file " +
+                            arg_parser.option_value("--statistics") + ".");
+                }
+
                 ofs.close();
             } else {
                 throw std::runtime_error(
@@ -180,6 +198,13 @@ int main (int argc, char * argv[]) {
 
                 if(ofs.is_open()) {
                     ofs << solver.best_solutions[i];
+
+                    if(ofs.eof() || ofs.fail() || ofs.bad()) {
+                        throw std::runtime_error("Error writing file " +
+                                solution_filename + std::to_string(i) +
+                                ".sol.");
+                    }
+
                     ofs.close();
                 } else {
                     throw std::runtime_error("File " + solution_filename +
@@ -200,6 +225,11 @@ int main (int argc, char * argv[]) {
                     }
 
                     ofs << solution.cost.back() << std::endl;
+
+                    if(ofs.eof() || ofs.fail() || ofs.bad()) {
+                        throw std::runtime_error("Error writing file " +
+                                arg_parser.option_value("--pareto") + ".");
+                    }
                 }
 
                 ofs.close();
@@ -259,6 +289,12 @@ int main (int argc, char * argv[]) {
                         ofs << best_solutions[j].back() << std::endl;
                     }
 
+                    if(ofs.eof() || ofs.fail() || ofs.bad()) {
+                        throw std::runtime_error("Error writing file " +
+                                best_solutions_snapshots_filename +
+                                std::to_string(i) + "txt.");
+                    }
+
                     ofs.close();
                 } else {
                     throw std::runtime_error(
@@ -311,6 +347,12 @@ int main (int argc, char * argv[]) {
                     }
 
                     ofs << num_non_dominated.back() << std::endl;
+
+                    if(ofs.eof() || ofs.fail() || ofs.bad()) {
+                        throw std::runtime_error("Error writing file " +
+                                arg_parser.option_value(
+                                    "--num-non-dominated-snapshots") + ".");
+                    }
                 }
 
                 ofs.close();
@@ -362,6 +404,12 @@ int main (int argc, char * argv[]) {
                     }
 
                     ofs << num_fronts.back() << std::endl;
+
+                    if(ofs.eof() || ofs.fail() || ofs.bad()) {
+                        throw std::runtime_error("Error writing file " +
+                                arg_parser.option_value(
+                                    "--num-fronts-snapshots") + ".");
+                    }
                 }
 
                 ofs.close();
@@ -420,6 +468,12 @@ int main (int argc, char * argv[]) {
                         }
 
                         ofs << population.front()[j].back() << std::endl;
+                    }
+
+                    if(ofs.eof() || ofs.fail() || ofs.bad()) {
+                        throw std::runtime_error("Error writing file " +
+                                populations_snapshots_filename +
+                                std::to_string(i) + ".txt.");
                     }
 
                     ofs.close();
