@@ -1,0 +1,43 @@
+Number of objectives: 2
+Number of vertices: 200
+Seed: 76615162
+Time limit: 3600
+Iterations limit: 4294967295
+Initial individuals: 0
+Maximum number of solutions: 2500
+Maximum number of snapshots: 60
+Number of iterations: 39528
+Solutions obtained: 375
+Solving time: 3600.2
+Number of snapshots: 61
+Pareto Snapshots: 61
+Non Dominated Snapshots: 61
+Fronts Snapshots: 61
+Number of individuals in each population: 1000
+Minimum percentage of individuals to become the elite set: 0.1
+Maximum percentage of individuals to become the elite set: 0.5
+Minimum percentage of mutants to be inserted in the population: 0.05
+Maximum percentage of mutants to be inserted in the population: 0.25
+Number of total parents for mating: 3
+Number of elite parents for mating: 2
+Type of bias that will be used: LOGINVERSE
+Type of diversity that will be used: AVERAGE_DISTANCE_TO_CENTROID
+Number of independent parallel populations: 1
+Number of pairs of chromosomes to be tested to path-relinking: 100
+Minimum distance between chromosomes selected to path-relinking: 0.15
+Individual selection to path-relinking: BESTSOLUTION
+Percentage of the path to be computed: 0.31
+Interval at which the path relink is applied: 0
+Interval at which the populations are shaken: 200
+Interval at which the populations are reset: 500
+Number of threads to be used during parallel decoding: 1
+Last update generation: 34036
+Last update time: 2480.42
+Largest number of generations between improvements: 5492
+Total path relink time: 0
+Total path relink calls: 0
+Number of homogeneities: 0
+Improvements in the elite set: 0
+Best individual improvements: 0
+Total shakings calls: 34
+Total resets calls: 11

@@ -1,0 +1,24 @@
+Number of objectives: 2
+Number of vertices: 1000
+Seed: 944703414
+Time limit: 1800
+Iterations limit: 4294967295
+Initial individuals: 0
+Maximum number of solutions: 500
+Maximum number of snapshots: 60
+Number of iterations: 22268
+Solutions obtained: 18
+Solving time: 1800.11
+Number of snapshots: 61
+Time between snapshots: 30
+Time when the last snapshot was taken: 1800.1
+Number of iterations between the snapshots: 71582788
+Iteration when the last snapshot was taken: 22268
+Population size: 300
+Number of solutions stored in the solution archive: 63
+Convergence speed: 1
+Threshold: 1
+nGenMark: 7
+EvalStop: 0
+Focus: 0
+Memory: 1

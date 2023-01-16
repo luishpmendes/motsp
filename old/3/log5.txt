@@ -1,0 +1,339 @@
++ instances=(kroAB100 kroAB200 vmAB1084)
++ solvers=(ihs)
++ seeds=(217855282 433060674 678738891 695840684 542525286)
++ time_limit=3600
++ population_size=1000
++ max_num_solutions=2500
++ max_num_snapshots=60
++ mkdir -p statistics
++ mkdir -p solutions
++ mkdir -p pareto
++ mkdir -p best_solutions_snapshots
++ mkdir -p num_non_dominated_snapshots
++ mkdir -p num_fronts_snapshots
++ mkdir -p populations_snapshots
++ mkdir -p num_elites_snapshots
++ mkdir -p num_mutants_snapshots
++ mkdir -p hypervolume
++ mkdir -p hypervolume_snapshots
++ for instance in ${instances[@]}
++ for solver in ${solvers[@]}
++ for seed in ${seeds[@]}
++ command='./bin/exec/ihs_solver_exec '
++ command+='--instance instances/kroAB100.txt '
++ command+='--seed 217855282 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/kroAB100_ihs_217855282.txt '
++ command+='--solutions solutions/kroAB100_ihs_217855282_ '
++ command+='--pareto pareto/kroAB100_ihs_217855282.txt '
++ command+='--best-solutions-snapshots best_solutions_snapshots/kroAB100_ihs_217855282_ '
++ command+='--num-non-dominated-snapshots num_non_dominated_snapshots/kroAB100_ihs_217855282.txt '
++ command+='--num-fronts-snapshots num_fronts_snapshots/kroAB100_ihs_217855282.txt '
++ command+='--populations-snapshots populations_snapshots/kroAB100_ihs_217855282_ '
++ '[' ihs = nspso ']'
++ '[' ihs = moead ']'
++ '[' ihs = mhaco ']'
++ '[' ihs = nsmpbrkga ']'
++ eval ./bin/exec/ihs_solver_exec --instance instances/kroAB100.txt --seed 217855282 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB100_ihs_217855282.txt --solutions solutions/kroAB100_ihs_217855282_ --pareto pareto/kroAB100_ihs_217855282.txt --best-solutions-snapshots best_solutions_snapshots/kroAB100_ihs_217855282_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB100_ihs_217855282.txt --num-fronts-snapshots num_fronts_snapshots/kroAB100_ihs_217855282.txt --populations-snapshots populations_snapshots/kroAB100_ihs_217855282_
+++ ./bin/exec/ihs_solver_exec --instance instances/kroAB100.txt --seed 217855282 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB100_ihs_217855282.txt --solutions solutions/kroAB100_ihs_217855282_ --pareto pareto/kroAB100_ihs_217855282.txt --best-solutions-snapshots best_solutions_snapshots/kroAB100_ihs_217855282_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB100_ihs_217855282.txt --num-fronts-snapshots num_fronts_snapshots/kroAB100_ihs_217855282.txt --populations-snapshots populations_snapshots/kroAB100_ihs_217855282_
++ for seed in ${seeds[@]}
++ command='./bin/exec/ihs_solver_exec '
++ command+='--instance instances/kroAB100.txt '
++ command+='--seed 433060674 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/kroAB100_ihs_433060674.txt '
++ command+='--solutions solutions/kroAB100_ihs_433060674_ '
++ command+='--pareto pareto/kroAB100_ihs_433060674.txt '
++ command+='--best-solutions-snapshots best_solutions_snapshots/kroAB100_ihs_433060674_ '
++ command+='--num-non-dominated-snapshots num_non_dominated_snapshots/kroAB100_ihs_433060674.txt '
++ command+='--num-fronts-snapshots num_fronts_snapshots/kroAB100_ihs_433060674.txt '
++ command+='--populations-snapshots populations_snapshots/kroAB100_ihs_433060674_ '
++ '[' ihs = nspso ']'
++ '[' ihs = moead ']'
++ '[' ihs = mhaco ']'
++ '[' ihs = nsmpbrkga ']'
++ eval ./bin/exec/ihs_solver_exec --instance instances/kroAB100.txt --seed 433060674 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB100_ihs_433060674.txt --solutions solutions/kroAB100_ihs_433060674_ --pareto pareto/kroAB100_ihs_433060674.txt --best-solutions-snapshots best_solutions_snapshots/kroAB100_ihs_433060674_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB100_ihs_433060674.txt --num-fronts-snapshots num_fronts_snapshots/kroAB100_ihs_433060674.txt --populations-snapshots populations_snapshots/kroAB100_ihs_433060674_
+++ ./bin/exec/ihs_solver_exec --instance instances/kroAB100.txt --seed 433060674 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB100_ihs_433060674.txt --solutions solutions/kroAB100_ihs_433060674_ --pareto pareto/kroAB100_ihs_433060674.txt --best-solutions-snapshots best_solutions_snapshots/kroAB100_ihs_433060674_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB100_ihs_433060674.txt --num-fronts-snapshots num_fronts_snapshots/kroAB100_ihs_433060674.txt --populations-snapshots populations_snapshots/kroAB100_ihs_433060674_
++ for seed in ${seeds[@]}
++ command='./bin/exec/ihs_solver_exec '
++ command+='--instance instances/kroAB100.txt '
++ command+='--seed 678738891 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/kroAB100_ihs_678738891.txt '
++ command+='--solutions solutions/kroAB100_ihs_678738891_ '
++ command+='--pareto pareto/kroAB100_ihs_678738891.txt '
++ command+='--best-solutions-snapshots best_solutions_snapshots/kroAB100_ihs_678738891_ '
++ command+='--num-non-dominated-snapshots num_non_dominated_snapshots/kroAB100_ihs_678738891.txt '
++ command+='--num-fronts-snapshots num_fronts_snapshots/kroAB100_ihs_678738891.txt '
++ command+='--populations-snapshots populations_snapshots/kroAB100_ihs_678738891_ '
++ '[' ihs = nspso ']'
++ '[' ihs = moead ']'
++ '[' ihs = mhaco ']'
++ '[' ihs = nsmpbrkga ']'
++ eval ./bin/exec/ihs_solver_exec --instance instances/kroAB100.txt --seed 678738891 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB100_ihs_678738891.txt --solutions solutions/kroAB100_ihs_678738891_ --pareto pareto/kroAB100_ihs_678738891.txt --best-solutions-snapshots best_solutions_snapshots/kroAB100_ihs_678738891_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB100_ihs_678738891.txt --num-fronts-snapshots num_fronts_snapshots/kroAB100_ihs_678738891.txt --populations-snapshots populations_snapshots/kroAB100_ihs_678738891_
+++ ./bin/exec/ihs_solver_exec --instance instances/kroAB100.txt --seed 678738891 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB100_ihs_678738891.txt --solutions solutions/kroAB100_ihs_678738891_ --pareto pareto/kroAB100_ihs_678738891.txt --best-solutions-snapshots best_solutions_snapshots/kroAB100_ihs_678738891_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB100_ihs_678738891.txt --num-fronts-snapshots num_fronts_snapshots/kroAB100_ihs_678738891.txt --populations-snapshots populations_snapshots/kroAB100_ihs_678738891_
++ for seed in ${seeds[@]}
++ command='./bin/exec/ihs_solver_exec '
++ command+='--instance instances/kroAB100.txt '
++ command+='--seed 695840684 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/kroAB100_ihs_695840684.txt '
++ command+='--solutions solutions/kroAB100_ihs_695840684_ '
++ command+='--pareto pareto/kroAB100_ihs_695840684.txt '
++ command+='--best-solutions-snapshots best_solutions_snapshots/kroAB100_ihs_695840684_ '
++ command+='--num-non-dominated-snapshots num_non_dominated_snapshots/kroAB100_ihs_695840684.txt '
++ command+='--num-fronts-snapshots num_fronts_snapshots/kroAB100_ihs_695840684.txt '
++ command+='--populations-snapshots populations_snapshots/kroAB100_ihs_695840684_ '
++ '[' ihs = nspso ']'
++ '[' ihs = moead ']'
++ '[' ihs = mhaco ']'
++ '[' ihs = nsmpbrkga ']'
++ eval ./bin/exec/ihs_solver_exec --instance instances/kroAB100.txt --seed 695840684 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB100_ihs_695840684.txt --solutions solutions/kroAB100_ihs_695840684_ --pareto pareto/kroAB100_ihs_695840684.txt --best-solutions-snapshots best_solutions_snapshots/kroAB100_ihs_695840684_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB100_ihs_695840684.txt --num-fronts-snapshots num_fronts_snapshots/kroAB100_ihs_695840684.txt --populations-snapshots populations_snapshots/kroAB100_ihs_695840684_
+++ ./bin/exec/ihs_solver_exec --instance instances/kroAB100.txt --seed 695840684 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB100_ihs_695840684.txt --solutions solutions/kroAB100_ihs_695840684_ --pareto pareto/kroAB100_ihs_695840684.txt --best-solutions-snapshots best_solutions_snapshots/kroAB100_ihs_695840684_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB100_ihs_695840684.txt --num-fronts-snapshots num_fronts_snapshots/kroAB100_ihs_695840684.txt --populations-snapshots populations_snapshots/kroAB100_ihs_695840684_
++ for seed in ${seeds[@]}
++ command='./bin/exec/ihs_solver_exec '
++ command+='--instance instances/kroAB100.txt '
++ command+='--seed 542525286 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/kroAB100_ihs_542525286.txt '
++ command+='--solutions solutions/kroAB100_ihs_542525286_ '
++ command+='--pareto pareto/kroAB100_ihs_542525286.txt '
++ command+='--best-solutions-snapshots best_solutions_snapshots/kroAB100_ihs_542525286_ '
++ command+='--num-non-dominated-snapshots num_non_dominated_snapshots/kroAB100_ihs_542525286.txt '
++ command+='--num-fronts-snapshots num_fronts_snapshots/kroAB100_ihs_542525286.txt '
++ command+='--populations-snapshots populations_snapshots/kroAB100_ihs_542525286_ '
++ '[' ihs = nspso ']'
++ '[' ihs = moead ']'
++ '[' ihs = mhaco ']'
++ '[' ihs = nsmpbrkga ']'
++ eval ./bin/exec/ihs_solver_exec --instance instances/kroAB100.txt --seed 542525286 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB100_ihs_542525286.txt --solutions solutions/kroAB100_ihs_542525286_ --pareto pareto/kroAB100_ihs_542525286.txt --best-solutions-snapshots best_solutions_snapshots/kroAB100_ihs_542525286_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB100_ihs_542525286.txt --num-fronts-snapshots num_fronts_snapshots/kroAB100_ihs_542525286.txt --populations-snapshots populations_snapshots/kroAB100_ihs_542525286_
+++ ./bin/exec/ihs_solver_exec --instance instances/kroAB100.txt --seed 542525286 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB100_ihs_542525286.txt --solutions solutions/kroAB100_ihs_542525286_ --pareto pareto/kroAB100_ihs_542525286.txt --best-solutions-snapshots best_solutions_snapshots/kroAB100_ihs_542525286_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB100_ihs_542525286.txt --num-fronts-snapshots num_fronts_snapshots/kroAB100_ihs_542525286.txt --populations-snapshots populations_snapshots/kroAB100_ihs_542525286_
++ for instance in ${instances[@]}
++ for solver in ${solvers[@]}
++ for seed in ${seeds[@]}
++ command='./bin/exec/ihs_solver_exec '
++ command+='--instance instances/kroAB200.txt '
++ command+='--seed 217855282 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/kroAB200_ihs_217855282.txt '
++ command+='--solutions solutions/kroAB200_ihs_217855282_ '
++ command+='--pareto pareto/kroAB200_ihs_217855282.txt '
++ command+='--best-solutions-snapshots best_solutions_snapshots/kroAB200_ihs_217855282_ '
++ command+='--num-non-dominated-snapshots num_non_dominated_snapshots/kroAB200_ihs_217855282.txt '
++ command+='--num-fronts-snapshots num_fronts_snapshots/kroAB200_ihs_217855282.txt '
++ command+='--populations-snapshots populations_snapshots/kroAB200_ihs_217855282_ '
++ '[' ihs = nspso ']'
++ '[' ihs = moead ']'
++ '[' ihs = mhaco ']'
++ '[' ihs = nsmpbrkga ']'
++ eval ./bin/exec/ihs_solver_exec --instance instances/kroAB200.txt --seed 217855282 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB200_ihs_217855282.txt --solutions solutions/kroAB200_ihs_217855282_ --pareto pareto/kroAB200_ihs_217855282.txt --best-solutions-snapshots best_solutions_snapshots/kroAB200_ihs_217855282_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB200_ihs_217855282.txt --num-fronts-snapshots num_fronts_snapshots/kroAB200_ihs_217855282.txt --populations-snapshots populations_snapshots/kroAB200_ihs_217855282_
+++ ./bin/exec/ihs_solver_exec --instance instances/kroAB200.txt --seed 217855282 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB200_ihs_217855282.txt --solutions solutions/kroAB200_ihs_217855282_ --pareto pareto/kroAB200_ihs_217855282.txt --best-solutions-snapshots best_solutions_snapshots/kroAB200_ihs_217855282_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB200_ihs_217855282.txt --num-fronts-snapshots num_fronts_snapshots/kroAB200_ihs_217855282.txt --populations-snapshots populations_snapshots/kroAB200_ihs_217855282_
++ for seed in ${seeds[@]}
++ command='./bin/exec/ihs_solver_exec '
++ command+='--instance instances/kroAB200.txt '
++ command+='--seed 433060674 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/kroAB200_ihs_433060674.txt '
++ command+='--solutions solutions/kroAB200_ihs_433060674_ '
++ command+='--pareto pareto/kroAB200_ihs_433060674.txt '
++ command+='--best-solutions-snapshots best_solutions_snapshots/kroAB200_ihs_433060674_ '
++ command+='--num-non-dominated-snapshots num_non_dominated_snapshots/kroAB200_ihs_433060674.txt '
++ command+='--num-fronts-snapshots num_fronts_snapshots/kroAB200_ihs_433060674.txt '
++ command+='--populations-snapshots populations_snapshots/kroAB200_ihs_433060674_ '
++ '[' ihs = nspso ']'
++ '[' ihs = moead ']'
++ '[' ihs = mhaco ']'
++ '[' ihs = nsmpbrkga ']'
++ eval ./bin/exec/ihs_solver_exec --instance instances/kroAB200.txt --seed 433060674 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB200_ihs_433060674.txt --solutions solutions/kroAB200_ihs_433060674_ --pareto pareto/kroAB200_ihs_433060674.txt --best-solutions-snapshots best_solutions_snapshots/kroAB200_ihs_433060674_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB200_ihs_433060674.txt --num-fronts-snapshots num_fronts_snapshots/kroAB200_ihs_433060674.txt --populations-snapshots populations_snapshots/kroAB200_ihs_433060674_
+++ ./bin/exec/ihs_solver_exec --instance instances/kroAB200.txt --seed 433060674 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB200_ihs_433060674.txt --solutions solutions/kroAB200_ihs_433060674_ --pareto pareto/kroAB200_ihs_433060674.txt --best-solutions-snapshots best_solutions_snapshots/kroAB200_ihs_433060674_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB200_ihs_433060674.txt --num-fronts-snapshots num_fronts_snapshots/kroAB200_ihs_433060674.txt --populations-snapshots populations_snapshots/kroAB200_ihs_433060674_
++ for seed in ${seeds[@]}
++ command='./bin/exec/ihs_solver_exec '
++ command+='--instance instances/kroAB200.txt '
++ command+='--seed 678738891 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/kroAB200_ihs_678738891.txt '
++ command+='--solutions solutions/kroAB200_ihs_678738891_ '
++ command+='--pareto pareto/kroAB200_ihs_678738891.txt '
++ command+='--best-solutions-snapshots best_solutions_snapshots/kroAB200_ihs_678738891_ '
++ command+='--num-non-dominated-snapshots num_non_dominated_snapshots/kroAB200_ihs_678738891.txt '
++ command+='--num-fronts-snapshots num_fronts_snapshots/kroAB200_ihs_678738891.txt '
++ command+='--populations-snapshots populations_snapshots/kroAB200_ihs_678738891_ '
++ '[' ihs = nspso ']'
++ '[' ihs = moead ']'
++ '[' ihs = mhaco ']'
++ '[' ihs = nsmpbrkga ']'
++ eval ./bin/exec/ihs_solver_exec --instance instances/kroAB200.txt --seed 678738891 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB200_ihs_678738891.txt --solutions solutions/kroAB200_ihs_678738891_ --pareto pareto/kroAB200_ihs_678738891.txt --best-solutions-snapshots best_solutions_snapshots/kroAB200_ihs_678738891_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB200_ihs_678738891.txt --num-fronts-snapshots num_fronts_snapshots/kroAB200_ihs_678738891.txt --populations-snapshots populations_snapshots/kroAB200_ihs_678738891_
+++ ./bin/exec/ihs_solver_exec --instance instances/kroAB200.txt --seed 678738891 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB200_ihs_678738891.txt --solutions solutions/kroAB200_ihs_678738891_ --pareto pareto/kroAB200_ihs_678738891.txt --best-solutions-snapshots best_solutions_snapshots/kroAB200_ihs_678738891_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB200_ihs_678738891.txt --num-fronts-snapshots num_fronts_snapshots/kroAB200_ihs_678738891.txt --populations-snapshots populations_snapshots/kroAB200_ihs_678738891_
++ for seed in ${seeds[@]}
++ command='./bin/exec/ihs_solver_exec '
++ command+='--instance instances/kroAB200.txt '
++ command+='--seed 695840684 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/kroAB200_ihs_695840684.txt '
++ command+='--solutions solutions/kroAB200_ihs_695840684_ '
++ command+='--pareto pareto/kroAB200_ihs_695840684.txt '
++ command+='--best-solutions-snapshots best_solutions_snapshots/kroAB200_ihs_695840684_ '
++ command+='--num-non-dominated-snapshots num_non_dominated_snapshots/kroAB200_ihs_695840684.txt '
++ command+='--num-fronts-snapshots num_fronts_snapshots/kroAB200_ihs_695840684.txt '
++ command+='--populations-snapshots populations_snapshots/kroAB200_ihs_695840684_ '
++ '[' ihs = nspso ']'
++ '[' ihs = moead ']'
++ '[' ihs = mhaco ']'
++ '[' ihs = nsmpbrkga ']'
++ eval ./bin/exec/ihs_solver_exec --instance instances/kroAB200.txt --seed 695840684 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB200_ihs_695840684.txt --solutions solutions/kroAB200_ihs_695840684_ --pareto pareto/kroAB200_ihs_695840684.txt --best-solutions-snapshots best_solutions_snapshots/kroAB200_ihs_695840684_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB200_ihs_695840684.txt --num-fronts-snapshots num_fronts_snapshots/kroAB200_ihs_695840684.txt --populations-snapshots populations_snapshots/kroAB200_ihs_695840684_
+++ ./bin/exec/ihs_solver_exec --instance instances/kroAB200.txt --seed 695840684 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB200_ihs_695840684.txt --solutions solutions/kroAB200_ihs_695840684_ --pareto pareto/kroAB200_ihs_695840684.txt --best-solutions-snapshots best_solutions_snapshots/kroAB200_ihs_695840684_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB200_ihs_695840684.txt --num-fronts-snapshots num_fronts_snapshots/kroAB200_ihs_695840684.txt --populations-snapshots populations_snapshots/kroAB200_ihs_695840684_
++ for seed in ${seeds[@]}
++ command='./bin/exec/ihs_solver_exec '
++ command+='--instance instances/kroAB200.txt '
++ command+='--seed 542525286 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/kroAB200_ihs_542525286.txt '
++ command+='--solutions solutions/kroAB200_ihs_542525286_ '
++ command+='--pareto pareto/kroAB200_ihs_542525286.txt '
++ command+='--best-solutions-snapshots best_solutions_snapshots/kroAB200_ihs_542525286_ '
++ command+='--num-non-dominated-snapshots num_non_dominated_snapshots/kroAB200_ihs_542525286.txt '
++ command+='--num-fronts-snapshots num_fronts_snapshots/kroAB200_ihs_542525286.txt '
++ command+='--populations-snapshots populations_snapshots/kroAB200_ihs_542525286_ '
++ '[' ihs = nspso ']'
++ '[' ihs = moead ']'
++ '[' ihs = mhaco ']'
++ '[' ihs = nsmpbrkga ']'
++ eval ./bin/exec/ihs_solver_exec --instance instances/kroAB200.txt --seed 542525286 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB200_ihs_542525286.txt --solutions solutions/kroAB200_ihs_542525286_ --pareto pareto/kroAB200_ihs_542525286.txt --best-solutions-snapshots best_solutions_snapshots/kroAB200_ihs_542525286_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB200_ihs_542525286.txt --num-fronts-snapshots num_fronts_snapshots/kroAB200_ihs_542525286.txt --populations-snapshots populations_snapshots/kroAB200_ihs_542525286_
+++ ./bin/exec/ihs_solver_exec --instance instances/kroAB200.txt --seed 542525286 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/kroAB200_ihs_542525286.txt --solutions solutions/kroAB200_ihs_542525286_ --pareto pareto/kroAB200_ihs_542525286.txt --best-solutions-snapshots best_solutions_snapshots/kroAB200_ihs_542525286_ --num-non-dominated-snapshots num_non_dominated_snapshots/kroAB200_ihs_542525286.txt --num-fronts-snapshots num_fronts_snapshots/kroAB200_ihs_542525286.txt --populations-snapshots populations_snapshots/kroAB200_ihs_542525286_
++ for instance in ${instances[@]}
++ for solver in ${solvers[@]}
++ for seed in ${seeds[@]}
++ command='./bin/exec/ihs_solver_exec '
++ command+='--instance instances/vmAB1084.txt '
++ command+='--seed 217855282 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/vmAB1084_ihs_217855282.txt '
++ command+='--solutions solutions/vmAB1084_ihs_217855282_ '
++ command+='--pareto pareto/vmAB1084_ihs_217855282.txt '
++ command+='--best-solutions-snapshots best_solutions_snapshots/vmAB1084_ihs_217855282_ '
++ command+='--num-non-dominated-snapshots num_non_dominated_snapshots/vmAB1084_ihs_217855282.txt '
++ command+='--num-fronts-snapshots num_fronts_snapshots/vmAB1084_ihs_217855282.txt '
++ command+='--populations-snapshots populations_snapshots/vmAB1084_ihs_217855282_ '
++ '[' ihs = nspso ']'
++ '[' ihs = moead ']'
++ '[' ihs = mhaco ']'
++ '[' ihs = nsmpbrkga ']'
++ eval ./bin/exec/ihs_solver_exec --instance instances/vmAB1084.txt --seed 217855282 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/vmAB1084_ihs_217855282.txt --solutions solutions/vmAB1084_ihs_217855282_ --pareto pareto/vmAB1084_ihs_217855282.txt --best-solutions-snapshots best_solutions_snapshots/vmAB1084_ihs_217855282_ --num-non-dominated-snapshots num_non_dominated_snapshots/vmAB1084_ihs_217855282.txt --num-fronts-snapshots num_fronts_snapshots/vmAB1084_ihs_217855282.txt --populations-snapshots populations_snapshots/vmAB1084_ihs_217855282_
+++ ./bin/exec/ihs_solver_exec --instance instances/vmAB1084.txt --seed 217855282 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/vmAB1084_ihs_217855282.txt --solutions solutions/vmAB1084_ihs_217855282_ --pareto pareto/vmAB1084_ihs_217855282.txt --best-solutions-snapshots best_solutions_snapshots/vmAB1084_ihs_217855282_ --num-non-dominated-snapshots num_non_dominated_snapshots/vmAB1084_ihs_217855282.txt --num-fronts-snapshots num_fronts_snapshots/vmAB1084_ihs_217855282.txt --populations-snapshots populations_snapshots/vmAB1084_ihs_217855282_
++ for seed in ${seeds[@]}
++ command='./bin/exec/ihs_solver_exec '
++ command+='--instance instances/vmAB1084.txt '
++ command+='--seed 433060674 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/vmAB1084_ihs_433060674.txt '
++ command+='--solutions solutions/vmAB1084_ihs_433060674_ '
++ command+='--pareto pareto/vmAB1084_ihs_433060674.txt '
++ command+='--best-solutions-snapshots best_solutions_snapshots/vmAB1084_ihs_433060674_ '
++ command+='--num-non-dominated-snapshots num_non_dominated_snapshots/vmAB1084_ihs_433060674.txt '
++ command+='--num-fronts-snapshots num_fronts_snapshots/vmAB1084_ihs_433060674.txt '
++ command+='--populations-snapshots populations_snapshots/vmAB1084_ihs_433060674_ '
++ '[' ihs = nspso ']'
++ '[' ihs = moead ']'
++ '[' ihs = mhaco ']'
++ '[' ihs = nsmpbrkga ']'
++ eval ./bin/exec/ihs_solver_exec --instance instances/vmAB1084.txt --seed 433060674 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/vmAB1084_ihs_433060674.txt --solutions solutions/vmAB1084_ihs_433060674_ --pareto pareto/vmAB1084_ihs_433060674.txt --best-solutions-snapshots best_solutions_snapshots/vmAB1084_ihs_433060674_ --num-non-dominated-snapshots num_non_dominated_snapshots/vmAB1084_ihs_433060674.txt --num-fronts-snapshots num_fronts_snapshots/vmAB1084_ihs_433060674.txt --populations-snapshots populations_snapshots/vmAB1084_ihs_433060674_
+++ ./bin/exec/ihs_solver_exec --instance instances/vmAB1084.txt --seed 433060674 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/vmAB1084_ihs_433060674.txt --solutions solutions/vmAB1084_ihs_433060674_ --pareto pareto/vmAB1084_ihs_433060674.txt --best-solutions-snapshots best_solutions_snapshots/vmAB1084_ihs_433060674_ --num-non-dominated-snapshots num_non_dominated_snapshots/vmAB1084_ihs_433060674.txt --num-fronts-snapshots num_fronts_snapshots/vmAB1084_ihs_433060674.txt --populations-snapshots populations_snapshots/vmAB1084_ihs_433060674_
++ for seed in ${seeds[@]}
++ command='./bin/exec/ihs_solver_exec '
++ command+='--instance instances/vmAB1084.txt '
++ command+='--seed 678738891 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/vmAB1084_ihs_678738891.txt '
++ command+='--solutions solutions/vmAB1084_ihs_678738891_ '
++ command+='--pareto pareto/vmAB1084_ihs_678738891.txt '
++ command+='--best-solutions-snapshots best_solutions_snapshots/vmAB1084_ihs_678738891_ '
++ command+='--num-non-dominated-snapshots num_non_dominated_snapshots/vmAB1084_ihs_678738891.txt '
++ command+='--num-fronts-snapshots num_fronts_snapshots/vmAB1084_ihs_678738891.txt '
++ command+='--populations-snapshots populations_snapshots/vmAB1084_ihs_678738891_ '
++ '[' ihs = nspso ']'
++ '[' ihs = moead ']'
++ '[' ihs = mhaco ']'
++ '[' ihs = nsmpbrkga ']'
++ eval ./bin/exec/ihs_solver_exec --instance instances/vmAB1084.txt --seed 678738891 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/vmAB1084_ihs_678738891.txt --solutions solutions/vmAB1084_ihs_678738891_ --pareto pareto/vmAB1084_ihs_678738891.txt --best-solutions-snapshots best_solutions_snapshots/vmAB1084_ihs_678738891_ --num-non-dominated-snapshots num_non_dominated_snapshots/vmAB1084_ihs_678738891.txt --num-fronts-snapshots num_fronts_snapshots/vmAB1084_ihs_678738891.txt --populations-snapshots populations_snapshots/vmAB1084_ihs_678738891_
+++ ./bin/exec/ihs_solver_exec --instance instances/vmAB1084.txt --seed 678738891 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/vmAB1084_ihs_678738891.txt --solutions solutions/vmAB1084_ihs_678738891_ --pareto pareto/vmAB1084_ihs_678738891.txt --best-solutions-snapshots best_solutions_snapshots/vmAB1084_ihs_678738891_ --num-non-dominated-snapshots num_non_dominated_snapshots/vmAB1084_ihs_678738891.txt --num-fronts-snapshots num_fronts_snapshots/vmAB1084_ihs_678738891.txt --populations-snapshots populations_snapshots/vmAB1084_ihs_678738891_
++ for seed in ${seeds[@]}
++ command='./bin/exec/ihs_solver_exec '
++ command+='--instance instances/vmAB1084.txt '
++ command+='--seed 695840684 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/vmAB1084_ihs_695840684.txt '
++ command+='--solutions solutions/vmAB1084_ihs_695840684_ '
++ command+='--pareto pareto/vmAB1084_ihs_695840684.txt '
++ command+='--best-solutions-snapshots best_solutions_snapshots/vmAB1084_ihs_695840684_ '
++ command+='--num-non-dominated-snapshots num_non_dominated_snapshots/vmAB1084_ihs_695840684.txt '
++ command+='--num-fronts-snapshots num_fronts_snapshots/vmAB1084_ihs_695840684.txt '
++ command+='--populations-snapshots populations_snapshots/vmAB1084_ihs_695840684_ '
++ '[' ihs = nspso ']'
++ '[' ihs = moead ']'
++ '[' ihs = mhaco ']'
++ '[' ihs = nsmpbrkga ']'
++ eval ./bin/exec/ihs_solver_exec --instance instances/vmAB1084.txt --seed 695840684 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/vmAB1084_ihs_695840684.txt --solutions solutions/vmAB1084_ihs_695840684_ --pareto pareto/vmAB1084_ihs_695840684.txt --best-solutions-snapshots best_solutions_snapshots/vmAB1084_ihs_695840684_ --num-non-dominated-snapshots num_non_dominated_snapshots/vmAB1084_ihs_695840684.txt --num-fronts-snapshots num_fronts_snapshots/vmAB1084_ihs_695840684.txt --populations-snapshots populations_snapshots/vmAB1084_ihs_695840684_
+++ ./bin/exec/ihs_solver_exec --instance instances/vmAB1084.txt --seed 695840684 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/vmAB1084_ihs_695840684.txt --solutions solutions/vmAB1084_ihs_695840684_ --pareto pareto/vmAB1084_ihs_695840684.txt --best-solutions-snapshots best_solutions_snapshots/vmAB1084_ihs_695840684_ --num-non-dominated-snapshots num_non_dominated_snapshots/vmAB1084_ihs_695840684.txt --num-fronts-snapshots num_fronts_snapshots/vmAB1084_ihs_695840684.txt --populations-snapshots populations_snapshots/vmAB1084_ihs_695840684_
++ for seed in ${seeds[@]}
++ command='./bin/exec/ihs_solver_exec '
++ command+='--instance instances/vmAB1084.txt '
++ command+='--seed 542525286 '
++ command+='--time-limit 3600 '
++ command+='--max-num-solutions 2500 '
++ command+='--max-num-snapshots 60 '
++ command+='--population-size 1000 '
++ command+='--statistics statistics/vmAB1084_ihs_542525286.txt '
++ command+='--solutions solutions/vmAB1084_ihs_542525286_ '
++ command+='--pareto pareto/vmAB1084_ihs_542525286.txt '
++ command+='--best-solutions-snapshots best_solutions_snapshots/vmAB1084_ihs_542525286_ '
++ command+='--num-non-dominated-snapshots num_non_dominated_snapshots/vmAB1084_ihs_542525286.txt '
++ command+='--num-fronts-snapshots num_fronts_snapshots/vmAB1084_ihs_542525286.txt '
++ command+='--populations-snapshots populations_snapshots/vmAB1084_ihs_542525286_ '
++ '[' ihs = nspso ']'
++ '[' ihs = moead ']'
++ '[' ihs = mhaco ']'
++ '[' ihs = nsmpbrkga ']'
++ eval ./bin/exec/ihs_solver_exec --instance instances/vmAB1084.txt --seed 542525286 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/vmAB1084_ihs_542525286.txt --solutions solutions/vmAB1084_ihs_542525286_ --pareto pareto/vmAB1084_ihs_542525286.txt --best-solutions-snapshots best_solutions_snapshots/vmAB1084_ihs_542525286_ --num-non-dominated-snapshots num_non_dominated_snapshots/vmAB1084_ihs_542525286.txt --num-fronts-snapshots num_fronts_snapshots/vmAB1084_ihs_542525286.txt --populations-snapshots populations_snapshots/vmAB1084_ihs_542525286_
+++ ./bin/exec/ihs_solver_exec --instance instances/vmAB1084.txt --seed 542525286 --time-limit 3600 --max-num-solutions 2500 --max-num-snapshots 60 --population-size 1000 --statistics statistics/vmAB1084_ihs_542525286.txt --solutions solutions/vmAB1084_ihs_542525286_ --pareto pareto/vmAB1084_ihs_542525286.txt --best-solutions-snapshots best_solutions_snapshots/vmAB1084_ihs_542525286_ --num-non-dominated-snapshots num_non_dominated_snapshots/vmAB1084_ihs_542525286.txt --num-fronts-snapshots num_fronts_snapshots/vmAB1084_ihs_542525286.txt --populations-snapshots populations_snapshots/vmAB1084_ihs_542525286_
