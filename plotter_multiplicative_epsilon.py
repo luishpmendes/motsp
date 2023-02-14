@@ -1,5 +1,7 @@
 import csv
 import matplotlib.pyplot as plt
+import seaborn as sns
+import ptitprince as pt
 import os
 import statistics as stats
 from math import ceil, floor, sqrt
@@ -30,8 +32,7 @@ for i in range(len(instances)):
     col = i%num_cols
     figs[row][col].suptitle(instances[i], fontsize = "x-large")
     ax = figs[row][col].subplots()
-    ax.set_ylabel("Multiplicative Epsilon", fontsize = "large")
-    ax.set_xlabel("Solver", fontsize = "large")
+    ax.set_xlabel("Multiplicative Epsilon Indicator", fontsize = "large")
     xs = []
     for solver in solvers:
         filename = os.path.join(dirname, "multiplicative_epsilon/" + instances[i] + "_" + solver + ".txt")
@@ -41,12 +42,12 @@ for i in range(len(instances)):
             for row in data:
                 x.append(float(row[0]))
         xs.append(x)
-    bp = ax.boxplot(xs, labels = [solver_labels[solver] for solver in solvers], patch_artist = True)
-    for j in range(len(solvers)) :
-        bp["boxes"][j].set_facecolor(colors[j])
-        bp["medians"][j].set_color("black")
-    ax.set_ylim(bottom = min_multiplicative_epsilon, top = max_multiplicative_epsilon)
-fig.suptitle("MOTSP", fontsize = "xx-large")
+    pt.half_violinplot(data = xs, ax = ax, palette = colors, orient="h", width=0.6, bw=0.2, cut=0.0, scale="area", inner=None)
+    sns.stripplot(data = xs, ax = ax, palette = colors, orient="h", size=2, zorder=0)
+    sns.boxplot(data = xs, ax = ax, palette = colors, orient="h", width=0.15, color="black", zorder=10, showcaps=True, boxprops={'facecolor':'none', "zorder":10}, showfliers=True, whiskerprops={'linewidth':2, "zorder":10}, flierprops={'markersize':2}, saturation=1)
+    ax.set_xlim(left = min_multiplicative_epsilon, right = max_multiplicative_epsilon)
+    ax.set_yticklabels([solver_labels[solver] for solver in solvers])
+fig.suptitle("Multi-Objective Travelling Salesman Problem", fontsize = "xx-large")
 filename = os.path.join(dirname, "multiplicative_epsilon/multiplicative_epsilon.png")
 plt.savefig(filename, format = "png")
 plt.close(fig)
@@ -67,15 +68,17 @@ for instance in instances:
                         multiplicative_epsilon[i].append(float(row[0]))
                     csv_file.close()
 
-plt.figure()
-plt.title("MOTSP", fontsize = "xx-large")
-plt.xlabel("Solver", fontsize = "x-large")
-plt.ylabel("Multiplicative Epsilon", fontsize = "x-large")
-bp = plt.boxplot(multiplicative_epsilon, labels = [solver_labels[solver] for solver in solvers], patch_artist = True)
-for i in range(len(solvers)) :
-    bp["boxes"][i].set_facecolor(colors[i])
-    bp["medians"][i].set_color("black")
-plt.ylim(bottom = min_multiplicative_epsilon, top = max_multiplicative_epsilon)
+plt.figure(figsize=(10, 10))
+plt.title("Multi-Objective Travelling Salesman Problem", fontsize = "xx-large")
+plt.xlabel("Multiplicative Epsilon Indicator", fontsize = "x-large")
+pt.half_violinplot(data = multiplicative_epsilon, palette = colors, orient="h", width=0.6, bw=0.2, cut=0.0, scale="area", inner=None)
+sns.stripplot(data = multiplicative_epsilon, palette = colors, orient="h", size=2, zorder=0)
+sns.boxplot(data = multiplicative_epsilon, palette = colors, orient="h", width=0.15, color="black", zorder=10, showcaps=True, boxprops={'facecolor':'none', "zorder":10}, showfliers=True, whiskerprops={'linewidth':2, "zorder":10}, flierprops={'markersize':2}, saturation=1)
+if plt.xlim()[1] > 1.0:
+    plt.xlim(right = 1.0)
+if plt.xlim()[0] < 0.0:
+    plt.xlim(left = 0.0)
+plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers])
 filename = os.path.join(dirname, "multiplicative_epsilon/multiplicative_epsilons.png")
 plt.savefig(filename, format = "png")
 plt.close()
@@ -108,7 +111,7 @@ for i in range(len(solvers)):
     y = []
     for m in ms:
         y.append(stats.mean(multiplicative_epsilon_per_m[solvers[i]][m]))
-    plt.plot(ms, y, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.8)
+    plt.plot(ms, y, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.80)
 plt.xlim(left = max(min(ms) - 1, 0), right = max(ms) + 1)
 plt.ylim(bottom = min_multiplicative_epsilon, top = max_multiplicative_epsilon)
 plt.legend(loc = "best", fontsize = "large")
