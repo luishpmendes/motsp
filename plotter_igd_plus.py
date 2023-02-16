@@ -23,34 +23,30 @@ delta_igd_plus = max_igd_plus - min_igd_plus
 min_igd_plus = max(min_igd_plus - round(0.025 * delta_igd_plus), 0.00)
 max_igd_plus = min(max_igd_plus + round(0.025 * delta_igd_plus), 1.00)
 
-num_rows = floor(sqrt(len(instances)))
-num_cols = ceil(len(instances)/floor(sqrt(len(instances))))
-fig = plt.figure(figsize = (5 * num_cols, 5 * num_rows), constrained_layout = True)
-figs = fig.subfigures(nrows = num_rows, ncols = num_cols, wspace = 0.05, hspace = 0.05)
-for i in range(len(instances)):
-    row = floor(i/num_cols)
-    col = i%num_cols
-    figs[row][col].suptitle(instances[i], fontsize = "x-large")
-    ax = figs[row][col].subplots()
-    ax.set_xlabel("Modified Inverted Generational Distance", fontsize = "large")
+for instance in instances:
+    plt.figure(figsize=(10, 10))
+    plt.title(instance, fontsize = "xx-large")
+    plt.xlabel("Modified Inverted Generational Distance", fontsize = "x-large")
     xs = []
     for solver in solvers:
-        filename = os.path.join(dirname, "igd_plus/" + instances[i] + "_" + solver + ".txt")
+        filename = os.path.join(dirname, "igd_plus/" + instance + "_" + solver + ".txt")
         x = []
         with open(filename) as csv_file:
             data = csv.reader(csv_file)
             for row in data:
                 x.append(float(row[0]))
         xs.append(x)
-    pt.half_violinplot(data = xs, ax = ax, palette = colors, orient="h", width=0.6, bw=0.2, cut=0.0, scale="area", inner=None)
-    sns.stripplot(data = xs, ax = ax, palette = colors, orient="h", size=2, zorder=0)
-    sns.boxplot(data = xs, ax = ax, palette = colors, orient="h", width=0.15, color="black", zorder=10, showcaps=True, boxprops={'facecolor':'none', "zorder":10}, showfliers=True, whiskerprops={'linewidth':2, "zorder":10}, flierprops={'markersize':2}, saturation=1)
-    ax.set_xlim(left = min_igd_plus, right = max_igd_plus)
-    ax.set_yticklabels([solver_labels[solver] for solver in solvers])
-fig.suptitle("Multi-Objective Travelling Salesman Problem", fontsize = "xx-large")
-filename = os.path.join(dirname, "igd_plus/igd_plus.png")
-plt.savefig(filename, format = "png")
-plt.close(fig)
+    pt.half_violinplot(data = xs, palette = colors, orient = "h", width = 0.6, cut = 0.0, inner = None)
+    sns.stripplot(data = xs, palette = colors, orient = "h", size = 2, zorder = 0)
+    sns.boxplot(data = xs, palette = colors, orient = "h", width = 0.20, color = "black", zorder = 10, showcaps = True, boxprops = {'facecolor' : 'none', "zorder" : 10}, showfliers = True, whiskerprops = {'linewidth' : 2, "zorder" : 10}, flierprops = {'markersize' : 2})
+    if plt.xlim()[1] > 1.0:
+        plt.xlim(right = 1.0)
+    if plt.xlim()[0] < 0.0:
+        plt.xlim(left = 0.0)
+    plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers])
+    filename = os.path.join(dirname, "igd_plus/" + instance + ".png")
+    plt.savefig(filename, format = "png")
+    plt.close()
 
 igd_plus = []
 
@@ -71,15 +67,15 @@ for instance in instances:
 plt.figure(figsize=(10, 10))
 plt.title("Multi-Objective Travelling Salesman Problem", fontsize = "xx-large")
 plt.xlabel("Modified Inverted Generational Distance", fontsize = "x-large")
-pt.half_violinplot(data = igd_plus, palette = colors, orient="h", width=0.6, bw=0.2, cut=0.0, scale="area", inner=None)
-sns.stripplot(data = igd_plus, palette = colors, orient="h", size=2, zorder=0)
-sns.boxplot(data = igd_plus, palette = colors, orient="h", width=0.15, color="black", zorder=10, showcaps=True, boxprops={'facecolor':'none', "zorder":10}, showfliers=True, whiskerprops={'linewidth':2, "zorder":10}, flierprops={'markersize':2}, saturation=1)
+pt.half_violinplot(data = igd_plus, palette = colors, orient = "h", width = 0.6, cut = 0.0, inner = None)
+sns.stripplot(data = igd_plus, palette = colors, orient = "h", size = 2, zorder = 0)
+sns.boxplot(data = igd_plus, palette = colors, orient = "h", width = 0.20, color = "black", zorder = 10, showcaps = True, boxprops = {'facecolor' : 'none', "zorder" : 10}, showfliers = True, whiskerprops = {'linewidth' : 2, "zorder" : 10}, flierprops = {'markersize' : 2})
 if plt.xlim()[1] > 1.0:
     plt.xlim(right = 1.0)
 if plt.xlim()[0] < 0.0:
     plt.xlim(left = 0.0)
 plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers])
-filename = os.path.join(dirname, "igd_plus/igd_pluses.png")
+filename = os.path.join(dirname, "igd_plus/igd_plus.png")
 plt.savefig(filename, format = "png")
 plt.close()
 
