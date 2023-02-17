@@ -24,7 +24,7 @@ min_igd_plus = max(min_igd_plus - round(0.025 * delta_igd_plus), 0.00)
 max_igd_plus = min(max_igd_plus + round(0.025 * delta_igd_plus), 1.00)
 
 for instance in instances:
-    plt.figure(figsize = (10, 10))
+    plt.figure(figsize = (11, 11))
     plt.title(instance, fontsize = "xx-large")
     plt.xlabel("Modified Inverted Generational Distance", fontsize = "x-large")
     xs = []
@@ -39,11 +39,7 @@ for instance in instances:
     pt.half_violinplot(data = xs, palette = colors, orient = "h", width = 0.6, cut = 0.0, inner = None)
     sns.stripplot(data = xs, palette = colors, orient = "h", size = 2, zorder = 0)
     sns.boxplot(data = xs, orient = "h", width = 0.20, color = "black", zorder = 10, showcaps = True, boxprops = {'facecolor' : 'none', "zorder" : 10}, showfliers = True, whiskerprops = {'linewidth' : 2, "zorder" : 10}, flierprops = {'markersize' : 2})
-    if plt.xlim()[1] > 1.0:
-        plt.xlim(right = 1.0)
-    if plt.xlim()[0] < 0.0:
-        plt.xlim(left = 0.0)
-    plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers])
+    plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers], fontsize = "large")
     filename = os.path.join(dirname, "igd_plus/" + instance + ".png")
     plt.savefig(filename, format = "png")
     plt.close()
@@ -64,17 +60,13 @@ for instance in instances:
                         igd_plus[i].append(float(row[0]))
                     csv_file.close()
 
-plt.figure(figsize = (10, 10))
+plt.figure(figsize = (11, 11))
 plt.title("Multi-Objective Travelling Salesman Problem", fontsize = "xx-large")
 plt.xlabel("Modified Inverted Generational Distance", fontsize = "x-large")
 pt.half_violinplot(data = igd_plus, palette = colors, orient = "h", width = 0.6, cut = 0.0, inner = None)
 sns.stripplot(data = igd_plus, palette = colors, orient = "h", size = 2, zorder = 0)
 sns.boxplot(data = igd_plus, orient = "h", width = 0.20, color = "black", zorder = 10, showcaps = True, boxprops = {'facecolor' : 'none', "zorder" : 10}, showfliers = True, whiskerprops = {'linewidth' : 2, "zorder" : 10}, flierprops = {'markersize' : 2})
-if plt.xlim()[1] > 1.0:
-    plt.xlim(right = 1.0)
-if plt.xlim()[0] < 0.0:
-    plt.xlim(left = 0.0)
-plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers])
+plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers], fontsize = "large")
 filename = os.path.join(dirname, "igd_plus/igd_plus.png")
 plt.savefig(filename, format = "png")
 plt.close()
