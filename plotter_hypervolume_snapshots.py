@@ -1,5 +1,7 @@
 import csv
 import matplotlib.pyplot as plt
+import seaborn as sns
+import ptitprince as pt
 import os
 import statistics as stats
 from math import ceil, floor, sqrt
@@ -25,37 +27,6 @@ delta_hypervolume = max_hypervolume - min_hypervolume
 min_hypervolume = max(min_hypervolume - round(0.025 * delta_hypervolume), 0.00)
 max_hypervolume = min(max_hypervolume + round(0.025 * delta_hypervolume), 1.00)
 
-# for version in versions:
-#     num_rows = floor(sqrt(len(instances)))
-#     num_cols = ceil(len(instances)/floor(sqrt(len(instances))))
-#     fig = plt.figure(figsize = (5 * num_cols, 5 * num_rows), constrained_layout = True)
-#     figs = fig.subfigures(nrows = num_rows, ncols = num_cols, wspace = 0.05, hspace = 0.05)
-#     for i in range(len(instances)):
-#         row = floor(i/num_cols)
-#         col = i%num_cols
-#         figs[row][col].suptitle(instances[i], fontsize = "x-large")
-#         ax = figs[row][col].subplots()
-#         ax.set_ylabel("Hypervolume Ratio x Time", fontsize = "large")
-#         ax.set_xlabel("Time (s)", fontsize = "large")
-#         for j in range(len(solvers)):
-#             filename = os.path.join(dirname, "hypervolume_snapshots/" + instances[i] + "_" + solvers[j] + "_" + version + ".txt")
-#             if os.path.exists(filename):
-#                 x = []
-#                 y = []
-#                 with open(filename) as csv_file:
-#                     data = csv.reader(csv_file, delimiter = ",")
-#                     for row in data:
-#                         x.append(float(row[1]))
-#                         y.append(float(row[2]))
-#                 ax.plot(x, y, label = solver_labels[solvers[j]], marker = (j + 3, 2, 0), color = colors[j], alpha = 0.80)
-#         ax.set_xlim(left = 0.0, right = max_time)
-#         ax.set_ylim(bottom = min_hypervolume, top = max_hypervolume)
-#         ax.legend(loc = "best")
-#     fig.suptitle("MOTSP", fontsize = "xx-large")
-#     filename = os.path.join(dirname, "hypervolume_snapshots/hypervolume_snapshots_" + version + ".png")
-#     plt.savefig(filename, format = "png")
-#     plt.close(fig)
-
 hypervolume_per_solver = {}
 time_per_solver = {}
 
@@ -66,18 +37,26 @@ for solver in solvers:
         hypervolume_per_solver[solver].append([])
         time_per_solver[solver].append([])
 
-for instance in instances:
+hypervolume_per_snapshot = []
+
+for i in range(num_snapshots + 1):
+    hypervolume_per_snapshot.append([])
     for solver in solvers:
+        hypervolume_per_snapshot[i].append([])
+
+for instance in instances:
+    for i in range(len(solvers)):
         for seed in seeds:
-            filename = os.path.join(dirname, "hypervolume_snapshots/" + instance + "_" + solver + "_" + str(seed) + ".txt")
+            filename = os.path.join(dirname, "hypervolume_snapshots/" + instance + "_" + solvers[i] + "_" + str(seed) + ".txt")
             if os.path.exists(filename):
                 with open(filename) as csv_file:
                     data = csv.reader(csv_file, delimiter = ",")
-                    i = 0
+                    j = 0
                     for row in data:
-                        time_per_solver[solver][i].append(float(row[1]))
-                        hypervolume_per_solver[solver][i].append(float(row[2]))
-                        i += 1
+                        time_per_solver[solvers[i]][j].append(float(row[1]))
+                        hypervolume_per_solver[solvers[i]][j].append(float(row[2]))
+                        hypervolume_per_snapshot[j][i].append(float(row[2]))
+                        j += 1
                     csv_file.close()
 
 plt.figure()
@@ -126,3 +105,16 @@ plt.legend(loc = "best", fontsize = "large")
 filename = os.path.join(dirname, "hypervolume_snapshots/hypervolume_quartiles_snapshots.png")
 plt.savefig(filename, format = "png")
 plt.close()
+
+for snapshot in range(num_snapshots + 1):
+    plt.figure(figsize = (10, 10))
+    plt.title("Multi-Objective Travelling Salesman Problem", fontsize = "xx-large")
+    plt.xlabel("Hypervolume Ratio", fontsize = "x-large")
+    pt.half_violinplot(data = hypervolume_per_snapshot[snapshot], palette = colors, orient = "h", width = 0.6, cut = 0.0, inner = None)
+    sns.stripplot(data = hypervolume_per_snapshot[snapshot], palette = colors, orient = "h", size = 2, zorder = 0)
+    sns.boxplot(data = hypervolume_per_snapshot[snapshot], orient = "h", width = 0.20, color = "black", zorder = 10, showcaps = True, boxprops = {'facecolor' : 'none', "zorder" : 10}, showfliers = True, whiskerprops = {'linewidth' : 2, "zorder" : 10}, flierprops = {'markersize' : 2})
+    plt.xlim(left = 0.0, right = 1.0)
+    plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers])
+    filename = os.path.join(dirname, "hypervolume_snapshots/snapshot_" + str(snapshot) + ".png")
+    plt.savefig(filename, format = "png")
+    plt.close()

@@ -24,7 +24,7 @@ min_hypervolume = max(min_hypervolume - round(0.025 * delta_hypervolume), 0.00)
 max_hypervolume = min(max_hypervolume + round(0.025 * delta_hypervolume), 1.00)
 
 for instance in instances:
-    plt.figure(figsize=(10, 10))
+    plt.figure(figsize = (10, 10))
     plt.title(instance, fontsize = "xx-large")
     plt.xlabel("Hypervolume Ratio", fontsize = "x-large")
     xs = []
@@ -38,7 +38,7 @@ for instance in instances:
         xs.append(x)
     pt.half_violinplot(data = xs, palette = colors, orient = "h", width = 0.6, cut = 0.0, inner = None)
     sns.stripplot(data = xs, palette = colors, orient = "h", size = 2, zorder = 0)
-    sns.boxplot(data = xs, palette = colors, orient = "h", width = 0.20, color = "black", zorder = 10, showcaps = True, boxprops = {'facecolor' : 'none', "zorder" : 10}, showfliers = True, whiskerprops = {'linewidth' : 2, "zorder" : 10}, flierprops = {'markersize' : 2})
+    sns.boxplot(data = xs, orient = "h", width = 0.20, color = "black", zorder = 10, showcaps = True, boxprops = {'facecolor' : 'none', "zorder" : 10}, showfliers = True, whiskerprops = {'linewidth' : 2, "zorder" : 10}, flierprops = {'markersize' : 2})
     if plt.xlim()[1] > 1.0:
         plt.xlim(right = 1.0)
     if plt.xlim()[0] < 0.0:
@@ -64,12 +64,12 @@ for instance in instances:
                         hypervolume[i].append(float(row[0]))
                     csv_file.close()
 
-plt.figure(figsize=(10, 10))
+plt.figure(figsize = (10, 10))
 plt.title("Multi-Objective Travelling Salesman Problem", fontsize = "xx-large")
 plt.xlabel("Hypervolume Ratio", fontsize = "x-large")
 pt.half_violinplot(data = hypervolume, palette = colors, orient = "h", width = 0.6, cut = 0.0, inner = None)
 sns.stripplot(data = hypervolume, palette = colors, orient = "h", size = 2, zorder = 0)
-sns.boxplot(data = hypervolume, palette = colors, orient = "h", width = 0.20, color = "black", zorder = 10, showcaps = True, boxprops = {'facecolor' : 'none', "zorder" : 10}, showfliers = True, whiskerprops = {'linewidth' : 2, "zorder" : 10}, flierprops = {'markersize' : 2})
+sns.boxplot(data = hypervolume, orient = "h", width = 0.20, color = "black", zorder = 10, showcaps = True, boxprops = {'facecolor' : 'none', "zorder" : 10}, showfliers = True, whiskerprops = {'linewidth' : 2, "zorder" : 10}, flierprops = {'markersize' : 2})
 if plt.xlim()[1] > 1.0:
     plt.xlim(right = 1.0)
 if plt.xlim()[0] < 0.0:
