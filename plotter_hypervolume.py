@@ -39,10 +39,6 @@ for instance in instances:
     pt.half_violinplot(data = xs, palette = colors, orient = "h", width = 0.6, cut = 0.0, inner = None)
     sns.stripplot(data = xs, palette = colors, orient = "h", size = 2, zorder = 0)
     sns.boxplot(data = xs, orient = "h", width = 0.20, color = "black", zorder = 10, showcaps = True, boxprops = {'facecolor' : 'none', "zorder" : 10}, showfliers = True, whiskerprops = {'linewidth' : 2, "zorder" : 10}, flierprops = {'markersize' : 2})
-    if plt.xlim()[0] < 0.0:
-        plt.xlim(left = 0.0)
-    if plt.xlim()[1] > 1.0:
-        plt.xlim(right = 1.0)
     plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers], fontsize = "large")
     filename = os.path.join(dirname, "hypervolume/" + instance + ".png")
     plt.savefig(filename, format = "png")
@@ -70,10 +66,6 @@ plt.xlabel("Hypervolume Ratio", fontsize = "x-large")
 pt.half_violinplot(data = hypervolume, palette = colors, orient = "h", width = 0.6, cut = 0.0, inner = None)
 sns.stripplot(data = hypervolume, palette = colors, orient = "h", size = 2, zorder = 0)
 sns.boxplot(data = hypervolume, orient = "h", width = 0.20, color = "black", zorder = 10, showcaps = True, boxprops = {'facecolor' : 'none', "zorder" : 10}, showfliers = True, whiskerprops = {'linewidth' : 2, "zorder" : 10}, flierprops = {'markersize' : 2})
-if plt.xlim()[0] < 0.0:
-    plt.xlim(left = 0.0)
-if plt.xlim()[1] > 1.0:
-    plt.xlim(right = 1.0)
 plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers], fontsize = "large")
 filename = os.path.join(dirname, "hypervolume/hypervolume.png")
 plt.savefig(filename, format = "png")
