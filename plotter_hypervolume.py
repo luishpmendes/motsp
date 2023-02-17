@@ -24,12 +24,12 @@ min_hypervolume = max(min_hypervolume - round(0.025 * delta_hypervolume), 0.00)
 max_hypervolume = min(max_hypervolume + round(0.025 * delta_hypervolume), 1.00)
 
 for instance in instances:
-    plt.figure(figsize = (10, 10))
+    plt.figure(figsize = (11, 11))
     plt.title(instance, fontsize = "xx-large")
     plt.xlabel("Hypervolume Ratio", fontsize = "x-large")
     xs = []
     for solver in solvers:
-        filename = os.path.join(dirname, "hypervolume/" + instances + "_" + solver + ".txt")
+        filename = os.path.join(dirname, "hypervolume/" + instance + "_" + solver + ".txt")
         x = []
         with open(filename) as csv_file:
             data = csv.reader(csv_file)
@@ -43,7 +43,7 @@ for instance in instances:
         plt.xlim(left = 0.0)
     if plt.xlim()[1] > 1.0:
         plt.xlim(right = 1.0)
-    plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers])
+    plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers], fontsize = "large")
     filename = os.path.join(dirname, "hypervolume/" + instance + ".png")
     plt.savefig(filename, format = "png")
     plt.close()
@@ -64,7 +64,7 @@ for instance in instances:
                         hypervolume[i].append(float(row[0]))
                     csv_file.close()
 
-plt.figure(figsize = (10, 10))
+plt.figure(figsize = (11, 11))
 plt.title("Multi-Objective Travelling Salesman Problem", fontsize = "xx-large")
 plt.xlabel("Hypervolume Ratio", fontsize = "x-large")
 pt.half_violinplot(data = hypervolume, palette = colors, orient = "h", width = 0.6, cut = 0.0, inner = None)
@@ -74,7 +74,7 @@ if plt.xlim()[0] < 0.0:
     plt.xlim(left = 0.0)
 if plt.xlim()[1] > 1.0:
     plt.xlim(right = 1.0)
-plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers])
+plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers], fontsize = "large")
 filename = os.path.join(dirname, "hypervolume/hypervolume.png")
 plt.savefig(filename, format = "png")
 plt.close()
