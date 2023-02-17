@@ -24,7 +24,7 @@ min_multiplicative_epsilon = max(min_multiplicative_epsilon - round(0.025 * delt
 max_multiplicative_epsilon = min(max_multiplicative_epsilon + round(0.025 * delta_multiplicative_epsilon), 1.00)
 
 for instance in instances:
-    plt.figure(figsize = (10, 10))
+    plt.figure(figsize = (11, 11))
     plt.title(instance, fontsize = "xx-large")
     plt.xlabel("Multiplicative Epsilon Indicator", fontsize = "x-large")
     xs = []
@@ -39,11 +39,7 @@ for instance in instances:
     pt.half_violinplot(data = xs, palette = colors, orient = "h", width = 0.6, cut = 0.0, inner = None)
     sns.stripplot(data = xs, palette = colors, orient = "h", size = 2, zorder = 0)
     sns.boxplot(data = xs, orient = "h", width = 0.20, color = "black", zorder = 10, showcaps = True, boxprops = {'facecolor' : 'none', "zorder" : 10}, showfliers = True, whiskerprops = {'linewidth' : 2, "zorder" : 10}, flierprops = {'markersize' : 2})
-    if plt.xlim()[1] > 1.0:
-        plt.xlim(right = 1.0)
-    if plt.xlim()[0] < 0.0:
-        plt.xlim(left = 0.0)
-    plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers])
+    plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers], fontsize = "large")
     filename = os.path.join(dirname, "multiplicative_epsilon/" + instance + ".png")
     plt.savefig(filename, format = "png")
     plt.close()
@@ -64,17 +60,13 @@ for instance in instances:
                         multiplicative_epsilon[i].append(float(row[0]))
                     csv_file.close()
 
-plt.figure(figsize = (10, 10))
+plt.figure(figsize = (11, 11))
 plt.title("Multi-Objective Travelling Salesman Problem", fontsize = "xx-large")
 plt.xlabel("Multiplicative Epsilon Indicator", fontsize = "x-large")
 pt.half_violinplot(data = multiplicative_epsilon, palette = colors, orient = "h", width = 0.6, cut = 0.0, inner = None)
 sns.stripplot(data = multiplicative_epsilon, palette = colors, orient = "h", size = 2, zorder = 0)
 sns.boxplot(data = multiplicative_epsilon, orient = "h", width = 0.20, color = "black", zorder = 10, showcaps = True, boxprops = {'facecolor' : 'none', "zorder" : 10}, showfliers = True, whiskerprops = {'linewidth' : 2, "zorder" : 10}, flierprops = {'markersize' : 2})
-if plt.xlim()[1] > 1.0:
-    plt.xlim(right = 1.0)
-if plt.xlim()[0] < 0.0:
-    plt.xlim(left = 0.0)
-plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers])
+plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers], fontsize = "large")
 filename = os.path.join(dirname, "multiplicative_epsilon/multiplicative_epsilon.png")
 plt.savefig(filename, format = "png")
 plt.close()
