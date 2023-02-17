@@ -56,12 +56,7 @@ for j in range(len(metrics)):
     pt.half_violinplot(data = metrics[j], ax = axs[0][j], palette = colors, orient = "h", width = 0.6, cut = 0.0, inner = None)
     sns.stripplot(data = metrics[j], ax = axs[0][j], palette = colors, orient = "h", size = 2, zorder = 0)
     sns.boxplot(data = metrics[j], ax = axs[0][j], orient = "h", width = 0.20, color = "black", zorder = 10, showcaps = True, boxprops = {'facecolor' : 'none', "zorder" : 10}, showfliers = True, whiskerprops = {'linewidth' : 2, "zorder" : 10}, flierprops = {'markersize' : 2})
-    axs[0][j].set_xticks(ticks = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], fontsize = "x-large")
     axs[0][j].set_yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers], fontsize = "x-large")
-    if axs[0][j].get_xlim()[0] > 0.0:
-        axs[0][j].set_xlim(left = 0.0)
-    if axs[0][j].get_xlim()[1] < 1.0:
-        axs[0][j].set_xlim(right = 1.0)
 filename = os.path.join(dirname, "metrics/raincloud.png")
 plt.savefig(filename, format = "png")
 
@@ -74,24 +69,12 @@ for i in range(len(solvers)):
         axs[j][j].set_yticks([])
         axs[j][j].set_ylabel(ylabel = "Density", fontsize = "xx-large")
         sns.kdeplot(data = metrics[j][i], ax = axs[j][j], color = colors[i], label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), cut = 0)
-        if axs[j][j].get_xlim()[0] > 0.0:
-            axs[j][j].set_xlim(left = 0.0)
-        if axs[j][j].get_xlim()[1] < 1.0:
-            axs[j][j].set_xlim(right = 1.0)
         axs[j][j].legend(loc = "best", fontsize = "x-large")
         for k in range(len(metrics)):
             if j != k:
                 axs[j][k].set_xlabel(xlabel = metrics_labels[k], fontsize = "xx-large")
                 axs[j][k].set_ylabel(ylabel = metrics_labels[j], fontsize = "xx-large")
                 axs[j][k].scatter(x = metrics[k][i], y = metrics[j][i], color = colors[i], label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), alpha = 0.60)
-                if axs[j][k].get_xlim()[0] > 0.0:
-                    axs[j][k].set_xlim(left = 0.0)
-                if axs[j][k].get_xlim()[1] < 1.0:
-                    axs[j][k].set_xlim(right = 1.0)
-                if axs[j][k].get_ylim()[0] > 0.0:
-                    axs[j][k].set_ylim(bottom = 0.0)
-                if axs[j][k].get_ylim()[1] < 1.0:
-                    axs[j][k].set_ylim(top = 1.0)
                 axs[j][k].legend(loc = "best", fontsize = "x-large")
 filename = os.path.join(dirname, "metrics/scatter.png")
 plt.savefig(filename, format = "png")
@@ -143,11 +126,6 @@ for instance in instances:
         sns.stripplot(data = metrics[j], ax = axs[0][j], palette = colors, orient = "h", size = 2, zorder = 0)
         sns.boxplot(data = metrics[j], ax = axs[0][j], orient = "h", width = 0.20, color = "black", zorder = 10, showcaps = True, boxprops = {'facecolor' : 'none', "zorder" : 10}, showfliers = True, whiskerprops = {'linewidth' : 2, "zorder" : 10}, flierprops = {'markersize' : 2})
         axs[0][j].set_yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers], fontsize = "x-large")
-        axs[0][j].set_xticks(ticks = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], fontsize = "x-large")
-        if axs[0][j].get_xlim()[0] > 0.0:
-            axs[0][j].set_xlim(left = 0.0)
-        if axs[0][j].get_xlim()[1] < 1.0:
-            axs[0][j].set_xlim(right = 1.0)
     filename = os.path.join(dirname, "metrics/raincloud_" + instance + ".png")
     plt.savefig(filename, format = "png")
 
@@ -160,24 +138,12 @@ for instance in instances:
             axs[j][j].set_yticks([])
             axs[j][j].set_ylabel(ylabel = "Density")
             sns.kdeplot(data = metrics[j][i], ax = axs[j][j], color = colors[i], label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), cut = 0)
-            if axs[j][j].get_xlim()[0] > 0.0:
-                axs[j][j].set_xlim(left = 0.0)
-            if axs[j][j].get_xlim()[1] < 1.0:
-                axs[j][j].set_xlim(right = 1.0)
             axs[j][j].legend(loc = "best")
             for k in range(len(metrics)):
                 if j != k:
                     axs[j][k].set_xlabel(xlabel = metrics_labels[k])
                     axs[j][k].set_ylabel(ylabel = metrics_labels[j])
                     axs[j][k].scatter(x = metrics[k][i], y = metrics[j][i], color = colors[i], label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), alpha = 0.60)
-                    if axs[j][k].get_xlim()[0] > 0.0:
-                        axs[j][k].set_xlim(left = 0.0)
-                    if axs[j][k].get_xlim()[1] < 1.0:
-                        axs[j][k].set_xlim(right = 1.0)
-                    if axs[j][k].get_ylim()[0] > 0.0:
-                        axs[j][k].set_ylim(bottom = 0.0)
-                    if axs[j][k].get_ylim()[1] < 1.0:
-                        axs[j][k].set_ylim(top = 1.0)
                     axs[j][k].legend(loc = "best")
     filename = os.path.join(dirname, "metrics/scatter_" + instance + ".png")
     plt.savefig(filename, format = "png")
