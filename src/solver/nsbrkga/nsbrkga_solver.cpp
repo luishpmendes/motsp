@@ -97,8 +97,6 @@ void NSBRKGA_Solver::solve() {
 
     std::vector<std::vector<BRKGA::Chromosome>> initial_populations(
             this->num_populations);
-    std::vector<std::vector<std::vector<double>>> initial_fitnesses(
-            this->num_populations);
 
     if(!this->initial_individuals.empty()) {
         for(unsigned i = 0; i < this->initial_individuals.size(); i++) {
@@ -221,14 +219,10 @@ void NSBRKGA_Solver::solve() {
                         this->rng);
                 initial_populations.clear();
                 initial_populations.resize(this->num_populations);
-                initial_fitnesses.clear();
-                initial_fitnesses.resize(this->num_populations);
 
                 for(unsigned i = 0; i < this->initial_individuals.size(); i++) {
                     initial_populations[i % this->num_populations].push_back(
                             this->best_individuals[i].second);
-                    initial_fitnesses[i % this->num_populations].push_back(
-                            this->best_individuals[i].first);
                 }
 
                 for(unsigned i = 0; i < this->num_populations; i++) {
@@ -236,9 +230,7 @@ void NSBRKGA_Solver::solve() {
                         j < initial_populations[i].size();
                         j++) {
                         algorithm.injectChromosome(initial_populations[i][j],
-                                                   i,
-                                                   j,
-                                                   initial_fitnesses[i][j]);
+                                                   i, j);
                     }
                 }
             }
