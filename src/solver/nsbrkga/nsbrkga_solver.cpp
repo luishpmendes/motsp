@@ -213,27 +213,6 @@ void NSBRKGA_Solver::solve() {
                 (generations_without_improvement % this->reset_interval) == 0) {
             this->num_resets++;
             algorithm.reset(this->reset_intensity);
-            if(!this->initial_individuals.empty()) {
-                shuffle(this->initial_individuals.begin(),
-                        this->initial_individuals.end(),
-                        this->rng);
-                initial_populations.clear();
-                initial_populations.resize(this->num_populations);
-
-                for(unsigned i = 0; i < this->initial_individuals.size(); i++) {
-                    initial_populations[i % this->num_populations].push_back(
-                            this->best_individuals[i].second);
-                }
-
-                for(unsigned i = 0; i < this->num_populations; i++) {
-                    for(unsigned j = 0;
-                        j < initial_populations[i].size();
-                        j++) {
-                        algorithm.injectChromosome(initial_populations[i][j],
-                                                   i, j);
-                    }
-                }
-            }
         }
     }
 
