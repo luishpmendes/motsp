@@ -214,6 +214,7 @@ class Solver {
      *
      * @param best_individuals the best individuals found so far.
      * @param new_individuals  the new individuals found.
+     * @param senses           the optimisation senses.
      *
      * @return true if the best individual are modified; false otherwise.
      *********************************************************************/
@@ -224,6 +225,27 @@ class Solver {
                 std::pair<std::vector<double>,
                           std::vector<double>>> & new_individuals,
             const std::vector<BRKGA::Sense> & senses);
+
+    /*********************************************************************
+     * Update the best individuals found so far.
+     *
+     * @param best_individuals  the best individuals found so far.
+     * @param new_individuals   the new individuals found.
+     * @param senses            the optimisation senses.
+     * @param max_num_solutions the maximum number of solutions.
+     * @param rng               the pseudo-random numbers generator.
+     *
+     * @return true if the best individual are modified; false otherwise.
+     *********************************************************************/
+    static bool update_best_individuals(
+            std::vector<std::pair<std::vector<double>,
+                                  std::vector<double>>> & best_individuals,
+            const std::vector<
+                std::pair<std::vector<double>,
+                          std::vector<double>>> & new_individuals,
+            const std::vector<BRKGA::Sense> & senses,
+            unsigned max_num_solutions,
+            std::mt19937 & rng);
 
     /*********************************************************************
      * Update the best individuals found so far.

@@ -25,7 +25,21 @@ int main(int argc, char * argv[]) {
                 reference_pareto,
                 pareto,
                 best_solutions_snapshot;
-        unsigned num_solvers;
+        unsigned num_solvers, max_num_solutions = 800,
+            seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::mt19937 rng;
+
+        if(arg_parser.option_exists("--max-num-solutions")) {
+            max_num_solutions =
+                std::stoul(arg_parser.option_value("--max-num-solutions"));
+        }
+
+        if(arg_parser.option_exists("--seed")) {
+            seed = std::stoul(arg_parser.option_value("--seed"));
+        }
+
+        rng.seed(seed);
+        rng.discard(10000);
 
         for(num_solvers = 0;
             arg_parser.option_exists("--pareto-" +
@@ -57,10 +71,11 @@ int main(int argc, char * argv[]) {
                         pareto.push_back(std::make_pair(value, std::vector<double>()));
                     }
 
-                    motsp::Solver::update_best_individuals(
-                        reference_pareto,
-                        pareto,
-                        instance.senses);
+                    motsp::Solver::update_best_individuals(reference_pareto,
+                                                           pareto,
+                                                           instance.senses,
+                                                           max_num_solutions,
+                                                           rng);
 
                     ifs.close();
                 } else {
@@ -107,7 +122,9 @@ int main(int argc, char * argv[]) {
                         motsp::Solver::update_best_individuals(
                             reference_pareto,
                             best_solutions_snapshot,
-                            instance.senses);
+                            instance.senses,
+                            max_num_solutions,
+                            rng);
 
                         ifs.close();
                     } else {

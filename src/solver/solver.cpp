@@ -97,6 +97,27 @@ bool Solver::update_best_individuals(
 }
 
 bool Solver::update_best_individuals(
+            std::vector<std::pair<std::vector<double>, std::vector<double>>> & best_individuals,
+            const std::vector<
+                std::pair<std::vector<double>, std::vector<double>>> & new_individuals,
+            const std::vector<BRKGA::Sense> & senses,
+            unsigned max_num_solutions,
+            std::mt19937 & rng) {
+    bool result = Solver::update_best_individuals(best_individuals,
+                                                  new_individuals,
+                                                  senses);
+
+    if(best_individuals.size() > max_num_solutions) {
+        BRKGA::Population::crowdingSort<std::vector<double>>(best_individuals,
+                                                             rng);
+        best_individuals.resize(max_num_solutions);
+        result = true;
+    }
+
+    return result;
+}
+
+bool Solver::update_best_individuals(
             const std::vector<
                 std::pair<std::vector<double>,
                           std::vector<double>>> & new_individuals) {
