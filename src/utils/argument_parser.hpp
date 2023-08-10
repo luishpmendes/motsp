@@ -36,4 +36,3 @@ public:
      ****************************************************************/
     bool option_exists(const std::string & option) const;
 };
-
