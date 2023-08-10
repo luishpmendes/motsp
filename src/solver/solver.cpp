@@ -141,7 +141,7 @@ bool Solver::update_best_individuals(const pagmo::population & pop) {
     std::vector<std::pair<std::vector<double>, std::vector<double>>>
         new_individuals(pop.size());
 
-    for(unsigned i = 0; i < pop.size(); i++) {
+    for(std::size_t i = 0; i < pop.size(); i++) {
         new_individuals[i] = std::make_pair(pop.get_f()[i], pop.get_x()[i]);
     }
 
@@ -156,14 +156,14 @@ void Solver::capture_snapshot(const pagmo::population & pop) {
                 time_snapshot,
                 std::vector<std::vector<double>>(
                     this->best_individuals.size())));
-    for(unsigned i = 0; i < this->best_individuals.size(); i++) {
+    for(std::size_t i = 0; i < this->best_individuals.size(); i++) {
         std::get<2>(this->best_solutions_snapshots.back())[i] =
             this->best_individuals[i].first;
     }
 
     this->current_individuals.resize(pop.size());
 
-    for(unsigned i = 0; i < pop.size(); i++) {
+    for(std::size_t i = 0; i < pop.size(); i++) {
         this->current_individuals[i] = std::make_pair(pop.get_f()[i],
                                                       pop.get_x()[i]);
     }
