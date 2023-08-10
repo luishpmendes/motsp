@@ -148,7 +148,7 @@ int main (int argc, char * argv[]) {
 
         if(arg_parser.option_exists("--shake-intensity")) {
             solver.shake_intensity =
-                std::stoul(arg_parser.option_value("--shake-intensity"));
+                std::stod(arg_parser.option_value("--shake-intensity"));
         }
 
         if(arg_parser.option_exists("--reset-interval")) {
