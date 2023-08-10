@@ -107,16 +107,16 @@ class Solution {
     friend std::istream & operator >>(std::istream & is,
                                       Solution & solution);
 
-    /*******************************************************
+    /*************************************************************
      * Standard output operator.
      *
      * @param os       standard output stream object.
      * @param solution the solution.
      *
      * @return the stream object.
-     *******************************************************/
+     *************************************************************/
     friend std::ostream & operator <<(std::ostream & os,
-                                      Solution & solution);
+                                      const Solution & solution);
 };
 
 }

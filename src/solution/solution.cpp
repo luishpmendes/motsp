@@ -10,27 +10,23 @@ bool Solution::dominates(const std::vector<double> & costA,
         return false;
     }
 
-    // Checks if costA is at least as good as costB
-    for(unsigned i = 0; i < costA.size(); i++) {
+    bool at_least_as_good = true, better = false;
+
+    for(std::size_t i = 0; i < costA.size() && at_least_as_good; i++) {
         if(costA[i] > costB[i] + std::numeric_limits<double>::epsilon()) {
-            return false;
+            at_least_as_good =  false;
+        } else if(costA[i] < costB[i] - std::numeric_limits<double>::epsilon()) {
+            better = true;
         }
     }
 
-    // Checks if costA is better than costB
-    for(unsigned i = 0; i < costA.size(); i++) {
-        if(costA[i] < costB[i] - std::numeric_limits<double>::epsilon()) {
-            return true;
-        }
-    }
-
-    return false;
+    return at_least_as_good && better;
 }
 
 void Solution::normalize_cycle() {
-    std::vector<unsigned>::iterator it = find(this->cycle.begin(),
-                                              this->cycle.end(),
-                                              0);
+    std::vector<unsigned>::iterator it = std::find(this->cycle.begin(),
+                                                   this->cycle.end(),
+                                                   0);
     if(it != this->cycle.end()) {
         std::rotate(this->cycle.begin(), it, this->cycle.end());
     }
@@ -43,17 +39,18 @@ void Solution::normalize_cycle() {
 void Solution::compute_cycle(const std::vector<double> & key) {
     std::vector<std::pair<double, unsigned>> permutation(key.size());
 
-    for(unsigned i = 0; i < key.size(); i++) {
+    for(std::size_t i = 0; i < key.size(); i++) {
         permutation[i] = std::make_pair(key[i], i + 1);
     }
 
     std::sort(permutation.begin(), permutation.end());
 
-    this->cycle = std::vector<unsigned>(key.size() + 1, key.size() + 1);
+    this->cycle.resize(key.size() + 1, key.size() + 1);
+    this->cycle.assign(key.size() + 1, key.size() + 1);
 
     this->cycle[0] = 0;
 
-    for(unsigned i = 0; i < key.size(); i++) {
+    for(std::size_t i = 0; i < key.size(); i++) {
         this->cycle[i + 1] = permutation[i].second;
     }
 
@@ -62,7 +59,8 @@ void Solution::compute_cycle(const std::vector<double> & key) {
 
 void Solution::init() {
     // compute the cost
-    this->cost = std::vector<double>(this->instance.num_objectives, 0.0);
+    this->cost.resize(this->instance.num_objectives, 0.0);
+    this->cost.assign(this->instance.num_objectives, 0.0);
 
     for(unsigned i = 0; i < this->instance.num_objectives; i++) {
         for(unsigned j = 0; j < this->instance.num_vertices - 1; j++) {
@@ -120,7 +118,7 @@ std::istream & operator >>(std::istream & is, Solution & solution) {
     return is;
 }
 
-std::ostream & operator <<(std::ostream & os, Solution & solution) {
+std::ostream & operator <<(std::ostream & os, const Solution & solution) {
     for(unsigned i = 0; i < solution.instance.num_vertices - 1; i++) {
         os << solution.cycle[i] << ' ';
     }
