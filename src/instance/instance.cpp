@@ -5,33 +5,30 @@
 namespace motsp {
 
 void Instance::init() {
-    this->adj =
-        std::vector<std::vector<std::vector<double>>>(
-                this->num_objectives, std::vector<std::vector<double>>(
-                    this->num_vertices,
-                    std::vector<double>(this->num_vertices, 0.0)));
+    this->adj.resize(this->num_objectives, std::vector<std::vector<double>>(
+                this->num_vertices,
+                std::vector<double>(this->num_vertices, 0.0)));
+    this->adj.assign(this->num_objectives, std::vector<std::vector<double>>(
+                this->num_vertices,
+                std::vector<double>(this->num_vertices, 0.0)));
+
+    this->primal_bound.resize(this->num_objectives, 0.0);
+    this->primal_bound.assign(this->num_objectives, 0.0);
+
+    this->senses.resize(this->num_objectives, BRKGA::Sense::MINIMIZE);
+    this->senses.assign(this->num_objectives, BRKGA::Sense::MINIMIZE);
 
     std::vector<std::vector<double>> edge_weight(this->num_objectives);
-
-    this->primal_bound = std::vector<double>(this->num_objectives, 0.0);
-
-    this->senses = std::vector<BRKGA::Sense>(this->num_objectives,
-            BRKGA::Sense::MINIMIZE);
 
     for(unsigned i = 0; i < this->num_objectives; i++) {
         for(unsigned u = 0; u < this->num_vertices; u++) {
             for(unsigned v = 0; v < this->num_vertices; v++) {
-                this->adj[i][u][v] +=
-                    (this->coord[i][u].first - this->coord[i][v].first) *
-                    (this->coord[i][u].first - this->coord[i][v].first);
+                double dx = this->coord[i][u].first - this->coord[i][v].first,
+                       dy = this->coord[i][u].second - this->coord[i][v].second,
+                       dist = round(sqrt(dx * dx + dy * dy));
 
-                this->adj[i][u][v] +=
-                    (this->coord[i][u].second - this->coord[i][v].second) *
-                    (this->coord[i][u].second - this->coord[i][v].second);
-
-                this->adj[i][u][v] = round(sqrt(this->adj[i][u][v]));
-
-                edge_weight[i].push_back(this->adj[i][u][v]);
+                this->adj[i][u][v] = dist;
+                edge_weight[i].push_back(dist);
             }
         }
 
@@ -44,19 +41,17 @@ void Instance::init() {
 }
 
 Instance::Instance(const std::vector<std::vector<std::vector<double>>> & adj) :
-    adj(adj) {
-    this->num_objectives = this->adj.size();
-    this->num_vertices = this->adj.front().size();
-    this->senses = std::vector<BRKGA::Sense>(this->num_objectives,
-            BRKGA::Sense::MINIMIZE);
-}
+    num_objectives(adj.size()),
+    num_vertices(adj.front().size()),
+    adj(adj),
+    senses(num_objectives, BRKGA::Sense::MINIMIZE) {}
+
 
 Instance::Instance(
         const std::vector<std::vector<std::pair<double, double>>> & coord) :
+    num_objectives(coord.size()),
+    num_vertices(coord.front().size()),
     coord(coord) {
-    this->num_objectives = this->coord.size();
-    this->num_vertices = this->coord.front().size();
-
     this->init();
 }
 
@@ -110,7 +105,7 @@ std::istream & operator >>(std::istream & is, Instance & instance) {
     return is;
 }
 
-std::ostream & operator <<(std::ostream & os, Instance & instance) {
+std::ostream & operator <<(std::ostream & os, const Instance & instance) {
     os << instance.num_objectives << ' '
        << instance.num_vertices << std::endl;
 

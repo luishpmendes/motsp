@@ -87,15 +87,16 @@ class Instance {
      **************************************************************************/
     friend std::istream & operator >>(std::istream & is, Instance & instance);
 
-    /**************************************************************************
+    /*************************************************************
      * Standard output operator.
      *
      * @param os       standard output stream object.
      * @param instance the instance.
      *
      * @return the stream object.
-     **************************************************************************/
-    friend std::ostream & operator <<(std::ostream & os, Instance & instance);
+     *************************************************************/
+    friend std::ostream & operator <<(std::ostream & os,
+                                      const Instance & instance);
 };
 
 }
