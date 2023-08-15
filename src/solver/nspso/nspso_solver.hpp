@@ -13,7 +13,7 @@ class NSPSO_Solver : public Solver {
     /********************************
      * Size of the population.
      ********************************/
-    unsigned population_size = 1000;
+    unsigned population_size = 300;
 
     /*****************************
      * Particles' inertia weight.

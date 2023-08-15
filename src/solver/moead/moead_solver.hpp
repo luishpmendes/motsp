@@ -13,7 +13,7 @@ class MOEAD_Solver : public Solver {
     /********************************
      * Size of the population.
      ********************************/
-    unsigned population_size = 1000;
+    unsigned population_size = 300;
 
     /******************************************************
      * Method used to generate the weights, one of “grid”,

@@ -116,6 +116,17 @@ int main (int argc, char * argv[]) {
                 std::stoul(arg_parser.option_value("--num-populations"));
         }
 
+        if(arg_parser.option_exists("--exchange-interval")) {
+            solver.exchange_interval =
+                std::stoul(arg_parser.option_value("--exchange-interval"));
+        }
+
+        if(arg_parser.option_exists("--num-exchange-individuals")) {
+            solver.num_exchange_individuals =
+                std::stoul(arg_parser.option_value(
+                    "--num-exchange-individuals"));
+        }
+
         if(arg_parser.option_exists("--pr-number-pairs")) {
             solver.pr_number_pairs =
                 std::stoul(arg_parser.option_value("--pr-number-pairs"));
@@ -540,14 +551,16 @@ int main (int argc, char * argv[]) {
                     ofs << iteration << " "
                         << time << std::endl;
 
-                    for(unsigned j = 0; j < population.front().size(); j++) {
-                        for(unsigned k = 0;
-                            k < population.front()[j].size() - 1;
-                            k++) {
-                            ofs << population.front()[j][k] << " ";
-                        }
+                    for (unsigned j = 0; j < population.size(); j++) {
+                        for(unsigned k = 0; k < population[j].size(); k++) {
+                            for(unsigned l = 0;
+                                l < population[j][k].size() - 1;
+                                l++) {
+                                ofs << population[j][k][l] << " ";
+                            }
 
-                        ofs << population.front()[j].back() << std::endl;
+                            ofs << population[j][k].back() << std::endl;
+                        }
                     }
 
                     if(ofs.eof() || ofs.fail() || ofs.bad()) {
@@ -632,6 +645,8 @@ int main (int argc, char * argv[]) {
                   << "--bias-type <bias_type> "
                   << "--diversity-type <diversity_type> "
                   << "--num-populations <num_populations> "
+                  << "--exchange-interval <exchange_interval> "
+                  << "--num-exchange-individuals <num_exchange_individuals> "
                   << "--pr-number-pairs <pr_number_pairs> "
                   << "--pr-min-dist <pr_min_dist> "
                   << "--pr-selection <pr_selection> "

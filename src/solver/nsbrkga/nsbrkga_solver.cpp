@@ -155,6 +155,11 @@ void NSBRKGA_Solver::solve() {
             this->large_offset = generations_without_improvement;
         }
 
+        if (this->exchange_interval > 0 && this->num_iterations > 0 &&
+                (this->num_iterations % this->exchange_interval == 0)) {
+            algorithm.exchangeElite(this->num_exchange_individuals);
+        }
+
         if(this->pr_interval > 0 && this->num_iterations > 0 &&
                 (this->num_iterations % this->pr_interval == 0)) {
             this->num_path_relink_calls++;
@@ -252,6 +257,10 @@ std::ostream & operator <<(std::ostream & os, const NSBRKGA_Solver & solver) {
                static_cast<int>(solver.diversity_type)) << std::endl
        << "Number of independent parallel populations: "
        << solver.num_populations << std::endl
+       << "Interval at which the elite solutions are exchanged between populations: "
+       << solver.exchange_interval << std::endl
+       << "Number of elite individuals to be exchanged between populations: "
+       << solver.num_exchange_individuals << std::endl
        << "Number of pairs of chromosomes to be tested to path-relinking: "
        << solver.pr_number_pairs << std::endl
        << "Minimum distance between chromosomes selected to path-relinking: "

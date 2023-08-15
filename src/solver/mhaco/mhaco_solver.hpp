@@ -13,7 +13,7 @@ class MHACO_Solver : public Solver {
     /********************************
      * Size of the population.
      ********************************/
-    unsigned population_size = 1000;
+    unsigned population_size = 300;
 
     /***********************************************************
      * Number of solutions stored in the solution archive

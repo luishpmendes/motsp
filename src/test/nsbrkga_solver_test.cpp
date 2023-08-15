@@ -21,6 +21,7 @@ int main() {
     solver.max_num_solutions = 64;
     solver.population_size = 32;
     solver.max_num_snapshots = 16;
+    solver.num_exchange_individuals = 3;
 
     assert((solver.seed = 2351389233));
     assert(fabs(solver.time_limit - 5.0) <
@@ -42,7 +43,9 @@ int main() {
     assert(solver.bias_type == BRKGA::BiasFunctionType::LOGINVERSE);
     assert(solver.diversity_type ==
             BRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID);
-    assert(solver.num_populations == 1);
+    assert(solver.num_populations == 3);
+    assert(solver.exchange_interval == 200);
+    assert(solver.num_exchange_individuals == 3);
     assert((solver.pr_number_pairs = 100));
     assert(fabs(solver.pr_min_dist - 0.15) <
             std::numeric_limits<double>::epsilon());
@@ -50,7 +53,7 @@ int main() {
             BRKGA::PathRelinking::Selection::BESTSOLUTION);
     assert(fabs(solver.pr_percentage - 0.30) <
             std::numeric_limits<double>::epsilon());
-    assert(solver.pr_interval == 200);
+    assert(solver.pr_interval == 500);
     assert(solver.shake_interval == 200);
     assert(fabs(solver.shake_intensity - 0.5) < 
             std::numeric_limits<double>::epsilon());
@@ -174,27 +177,45 @@ int main() {
     for(unsigned i = 0;
         i < solver.num_non_dominated_snapshots.size() - 1;
         i++) {
-        std::cout << std::get<2>(solver.num_non_dominated_snapshots[i]).front()
+        std::cout << std::accumulate(
+            std::get<2>(solver.num_non_dominated_snapshots[i]).begin(),
+            std::get<2>(solver.num_non_dominated_snapshots[i]).end(),
+            0) / std::get<2>(solver.num_non_dominated_snapshots[i]).size()
                   << " ";
     }
-    std::cout << std::get<2>(solver.num_non_dominated_snapshots.back()).front()
-              << std::endl;
+    std::cout << std::accumulate(
+        std::get<2>(solver.num_non_dominated_snapshots.back()).begin(),
+        std::get<2>(solver.num_non_dominated_snapshots.back()).end(),
+        0) / std::get<2>(solver.num_non_dominated_snapshots.back()).size()
+                << std::endl;
 
     std::cout << "Num fronts snapshots: ";
     for(unsigned i = 0; i < solver.num_fronts_snapshots.size() - 1; i++) {
-        std::cout << std::get<2>(solver.num_fronts_snapshots[i]).front()
+        std::cout << std::accumulate(
+            std::get<2>(solver.num_fronts_snapshots[i]).begin(),
+            std::get<2>(solver.num_fronts_snapshots[i]).end(),
+            0) / std::get<2>(solver.num_fronts_snapshots[i]).size()
                   << " ";
     }
-    std::cout << std::get<2>(solver.num_fronts_snapshots.back()).front()
-              << std::endl;
+    std::cout << std::accumulate(
+        std::get<2>(solver.num_fronts_snapshots.back()).begin(),
+        std::get<2>(solver.num_fronts_snapshots.back()).end(),
+        0) / std::get<2>(solver.num_fronts_snapshots.back()).size()
+                << std::endl;
 
     std::cout << "Num elites snapshots: ";
     for(unsigned i = 0; i < solver.num_elites_snapshots.size() - 1; i++) {
-        std::cout << std::get<2>(solver.num_elites_snapshots[i]).front()
+        std::cout << std::accumulate(
+            std::get<2>(solver.num_elites_snapshots[i]).begin(),
+            std::get<2>(solver.num_elites_snapshots[i]).end(),
+            0) / std::get<2>(solver.num_elites_snapshots[i]).size()
                   << " ";
     }
-    std::cout << std::get<2>(solver.num_elites_snapshots.back()).front()
-              << std::endl << std::endl;
+    std::cout << std::accumulate(
+        std::get<2>(solver.num_elites_snapshots.back()).begin(),
+        std::get<2>(solver.num_elites_snapshots.back()).end(),
+        0) / std::get<2>(solver.num_elites_snapshots.back()).size()
+                << std::endl;
 
     std::cout << "instances/kroAD100.txt" << std::endl;
 
@@ -211,6 +232,7 @@ int main() {
     solver.max_num_solutions = 64;
     solver.population_size = 32;
     solver.max_num_snapshots = 16;
+    solver.num_exchange_individuals = 3;
 
     assert((solver.seed = 2351389233));
     assert(fabs(solver.time_limit - 5.0) <
@@ -232,7 +254,9 @@ int main() {
     assert(solver.bias_type == BRKGA::BiasFunctionType::LOGINVERSE);
     assert(solver.diversity_type ==
             BRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID);
-    assert(solver.num_populations == 1);
+    assert(solver.num_populations == 3);
+    assert(solver.exchange_interval == 200);
+    assert(solver.num_exchange_individuals == 3);
     assert((solver.pr_number_pairs = 100));
     assert(fabs(solver.pr_min_dist - 0.15) <
             std::numeric_limits<double>::epsilon());
@@ -240,7 +264,7 @@ int main() {
             BRKGA::PathRelinking::Selection::BESTSOLUTION);
     assert(fabs(solver.pr_percentage - 0.30) <
             std::numeric_limits<double>::epsilon());
-    assert(solver.pr_interval == 200);
+    assert(solver.pr_interval == 500);
     assert(solver.shake_interval == 200);
     assert(fabs(solver.shake_intensity - 0.5) < 
             std::numeric_limits<double>::epsilon());
@@ -364,27 +388,45 @@ int main() {
     for(unsigned i = 0;
         i < solver.num_non_dominated_snapshots.size() - 1;
         i++) {
-        std::cout << std::get<2>(solver.num_non_dominated_snapshots[i]).front()
+        std::cout << std::accumulate(
+            std::get<2>(solver.num_non_dominated_snapshots[i]).begin(),
+            std::get<2>(solver.num_non_dominated_snapshots[i]).end(),
+            0) / std::get<2>(solver.num_non_dominated_snapshots[i]).size()
                   << " ";
     }
-    std::cout << std::get<2>(solver.num_non_dominated_snapshots.back()).front()
-              << std::endl;
+    std::cout << std::accumulate(
+        std::get<2>(solver.num_non_dominated_snapshots.back()).begin(),
+        std::get<2>(solver.num_non_dominated_snapshots.back()).end(),
+        0) / std::get<2>(solver.num_non_dominated_snapshots.back()).size()
+                << std::endl;
 
     std::cout << "Num fronts snapshots: ";
     for(unsigned i = 0; i < solver.num_fronts_snapshots.size() - 1; i++) {
-        std::cout << std::get<2>(solver.num_fronts_snapshots[i]).front()
+        std::cout << std::accumulate(
+            std::get<2>(solver.num_fronts_snapshots[i]).begin(),
+            std::get<2>(solver.num_fronts_snapshots[i]).end(),
+            0) / std::get<2>(solver.num_fronts_snapshots[i]).size()
                   << " ";
     }
-    std::cout << std::get<2>(solver.num_fronts_snapshots.back()).front()
-              << std::endl;
+    std::cout << std::accumulate(
+        std::get<2>(solver.num_fronts_snapshots.back()).begin(),
+        std::get<2>(solver.num_fronts_snapshots.back()).end(),
+        0) / std::get<2>(solver.num_fronts_snapshots.back()).size()
+                << std::endl;
 
     std::cout << "Num elites snapshots: ";
     for(unsigned i = 0; i < solver.num_elites_snapshots.size() - 1; i++) {
-        std::cout << std::get<2>(solver.num_elites_snapshots[i]).front()
+        std::cout << std::accumulate(
+            std::get<2>(solver.num_elites_snapshots[i]).begin(),
+            std::get<2>(solver.num_elites_snapshots[i]).end(),
+            0) / std::get<2>(solver.num_elites_snapshots[i]).size()
                   << " ";
     }
-    std::cout << std::get<2>(solver.num_elites_snapshots.back()).front()
-              << std::endl << std::endl;
+    std::cout << std::accumulate(
+        std::get<2>(solver.num_elites_snapshots.back()).begin(),
+        std::get<2>(solver.num_elites_snapshots.back()).end(),
+        0) / std::get<2>(solver.num_elites_snapshots.back()).size()
+                << std::endl;
 
     std::cout << "instances/kroCD100.txt" << std::endl;
 
@@ -401,6 +443,7 @@ int main() {
     solver.max_num_solutions = 64;
     solver.population_size = 32;
     solver.max_num_snapshots = 16;
+    solver.num_exchange_individuals = 3;
 
     assert((solver.seed = 2351389233));
     assert(fabs(solver.time_limit - 5.0) <
@@ -422,7 +465,9 @@ int main() {
     assert(solver.bias_type == BRKGA::BiasFunctionType::LOGINVERSE);
     assert(solver.diversity_type ==
             BRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID);
-    assert(solver.num_populations == 1);
+    assert(solver.num_populations == 3);
+    assert(solver.exchange_interval == 200);
+    assert(solver.num_exchange_individuals == 3);
     assert((solver.pr_number_pairs = 100));
     assert(fabs(solver.pr_min_dist - 0.15) <
             std::numeric_limits<double>::epsilon());
@@ -430,7 +475,7 @@ int main() {
             BRKGA::PathRelinking::Selection::BESTSOLUTION);
     assert(fabs(solver.pr_percentage - 0.30) <
             std::numeric_limits<double>::epsilon());
-    assert(solver.pr_interval == 200);
+    assert(solver.pr_interval == 500);
     assert(solver.shake_interval == 200);
     assert(fabs(solver.shake_intensity - 0.5) < 
             std::numeric_limits<double>::epsilon());
@@ -554,27 +599,45 @@ int main() {
     for(unsigned i = 0;
         i < solver.num_non_dominated_snapshots.size() - 1;
         i++) {
-        std::cout << std::get<2>(solver.num_non_dominated_snapshots[i]).front()
+        std::cout << std::accumulate(
+            std::get<2>(solver.num_non_dominated_snapshots[i]).begin(),
+            std::get<2>(solver.num_non_dominated_snapshots[i]).end(),
+            0) / std::get<2>(solver.num_non_dominated_snapshots[i]).size()
                   << " ";
     }
-    std::cout << std::get<2>(solver.num_non_dominated_snapshots.back()).front()
-              << std::endl;
+    std::cout << std::accumulate(
+        std::get<2>(solver.num_non_dominated_snapshots.back()).begin(),
+        std::get<2>(solver.num_non_dominated_snapshots.back()).end(),
+        0) / std::get<2>(solver.num_non_dominated_snapshots.back()).size()
+                << std::endl;
 
     std::cout << "Num fronts snapshots: ";
     for(unsigned i = 0; i < solver.num_fronts_snapshots.size() - 1; i++) {
-        std::cout << std::get<2>(solver.num_fronts_snapshots[i]).front()
+        std::cout << std::accumulate(
+            std::get<2>(solver.num_fronts_snapshots[i]).begin(),
+            std::get<2>(solver.num_fronts_snapshots[i]).end(),
+            0) / std::get<2>(solver.num_fronts_snapshots[i]).size()
                   << " ";
     }
-    std::cout << std::get<2>(solver.num_fronts_snapshots.back()).front()
-              << std::endl;
+    std::cout << std::accumulate(
+        std::get<2>(solver.num_fronts_snapshots.back()).begin(),
+        std::get<2>(solver.num_fronts_snapshots.back()).end(),
+        0) / std::get<2>(solver.num_fronts_snapshots.back()).size()
+                << std::endl;
 
     std::cout << "Num elites snapshots: ";
     for(unsigned i = 0; i < solver.num_elites_snapshots.size() - 1; i++) {
-        std::cout << std::get<2>(solver.num_elites_snapshots[i]).front()
+        std::cout << std::accumulate(
+            std::get<2>(solver.num_elites_snapshots[i]).begin(),
+            std::get<2>(solver.num_elites_snapshots[i]).end(),
+            0) / std::get<2>(solver.num_elites_snapshots[i]).size()
                   << " ";
     }
-    std::cout << std::get<2>(solver.num_elites_snapshots.back()).front()
-              << std::endl << std::endl;
+    std::cout << std::accumulate(
+        std::get<2>(solver.num_elites_snapshots.back()).begin(),
+        std::get<2>(solver.num_elites_snapshots.back()).end(),
+        0) / std::get<2>(solver.num_elites_snapshots.back()).size()
+                << std::endl;
 
     std::cout << std::endl << "NSBRKGA Solver Test PASSED" << std::endl;
 
