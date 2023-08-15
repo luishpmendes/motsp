@@ -19,7 +19,7 @@ int main() {
     solver.iterations_limit = 100;
     solver.max_num_solutions = 64;
     solver.population_size = 32;
-    solver.max_num_snapshots = 32;
+    solver.max_num_snapshots = 16;
 
     assert((solver.seed = 2351389233));
     assert(fabs(solver.time_limit - 5.0) <
@@ -27,7 +27,7 @@ int main() {
     assert(solver.iterations_limit == 100);
     assert(solver.max_num_solutions == 64);
     assert(solver.population_size == 32);
-    assert(solver.max_num_snapshots == 32);
+    assert(solver.max_num_snapshots == 16);
     assert(fabs(solver.crossover_probability - 0.95) <
             std::numeric_limits<double>::epsilon());
     assert(fabs(solver.crossover_distribution - 10.00) <
@@ -163,7 +163,7 @@ int main() {
     solver.iterations_limit = 100;
     solver.max_num_solutions = 64;
     solver.population_size = 32;
-    solver.max_num_snapshots = 32;
+    solver.max_num_snapshots = 16;
 
     assert((solver.seed = 2351389233));
     assert(fabs(solver.time_limit - 5.0) <
@@ -171,7 +171,7 @@ int main() {
     assert(solver.iterations_limit == 100);
     assert(solver.max_num_solutions == 64);
     assert(solver.population_size == 32);
-    assert(solver.max_num_snapshots == 32);
+    assert(solver.max_num_snapshots == 16);
     assert(fabs(solver.crossover_probability - 0.95) <
             std::numeric_limits<double>::epsilon());
     assert(fabs(solver.crossover_distribution - 10.00) <
@@ -307,7 +307,7 @@ int main() {
     solver.iterations_limit = 100;
     solver.max_num_solutions = 64;
     solver.population_size = 32;
-    solver.max_num_snapshots = 32;
+    solver.max_num_snapshots = 16;
 
     assert((solver.seed = 2351389233));
     assert(fabs(solver.time_limit - 5.0) <
@@ -315,7 +315,7 @@ int main() {
     assert(solver.iterations_limit == 100);
     assert(solver.max_num_solutions == 64);
     assert(solver.population_size == 32);
-    assert(solver.max_num_snapshots == 32);
+    assert(solver.max_num_snapshots == 16);
     assert(fabs(solver.crossover_probability - 0.95) <
             std::numeric_limits<double>::epsilon());
     assert(fabs(solver.crossover_distribution - 10.00) <

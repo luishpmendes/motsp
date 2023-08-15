@@ -115,10 +115,10 @@ void NSBRKGA_Solver::solve() {
             new BRKGA::KendallTauDistance());
 
     if(this->max_num_snapshots > 0) {
-        this->time_between_snapshots = this->time_limit /
-            this->max_num_snapshots;
-        this->iterations_between_snapshots = this->iterations_limit /
-            this->max_num_snapshots;
+        this->time_between_snapshots = this->time_limit / 
+                (std::pow(2.0, this->max_num_snapshots) - 1.0);
+        this->iterations_between_snapshots = this->iterations_limit / 
+                (std::pow(2, this->max_num_snapshots) - 1);
         this->capture_snapshot(algorithm);
     }
 
@@ -146,6 +146,8 @@ void NSBRKGA_Solver::solve() {
            this->num_iterations - this->iteration_last_snapshot >=
            this->iterations_between_snapshots)) {
             this->capture_snapshot(algorithm);
+            this->time_between_snapshots *= 2.0;
+            this->iterations_between_snapshots *= 2;
         }
 
         unsigned generations_without_improvement = this->num_iterations -
