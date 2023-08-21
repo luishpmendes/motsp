@@ -115,10 +115,20 @@ void NSBRKGA_Solver::solve() {
             new BRKGA::KendallTauDistance());
 
     if(this->max_num_snapshots > 0) {
-        this->time_between_snapshots = this->time_limit / 
-                (std::pow(2.0, this->max_num_snapshots) - 1.0);
-        this->iterations_between_snapshots = this->iterations_limit / 
-                (std::pow(2, this->max_num_snapshots) - 1);
+        if (this->time_limit > 0.0) {
+            this->time_between_snapshots = this->time_limit / 
+                    (std::pow(2.0, this->max_num_snapshots) - 1.0);
+        } else {
+            this->time_between_snapshots = 0.0;
+        }
+
+        if (this->iterations_limit > 0) {
+            this->iterations_between_snapshots = this->iterations_limit / 
+                    (std::pow(2, this->max_num_snapshots) - 1);
+        } else {
+            this->iterations_between_snapshots = 0;
+        }
+
         this->capture_snapshot(algorithm);
     }
 
@@ -140,14 +150,17 @@ void NSBRKGA_Solver::solve() {
         }
 
         if(this->max_num_snapshots > 0 &&
-           this->num_snapshots < this->max_num_snapshots &&
-          (this->elapsed_time() - this->time_last_snapshot >=
-           this->time_between_snapshots ||
-           this->num_iterations - this->iteration_last_snapshot >=
-           this->iterations_between_snapshots)) {
-            this->capture_snapshot(algorithm);
-            this->time_between_snapshots *= 2.0;
-            this->iterations_between_snapshots *= 2;
+            this->num_snapshots < this->max_num_snapshots) {
+            if ((this->time_between_snapshots > 0.0 &&
+                this->elapsed_time() - this->time_last_snapshot
+                    >= this->time_between_snapshots) ||
+                (this->iterations_between_snapshots > 0 &&
+                       this->num_iterations - this->iteration_last_snapshot
+                           >= this->iterations_between_snapshots)) {
+                this->capture_snapshot(algorithm);
+                this->time_between_snapshots *= 2.0;
+                this->iterations_between_snapshots *= 2;
+            }
         }
 
         unsigned generations_without_improvement = this->num_iterations -

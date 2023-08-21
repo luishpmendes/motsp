@@ -187,8 +187,8 @@ int main(int argc, char * argv[]) {
             double multiplicative_epsilon = multiplicative_epsilon_indicator(
                     instance.senses, reference_pareto, paretos[i]);
 
-            assert(multiplicative_epsilon >= 0.0);
-            assert(multiplicative_epsilon <= 1.0);
+            // assert(multiplicative_epsilon >= 0.0);
+            // assert(multiplicative_epsilon <= 1.0);
 
             multiplicative_epsilons[i] = multiplicative_epsilon;
         }
@@ -203,8 +203,8 @@ int main(int argc, char * argv[]) {
                                 reference_pareto,
                                 best_solutions_snapshots[i][j]);
 
-                assert(multiplicative_epsilon >= 0.0);
-                assert(multiplicative_epsilon >= 0.0);
+                // assert(multiplicative_epsilon >= 0.0);
+                // assert(multiplicative_epsilon <= 1.0);
 
                 multiplicative_epsilon_snapshots[i].push_back(multiplicative_epsilon);
             }

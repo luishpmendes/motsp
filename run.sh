@@ -29,6 +29,8 @@ mkdir -p ${path}/igd_plus
 mkdir -p ${path}/igd_plus_snapshots
 mkdir -p ${path}/multiplicative_epsilon
 mkdir -p ${path}/multiplicative_epsilon_snapshots
+mkdir -p ${path}/metrics
+mkdir -p ${path}/metrics_snapshots
 
 commands=()
 
@@ -405,6 +407,8 @@ python3 ${path}/plotter_igd_plus.py &
 python3 ${path}/plotter_igd_plus_snapshots.py &
 python3 ${path}/plotter_multiplicative_epsilon.py &
 python3 ${path}/plotter_multiplicative_epsilon_snapshots.py &
+python3 ${path}/plotter_metrics.py &
+python3 ${path}/plotter_metrics_snapshots.py &
 python3 ${path}/plotter_num_non_dominated_snapshots.py &
 python3 ${path}/plotter_num_fronts_snapshots.py &
 python3 ${path}/plotter_num_elites_snapshots.py &
@@ -429,3 +433,17 @@ do
         wait
     done
 done
+
+ffmpeg -y -r 5 -i ${path}/hypervolume_snapshots/snapshot_%d.png -c:v libx264 -vf fps=60 -pix_fmt yuv420p ${path}/hypervolume_snapshots/hypervolume.mp4 &
+ffmpeg -y -r 5 -i ${path}/igd_plus_snapshots/snapshot_%d.png -c:v libx264 -vf fps=60 -pix_fmt yuv420p ${path}/igd_plus_snapshots/igd_plus.mp4 &
+ffmpeg -y -r 5 -i ${path}/multiplicative_epsilon_snapshots/snapshot_%d.png -c:v libx264 -vf fps=60 -pix_fmt yuv420p ${path}/multiplicative_epsilon_snapshots/multiplicative_epsilon.mp4 &
+ffmpeg -y -r 5 -i ${path}/metrics_snapshots/raincloud_%d.png -c:v libx264 -vf fps=60 -pix_fmt yuv420p ${path}/metrics_snapshots/raincloud.mp4 &
+ffmpeg -y -r 5 -i ${path}/metrics_snapshots/scatter_%d.png -c:v libx264 -vf fps=60 -pix_fmt yuv420p ${path}/metrics_snapshots/scatter.mp4
+
+wait
+
+rm ${path}/hypervolume_snapshots/snapshot_*.png &
+rm ${path}/igd_plus_snapshots/snapshot_*.png &
+rm ${path}/multiplicative_epsilon_snapshots/snapshot_*.png &
+rm ${path}/metrics_snapshots/raincloud_*.png &
+rm ${path}/metrics_snapshots/scatter_*.png
