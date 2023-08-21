@@ -7,7 +7,7 @@ versions=(best median)
 
 num_processes=6
 
-time_limit=300
+time_limit=600
 population_size=300
 max_num_solutions=500
 max_num_snapshots=60
