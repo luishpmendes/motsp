@@ -1,0 +1,21 @@
+Number of objectives: 2
+Number of vertices: 1000
+Seed: 147607335
+Time limit: 600
+Iterations limit: 4294967295
+Initial individuals: 0
+Maximum number of solutions: 500
+Maximum number of snapshots: 60
+Number of iterations: 9143
+Solutions obtained: 94
+Solving time: 600.061
+Number of snapshots: 61
+Time between snapshots: 300
+Time when the last snapshot was taken: 600.052
+Number of iterations between the snapshots: 0
+Iteration when the last snapshot was taken: 9143
+Population size: 300
+Crossover probability: 0.95
+Distribution index for crossover: 10
+Mutation probability: 0.01
+Distribution index for mutation: 50
