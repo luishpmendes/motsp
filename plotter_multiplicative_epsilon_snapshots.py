@@ -6,6 +6,8 @@ import os
 import statistics as stats
 from math import ceil, floor, sqrt
 from plotter_definitions import *
+from functools import partial
+import numpy as np
 
 dirname = os.path.dirname(__file__)
 
@@ -70,8 +72,10 @@ for i in range(len(solvers)):
         x.append(stats.mean(time_per_solver[solvers[i]][j]))
         y.append(stats.mean(multiplicative_epsilon_per_solver[solvers[i]][j]))
     plt.plot(x, y, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.80)
-plt.xlim(left = 0.0, right = max_time)
-plt.ylim(bottom = min_multiplicative_epsilon, top = max_multiplicative_epsilon)
+# plt.xlim(left = 0.0, right = max_time)
+# plt.ylim(bottom = min_multiplicative_epsilon, top = max_multiplicative_epsilon)
+plt.xscale("symlog")
+plt.yscale("function", functions = (partial(np.power, 10.0), np.log10))
 plt.legend(loc = "best", fontsize = "large")
 filename = os.path.join(dirname, "multiplicative_epsilon_snapshots/multiplicative_epsilon_mean_snapshots.png")
 plt.savefig(filename, format = "png")
@@ -99,8 +103,10 @@ for i in range(len(solvers)):
         quantiles = stats.quantiles(multiplicative_epsilon_per_solver[solvers[i]][j])
         y1.append(quantiles[1])
     plt.plot(x, y1, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.75)
-plt.xlim(left = 0.0, right = max_time)
-plt.ylim(bottom = min_multiplicative_epsilon, top = max_multiplicative_epsilon)
+# plt.xlim(left = 0.0, right = max_time)
+# plt.ylim(bottom = min_multiplicative_epsilon, top = max_multiplicative_epsilon)
+plt.xscale("symlog")
+plt.yscale("function", functions = (partial(np.power, 10.0), np.log10))
 plt.legend(loc = "best", fontsize = "large")
 filename = os.path.join(dirname, "multiplicative_epsilon_snapshots/multiplicative_epsilon_quartiles_snapshots.png")
 plt.savefig(filename, format = "png")
