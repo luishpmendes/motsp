@@ -8,7 +8,7 @@ NSBRKGA_Solver::NSBRKGA_Solver(const Instance & instance)
 NSBRKGA_Solver::NSBRKGA_Solver() = default;
 
 void NSBRKGA_Solver::capture_snapshot(
-        const BRKGA::NSBRKGA<Decoder> & algorithm) {
+        const NSBRKGA::NSBRKGA<Decoder> & algorithm) {
     double time_snapshot = this->elapsed_time();
 
     this->best_solutions_snapshots.emplace_back(std::make_tuple(
@@ -69,7 +69,7 @@ void NSBRKGA_Solver::solve() {
                     this->num_threads,
                     this->max_local_search_iterations);
 
-    BRKGA::BrkgaParams params;
+    NSBRKGA::NsbrkgaParams params;
     params.num_incumbent_solutions = this->max_num_solutions;
     params.population_size = this->population_size;
     params.min_elites_percentage = this->min_elites_percentage;
@@ -81,21 +81,16 @@ void NSBRKGA_Solver::solve() {
     params.bias_type = this->bias_type;
     params.diversity_type = this->diversity_type;
     params.num_independent_populations = this->num_populations;
-    params.pr_number_pairs = this->pr_number_pairs;
-    params.pr_minimum_distance = this->pr_min_dist;
-    params.pr_type = BRKGA::PathRelinking::Type::PERMUTATION;
-    params.pr_selection = this->pr_selection;
-    params.alpha_block_size = 0.1;
-    params.pr_percentage = this->pr_percentage;
+    params.pr_type = NSBRKGA::PathRelinking::Type::PERMUTATION;
 
-    BRKGA::NSBRKGA algorithm(decoder,
+    NSBRKGA::NSBRKGA algorithm(decoder,
                              this->instance.senses,
                              this->seed,
                              this->instance.num_vertices - 1,
                              params,
                              this->num_threads);
 
-    std::vector<std::vector<BRKGA::Chromosome>> initial_populations(
+    std::vector<std::vector<NSBRKGA::Chromosome>> initial_populations(
             this->num_populations);
 
     if(!this->initial_individuals.empty()) {
@@ -111,8 +106,8 @@ void NSBRKGA_Solver::solve() {
 
     this->update_best_individuals(algorithm.getIncumbentSolutions());
 
-    std::shared_ptr<BRKGA::DistanceFunctionBase> dist_func(
-            new BRKGA::KendallTauDistance());
+    std::shared_ptr<NSBRKGA::DistanceFunctionBase> dist_func(
+            new NSBRKGA::KendallTauDistance());
 
     if(this->max_num_snapshots > 0) {
         if (this->time_limit > 0.0) {
@@ -181,26 +176,17 @@ void NSBRKGA_Solver::solve() {
             const auto pr_start_time = std::chrono::steady_clock::now();
             auto result = algorithm.pathRelink(
                     params.pr_type,
-                    params.pr_selection,
                     dist_func,
-                    params.pr_number_pairs,
-                    params.pr_minimum_distance,
-                    1,
-                    this->time_limit - this->elapsed_time(),
-                    params.pr_percentage);
+                    this->time_limit - this->elapsed_time());
 
             const auto pr_time = Solver::elapsed_time(pr_start_time);
             this->path_relink_time += pr_time;
 
             switch(result) {
-                case BRKGA::PathRelinking::PathRelinkingResult::TOO_HOMOGENEOUS: {
-                    this->num_homogeneities++;
-                    break;
-                }
-                case BRKGA::PathRelinking::PathRelinkingResult::ELITE_IMPROVEMENT: {
+                case NSBRKGA::PathRelinking::PathRelinkingResult::ELITE_IMPROVEMENT: {
                     this->num_elite_improvments++;
                 }
-                case BRKGA::PathRelinking::PathRelinkingResult::BEST_IMPROVEMENT: {
+                case NSBRKGA::PathRelinking::PathRelinkingResult::BEST_IMPROVEMENT: {
                     this->num_best_improvements++;
                     this->last_update_time = this->elapsed_time();
 
@@ -265,10 +251,10 @@ std::ostream & operator <<(std::ostream & os, const NSBRKGA_Solver & solver) {
        << "Number of elite parents for mating: " << solver.num_elite_parents
        << std::endl
        << "Type of bias that will be used: "
-       << EnumIO<BRKGA::BiasFunctionType>::enum_names().at(
+       << EnumIO<NSBRKGA::BiasFunctionType>::enum_names().at(
                static_cast<int>(solver.bias_type)) << std::endl
        << "Type of diversity that will be used: "
-       << EnumIO<BRKGA::DiversityFunctionType>::enum_names().at(
+       << EnumIO<NSBRKGA::DiversityFunctionType>::enum_names().at(
                static_cast<int>(solver.diversity_type)) << std::endl
        << "Number of independent parallel populations: "
        << solver.num_populations << std::endl
@@ -276,15 +262,6 @@ std::ostream & operator <<(std::ostream & os, const NSBRKGA_Solver & solver) {
        << solver.exchange_interval << std::endl
        << "Number of elite individuals to be exchanged between populations: "
        << solver.num_exchange_individuals << std::endl
-       << "Number of pairs of chromosomes to be tested to path-relinking: "
-       << solver.pr_number_pairs << std::endl
-       << "Minimum distance between chromosomes selected to path-relinking: "
-       << solver.pr_min_dist << std::endl
-       << "Individual selection to path-relinking: "
-       << EnumIO<BRKGA::PathRelinking::Selection>::enum_names().at(
-               static_cast<int>(solver.pr_selection)) << std::endl
-       << "Percentage of the path to be computed: " << solver.pr_percentage
-       << std::endl
        << "Interval at which the path relink is applied: "
        << solver.pr_interval << std::endl
        << "Interval at which the populations are shaken: "
@@ -305,7 +282,6 @@ std::ostream & operator <<(std::ostream & os, const NSBRKGA_Solver & solver) {
        << "Total path relink time: " << solver.path_relink_time << std::endl
        << "Total path relink calls: " << solver.num_path_relink_calls
        << std::endl
-       << "Number of homogeneities: " << solver.num_homogeneities << std::endl
        << "Improvements in the elite set: " << solver.num_elite_improvments
        << std::endl
        << "Best individual improvements: " << solver.num_best_improvements

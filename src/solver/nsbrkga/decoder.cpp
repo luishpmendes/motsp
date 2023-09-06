@@ -17,7 +17,7 @@ Decoder::Decoder(const Instance & instance,
       costs(num_threads,
             std::vector<double>(instance.num_objectives, 0.0)) {}
 
-std::vector<double> Decoder::decode(BRKGA::Chromosome & chromosome,
+std::vector<double> Decoder::decode(NSBRKGA::Chromosome & chromosome,
                                     bool rewrite) {
 #   ifdef _OPENMP
         std::vector<std::pair<double, unsigned>> & permutation =

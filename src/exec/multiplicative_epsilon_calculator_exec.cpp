@@ -5,7 +5,7 @@
 
 static inline
 double multiplicative_epsilon_indicator(
-        const std::vector<BRKGA::Sense> & senses,
+        const std::vector<NSBRKGA::Sense> & senses,
         const std::vector<std::vector<double>> & reference_front,
         const std::vector<std::vector<double>> & front) {
     double epsilon = 0.0, min_max_ratio, max_ratio, ratio;
@@ -15,9 +15,9 @@ double multiplicative_epsilon_indicator(
             max_ratio = 0.0;
 
             for(unsigned k = 0; k < senses.size(); k++) {
-                if(senses[k] == BRKGA::Sense::MINIMIZE) {
+                if(senses[k] == NSBRKGA::Sense::MINIMIZE) {
                     ratio = reference_front[j][k] / front[i][k];
-                } else { // senses[k] == BRKGA::Sense::MAXIMIZE
+                } else { // senses[k] == NSBRKGA::Sense::MAXIMIZE
                     ratio = front[i][k] / reference_front[j][k];
                 }
 

@@ -23,7 +23,7 @@ void Branch_and_Cut_Solver::capture_snapshot() {
             this->best_individuals[i].first;
     }
 
-    this->fronts = BRKGA::Population::nonDominatedSort<std::vector<double>>(
+    this->fronts = NSBRKGA::Population::nonDominatedSort<std::vector<double>>(
             all_individuals,
             this->instance.senses);
 
@@ -238,7 +238,7 @@ void Branch_and_Cut_Solver::solve() {
 
             if(this->all_individuals.size() > this->max_num_solutions) {
                 auto fronts =
-                    BRKGA::Population::nonDominatedSort<std::vector<double>>(
+                    NSBRKGA::Population::nonDominatedSort<std::vector<double>>(
                             this->all_individuals,
                             this->instance.senses);
 
@@ -247,9 +247,8 @@ void Branch_and_Cut_Solver::solve() {
                 for(unsigned i = 0; i < fronts.size(); i++) {
                     if(this->all_individuals.size() + fronts[i].size() >
                             this->max_num_solutions) {
-                        BRKGA::Population::crowdingSort<std::vector<double>>(
-                                fronts[i],
-                                this->rng);
+                        NSBRKGA::Population::crowdingSort<std::vector<double>>(
+                                fronts[i]);
                     }
 
                     this->all_individuals.insert(this->all_individuals.end(),

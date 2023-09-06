@@ -127,26 +127,6 @@ int main (int argc, char * argv[]) {
                     "--num-exchange-individuals"));
         }
 
-        if(arg_parser.option_exists("--pr-number-pairs")) {
-            solver.pr_number_pairs =
-                std::stoul(arg_parser.option_value("--pr-number-pairs"));
-        }
-
-        if(arg_parser.option_exists("--pr-min-dist")) {
-            solver.pr_min_dist =
-                std::stod(arg_parser.option_value("--pr-min-dist"));
-        }
-
-        if(arg_parser.option_exists("--pr-selection")) {
-            std::stringstream ss(arg_parser.option_value("--pr-selection"));
-            ss >> solver.pr_selection;
-        }
-
-        if(arg_parser.option_exists("--pr-percentage")) {
-            solver.pr_percentage =
-                std::stod(arg_parser.option_value("--pr-percentage"));
-        }
-
         if(arg_parser.option_exists("--pr-interval")) {
             solver.pr_interval =
                 std::stoul(arg_parser.option_value("--pr-interval"));
@@ -647,10 +627,6 @@ int main (int argc, char * argv[]) {
                   << "--num-populations <num_populations> "
                   << "--exchange-interval <exchange_interval> "
                   << "--num-exchange-individuals <num_exchange_individuals> "
-                  << "--pr-number-pairs <pr_number_pairs> "
-                  << "--pr-min-dist <pr_min_dist> "
-                  << "--pr-selection <pr_selection> "
-                  << "--pr-percentage <pr_percentage> "
                   << "--pr-interval <pr_interval> "
                   << "--shake-interval <shake_interval> "
                   << "--shake-intensity <shake_intensity> "

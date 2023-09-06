@@ -37,7 +37,7 @@ class Instance {
     /*********************************
      * The optimization senses.
      *********************************/
-    std::vector<BRKGA::Sense> senses;
+    std::vector<NSBRKGA::Sense> senses;
 
     /********************************
      * This instance primal bounds.

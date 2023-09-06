@@ -40,19 +40,12 @@ int main() {
             std::numeric_limits<double>::epsilon());
     assert(solver.num_total_parents == 3);
     assert(solver.num_elite_parents == 2);
-    assert(solver.bias_type == BRKGA::BiasFunctionType::LOGINVERSE);
+    assert(solver.bias_type == NSBRKGA::BiasFunctionType::LOGINVERSE);
     assert(solver.diversity_type ==
-            BRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID);
+            NSBRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID);
     assert(solver.num_populations == 3);
     assert(solver.exchange_interval == 200);
     assert(solver.num_exchange_individuals == 3);
-    assert((solver.pr_number_pairs = 100));
-    assert(fabs(solver.pr_min_dist - 0.15) <
-            std::numeric_limits<double>::epsilon());
-    assert(solver.pr_selection ==
-            BRKGA::PathRelinking::Selection::BESTSOLUTION);
-    assert(fabs(solver.pr_percentage - 0.30) <
-            std::numeric_limits<double>::epsilon());
     assert(solver.pr_interval == 500);
     assert(solver.shake_interval == 200);
     assert(fabs(solver.shake_intensity - 0.5) < 
@@ -281,19 +274,12 @@ int main() {
             std::numeric_limits<double>::epsilon());
     assert(solver.num_total_parents == 3);
     assert(solver.num_elite_parents == 2);
-    assert(solver.bias_type == BRKGA::BiasFunctionType::LOGINVERSE);
+    assert(solver.bias_type == NSBRKGA::BiasFunctionType::LOGINVERSE);
     assert(solver.diversity_type ==
-            BRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID);
+            NSBRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID);
     assert(solver.num_populations == 3);
     assert(solver.exchange_interval == 200);
     assert(solver.num_exchange_individuals == 3);
-    assert((solver.pr_number_pairs = 100));
-    assert(fabs(solver.pr_min_dist - 0.15) <
-            std::numeric_limits<double>::epsilon());
-    assert(solver.pr_selection ==
-            BRKGA::PathRelinking::Selection::BESTSOLUTION);
-    assert(fabs(solver.pr_percentage - 0.30) <
-            std::numeric_limits<double>::epsilon());
     assert(solver.pr_interval == 500);
     assert(solver.shake_interval == 200);
     assert(fabs(solver.shake_intensity - 0.5) < 
@@ -522,19 +508,12 @@ int main() {
             std::numeric_limits<double>::epsilon());
     assert(solver.num_total_parents == 3);
     assert(solver.num_elite_parents == 2);
-    assert(solver.bias_type == BRKGA::BiasFunctionType::LOGINVERSE);
+    assert(solver.bias_type == NSBRKGA::BiasFunctionType::LOGINVERSE);
     assert(solver.diversity_type ==
-            BRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID);
+            NSBRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID);
     assert(solver.num_populations == 3);
     assert(solver.exchange_interval == 200);
     assert(solver.num_exchange_individuals == 3);
-    assert((solver.pr_number_pairs = 100));
-    assert(fabs(solver.pr_min_dist - 0.15) <
-            std::numeric_limits<double>::epsilon());
-    assert(solver.pr_selection ==
-            BRKGA::PathRelinking::Selection::BESTSOLUTION);
-    assert(fabs(solver.pr_percentage - 0.30) <
-            std::numeric_limits<double>::epsilon());
     assert(solver.pr_interval == 500);
     assert(solver.shake_interval == 200);
     assert(fabs(solver.shake_intensity - 0.5) < 

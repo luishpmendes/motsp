@@ -46,16 +46,16 @@ class NSBRKGA_Solver : public Solver {
      **************************************/
     unsigned num_elite_parents = 2;
 
-    /************************************************************************
+    /****************************************************************************
      * Type of bias that will be used.
-     ************************************************************************/
-    BRKGA::BiasFunctionType bias_type = BRKGA::BiasFunctionType::LOGINVERSE;
+     ****************************************************************************/
+    NSBRKGA::BiasFunctionType bias_type = NSBRKGA::BiasFunctionType::LOGINVERSE;
 
-    /***************************************************************
+    /*****************************************************************
      * Type of diversity that will be used.
-     ***************************************************************/
-    BRKGA::DiversityFunctionType diversity_type =
-        BRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID;
+     *****************************************************************/
+    NSBRKGA::DiversityFunctionType diversity_type =
+        NSBRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID;
 
     /**********************************************
      * Number of independent parallel populations.
@@ -72,27 +72,6 @@ class NSBRKGA_Solver : public Solver {
      * Number of elite individuals to be exchanged between populations.
      *******************************************************************/
     unsigned num_exchange_individuals = 30;
-
-    /*********************************************************************
-     * Number of pairs of chromosomes to be tested to path-relinking.
-     *********************************************************************/
-    unsigned pr_number_pairs = 100;
-
-    /*******************************************************************
-     * Minimum distance between chromosomes selected to path-relinking.
-     *******************************************************************/
-    double pr_min_dist = 0.15;
-
-    /**************************************************
-     * Individual selection to path-relinking.
-     **************************************************/
-    BRKGA::PathRelinking::Selection pr_selection =
-        BRKGA::PathRelinking::Selection::BESTSOLUTION;
-
-    /*****************************************
-     * Percentage of the path to be computed.
-     *****************************************/
-    double pr_percentage = 0.30;
 
     /***********************************************
      * Interval at which the path relink is applied
@@ -154,11 +133,6 @@ class NSBRKGA_Solver : public Solver {
      * Total path relink calls.
      ***********************************/
     unsigned num_path_relink_calls = 0;
-
-    /*******************************
-     * Number of homogeneities.
-     *******************************/
-    unsigned num_homogeneities = 0;
 
     /***********************************
      * Improvements in the elite set.
@@ -225,7 +199,7 @@ class NSBRKGA_Solver : public Solver {
      *
      * @param pop the current population.
      *******************************************************************/
-    void capture_snapshot(const BRKGA::NSBRKGA<Decoder> & algorithm);
+    void capture_snapshot(const NSBRKGA::NSBRKGA<Decoder> & algorithm);
 
     /**********************
      * Solve the instance.

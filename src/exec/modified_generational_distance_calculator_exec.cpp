@@ -4,7 +4,7 @@
 #include <fstream>
 
 static inline
-double modified_distance(const std::vector<BRKGA::Sense> & senses,
+double modified_distance(const std::vector<NSBRKGA::Sense> & senses,
                          const std::vector<double> & reference_point,
                          const std::vector<double> & point) {
     double distance = 0.0, delta;
@@ -12,11 +12,11 @@ double modified_distance(const std::vector<BRKGA::Sense> & senses,
     for(unsigned i = 0; i < senses.size(); i++) {
         delta = 0;
 
-        if(senses[i] == BRKGA::Sense::MINIMIZE) {
+        if(senses[i] == NSBRKGA::Sense::MINIMIZE) {
             if(point[i] > reference_point[i]) {
                 delta = point[i] - reference_point[i];
             }
-        } else { // senses[i] == BRKGA::Sense::MAXIMIZE
+        } else { // senses[i] == NSBRKGA::Sense::MAXIMIZE
             if(reference_point[i] > point[i]) {
                 delta = reference_point[i] - point[i];
             }
@@ -30,7 +30,7 @@ double modified_distance(const std::vector<BRKGA::Sense> & senses,
 
 static inline
 double modified_inverted_generational_distance(
-        const std::vector<BRKGA::Sense> & senses,
+        const std::vector<NSBRKGA::Sense> & senses,
         const std::vector<std::vector<double>> & reference_front,
         const std::vector<std::vector<double>> & front) {
     double igd_plus = 0.0, min_distance, distance;

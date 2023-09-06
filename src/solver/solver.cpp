@@ -48,7 +48,7 @@ bool Solver::update_best_individuals(
             std::vector<std::pair<std::vector<double>, std::vector<double>>> & best_individuals,
             const std::vector<
                 std::pair<std::vector<double>, std::vector<double>>> & new_individuals,
-            const std::vector<BRKGA::Sense> & senses) {
+            const std::vector<NSBRKGA::Sense> & senses) {
     bool result = false;
 
     if(new_individuals.empty()) {
@@ -56,7 +56,7 @@ bool Solver::update_best_individuals(
     }
 
     auto non_dominated_new_individuals =
-        BRKGA::Population::nonDominatedSort<std::vector<double>>(
+        NSBRKGA::Population::nonDominatedSort<std::vector<double>>(
                 new_individuals,
                 senses).front();
 
@@ -100,16 +100,14 @@ bool Solver::update_best_individuals(
             std::vector<std::pair<std::vector<double>, std::vector<double>>> & best_individuals,
             const std::vector<
                 std::pair<std::vector<double>, std::vector<double>>> & new_individuals,
-            const std::vector<BRKGA::Sense> & senses,
-            unsigned max_num_solutions,
-            std::mt19937 & rng) {
+            const std::vector<NSBRKGA::Sense> & senses,
+            unsigned max_num_solutions) {
     bool result = Solver::update_best_individuals(best_individuals,
                                                   new_individuals,
                                                   senses);
 
     if(best_individuals.size() > max_num_solutions) {
-        BRKGA::Population::crowdingSort<std::vector<double>>(best_individuals,
-                                                             rng);
+        NSBRKGA::Population::crowdingSort<std::vector<double>>(best_individuals);
         best_individuals.resize(max_num_solutions);
         result = true;
     }
@@ -127,9 +125,8 @@ bool Solver::update_best_individuals(
             this->instance.senses);
 
     if(this->best_individuals.size() > this->max_num_solutions) {
-        BRKGA::Population::crowdingSort<std::vector<double>>(
-                this->best_individuals,
-                this->rng);
+        NSBRKGA::Population::crowdingSort<std::vector<double>>(
+                this->best_individuals);
         this->best_individuals.resize(this->max_num_solutions);
         result = true;
     }
@@ -168,7 +165,7 @@ void Solver::capture_snapshot(const pagmo::population & pop) {
                                                       pop.get_x()[i]);
     }
 
-    this->fronts = BRKGA::Population::nonDominatedSort<std::vector<double>>(
+    this->fronts = NSBRKGA::Population::nonDominatedSort<std::vector<double>>(
             current_individuals,
             this->instance.senses);
 

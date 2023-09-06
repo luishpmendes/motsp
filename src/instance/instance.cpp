@@ -15,8 +15,8 @@ void Instance::init() {
     this->primal_bound.resize(this->num_objectives, 0.0);
     this->primal_bound.assign(this->num_objectives, 0.0);
 
-    this->senses.resize(this->num_objectives, BRKGA::Sense::MINIMIZE);
-    this->senses.assign(this->num_objectives, BRKGA::Sense::MINIMIZE);
+    this->senses.resize(this->num_objectives, NSBRKGA::Sense::MINIMIZE);
+    this->senses.assign(this->num_objectives, NSBRKGA::Sense::MINIMIZE);
 
     std::vector<std::vector<double>> edge_weight(this->num_objectives);
 
@@ -44,7 +44,7 @@ Instance::Instance(const std::vector<std::vector<std::vector<double>>> & adj) :
     num_objectives(adj.size()),
     num_vertices(adj.front().size()),
     adj(adj),
-    senses(num_objectives, BRKGA::Sense::MINIMIZE) {}
+    senses(num_objectives, NSBRKGA::Sense::MINIMIZE) {}
 
 
 Instance::Instance(
