@@ -78,20 +78,30 @@ class Solver {
      *************************************************/
     unsigned num_snapshots = 0;
 
-    /************************************
-     * The time between the snapshots.
-     ************************************/
-    double time_between_snapshots = 0.0;
+    /****************************************************
+     * Factor at which the time snapshots are increased.
+     ****************************************************/
+    double time_snapshot_factor = 1.0;
+
+    /**********************************************************
+     * Factor at which the iterations snapshots are increased.
+     **********************************************************/
+    double iteration_snapshot_factor = 1.0;
+
+    /*************************************************
+     * The time when the next snapshot will be taken.
+     *************************************************/
+    double time_next_snapshot = 0.0;
 
     /*********************************************
      * The time when the last snapshot was taken.
      *********************************************/
     double time_last_snapshot = 0.0;
 
-    /**************************************************
-     * The number of iterations between the snapshots.
-     **************************************************/
-    unsigned iterations_between_snapshots = 0;
+    /******************************************************
+     * The iteration when the next snapshot will be taken.
+     ******************************************************/
+    unsigned iteration_next_snapshot = 0;
 
     /**************************************************
      * The iteration when the last snapshot was taken.

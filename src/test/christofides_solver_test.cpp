@@ -36,8 +36,7 @@ int main() {
     assert(solver.best_solutions.size() > 0);
     assert(solver.best_solutions.size() <= solver.max_num_solutions);
 
-    assert(solver.num_snapshots > 0);
-    assert(solver.num_snapshots <= solver.max_num_snapshots + 2);
+    assert(solver.num_snapshots == solver.max_num_snapshots);
 
     assert(solver.best_solutions_snapshots.size() == solver.num_snapshots);
     assert(solver.num_non_dominated_snapshots.size() == solver.num_snapshots);
@@ -166,8 +165,7 @@ int main() {
     assert(solver.best_solutions.size() > 0);
     assert(solver.best_solutions.size() <= solver.max_num_solutions);
 
-    assert(solver.num_snapshots > 0);
-    assert(solver.num_snapshots <= solver.max_num_snapshots + 2);
+    assert(solver.num_snapshots == solver.max_num_snapshots);
 
     assert(solver.best_solutions_snapshots.size() == solver.num_snapshots);
     assert(solver.num_non_dominated_snapshots.size() == solver.num_snapshots);
@@ -296,8 +294,7 @@ int main() {
     assert(solver.best_solutions.size() > 0);
     assert(solver.best_solutions.size() <= solver.max_num_solutions);
 
-    assert(solver.num_snapshots > 0);
-    assert(solver.num_snapshots <= solver.max_num_snapshots + 2);
+    assert(solver.num_snapshots == solver.max_num_snapshots);
 
     assert(solver.best_solutions_snapshots.size() == solver.num_snapshots);
     assert(solver.num_non_dominated_snapshots.size() == solver.num_snapshots);

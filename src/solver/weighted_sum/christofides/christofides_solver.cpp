@@ -66,9 +66,29 @@ void Christofides_Solver::solve() {
     std::vector<std::vector<double>> others, new_others;
     std::queue<std::pair<std::vector<double>,
                          std::vector<std::vector<double>>>> Q;
-    this->time_between_snapshots = this->time_limit / this->max_num_snapshots;
-    this->iterations_between_snapshots = this->iterations_limit /
-        this->max_num_snapshots;
+
+    if(this->max_num_snapshots > this->num_snapshots + 1) {
+        if (this->time_limit > 0.0) {
+            this->time_snapshot_factor = std::pow(this->time_limit / this->elapsed_time(), 1.0 / (this->max_num_snapshots - this->num_snapshots));
+            this->time_next_snapshot = this->elapsed_time() * this->time_snapshot_factor;
+        } else {
+            this->time_next_snapshot = 0.0;
+            this->time_snapshot_factor = 1.0;
+        }
+
+        if (this->iterations_limit > 0) {
+            this->iteration_snapshot_factor = std::pow(this->iterations_limit / 1, 1.0 / (this->max_num_snapshots - this->num_snapshots));
+            this->iteration_next_snapshot = unsigned(std::round(1.0 * this->iteration_snapshot_factor));
+        } else {
+            this->iteration_next_snapshot = 0;
+            this->iteration_snapshot_factor = 1.0;
+        }
+    } else {
+        this->time_next_snapshot = 0.0;
+        this->iteration_next_snapshot = 0;
+        this->time_snapshot_factor = 1.0;
+        this->iteration_snapshot_factor = 1.0;
+    }
 
     const auto solve_weight = [&](std::vector<double> weight) {
         // Constructs a solution using the Christofides algorithm
@@ -156,12 +176,46 @@ void Christofides_Solver::solve() {
 
         this->update_best_individuals(individuals);
 
-        if(this->num_snapshots < this->max_num_snapshots &&
-          (this->elapsed_time() - this->time_last_snapshot >=
-           this->time_between_snapshots ||
-           this->num_iterations - this->iteration_last_snapshot >=
-           this->iterations_between_snapshots)) {
-            this->capture_snapshot();
+        if(this->max_num_snapshots > this->num_snapshots + 1) {
+            if (this->iteration_next_snapshot > 0 && 
+                this->num_iterations >= this->iteration_next_snapshot) {
+                this->capture_snapshot();
+
+                if (this->time_limit > 0.0) {
+                    this->time_next_snapshot = this->time_last_snapshot * this->time_snapshot_factor;
+                    this->time_snapshot_factor = std::pow(this->time_limit / this->time_last_snapshot, 1.0 / (this->max_num_snapshots - this->num_snapshots));
+                } else {
+                    this->time_next_snapshot = 0.0;
+                    this->time_snapshot_factor = 1.0;
+                }
+
+                if (this->iterations_limit > 0) {
+                    this->iteration_next_snapshot = unsigned(std::round(double(this->iteration_last_snapshot) * this->iteration_snapshot_factor));
+                    this->iteration_snapshot_factor = std::pow(this->iterations_limit / this->iteration_last_snapshot, 1.0 / (this->max_num_snapshots - this->num_snapshots));
+                } else {
+                    this->iteration_next_snapshot = 0;
+                    this->iteration_snapshot_factor = 1.0;
+                }
+            } else if (this->time_next_snapshot > 0.0 && 
+                this->elapsed_time() >= this->time_next_snapshot) {
+                this->capture_snapshot();
+
+                if (this->time_limit > 0.0) {
+                    this->time_next_snapshot = this->time_last_snapshot * this->time_snapshot_factor;
+                    this->time_snapshot_factor = std::pow(this->time_limit / this->time_last_snapshot, 1.0 / (this->max_num_snapshots - this->num_snapshots));
+                } else {
+                    this->time_next_snapshot = 0.0;
+                    this->time_snapshot_factor = 1.0;
+                }
+
+                if (this->iterations_limit > 0) {
+                    this->iteration_next_snapshot = unsigned(std::round(double(this->iteration_last_snapshot >= 1 ? this->iteration_last_snapshot : 1 ) * this->iteration_snapshot_factor));
+                    this->iteration_snapshot_factor = std::pow(this->iterations_limit / this->iteration_last_snapshot >= 1 ? this->iteration_last_snapshot : 1, 1.0 / (this->max_num_snapshots - this->num_snapshots));
+                } else {
+                    this->iteration_next_snapshot = 0;
+                    this->iteration_snapshot_factor = 1.0;
+                }
+            }
         }
 
         this->num_iterations++;

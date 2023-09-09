@@ -202,16 +202,20 @@ std::ostream & operator <<(std::ostream & os, const Solver & solver) {
        << std::endl
        << "Maximum number of snapshots: " << solver.max_num_snapshots
        << std::endl
+       << "Factor at which the time between snapshots are increased: "
+       << solver.time_snapshot_factor << std::endl
+       << "Factor at which the iterations between snapshots are increased: "
+       << solver.iteration_snapshot_factor << std::endl
        << "Number of iterations: " << solver.num_iterations << std::endl
        << "Solutions obtained: " << solver.best_solutions.size() << std::endl
        << "Solving time: " << solver.solving_time << std::endl
        << "Number of snapshots: " << solver.num_snapshots << std::endl
-       << "Time between snapshots: " << solver.time_between_snapshots
+       << "Time next snapshot: " << solver.time_next_snapshot
        << std::endl
        << "Time when the last snapshot was taken: "
        << solver.time_last_snapshot << std::endl
-       << "Number of iterations between the snapshots: "
-       << solver.iterations_between_snapshots << std::endl
+       << "Number of iteration of the next snapshot: "
+       << solver.iteration_next_snapshot << std::endl
        << "Iteration when the last snapshot was taken: "
        << solver.iteration_last_snapshot << std::endl;
     return os;

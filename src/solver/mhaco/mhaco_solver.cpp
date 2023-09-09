@@ -35,22 +35,29 @@ void MHACO_Solver::solve() {
 
     this->update_best_individuals(pop);
 
-    if(this->max_num_snapshots > 0) {
+    if(this->max_num_snapshots > this->num_snapshots + 1) {
+        this->capture_snapshot(pop);
+
         if (this->time_limit > 0.0) {
-            this->time_between_snapshots = this->time_limit / 
-                    (std::pow(2.0, this->max_num_snapshots) - 1.0);
+            this->time_snapshot_factor = std::pow(this->time_limit / this->time_last_snapshot, 1.0 / (this->max_num_snapshots - this->num_snapshots));
+            this->time_next_snapshot = this->time_last_snapshot * this->time_snapshot_factor;
         } else {
-            this->time_between_snapshots = 0.0;
+            this->time_next_snapshot = 0.0;
+            this->time_snapshot_factor = 1.0;
         }
 
         if (this->iterations_limit > 0) {
-            this->iterations_between_snapshots = this->iterations_limit / 
-                    (std::pow(2, this->max_num_snapshots) - 1);
+            this->iteration_snapshot_factor = std::pow(this->iterations_limit / (this->iteration_last_snapshot + 1.0), 1.0 / (this->max_num_snapshots - this->num_snapshots));
+            this->iteration_next_snapshot = unsigned(std::round(double(this->iteration_last_snapshot) * this->iteration_snapshot_factor));
         } else {
-            this->iterations_between_snapshots = 0;
+            this->iteration_next_snapshot = 0;
+            this->iteration_snapshot_factor = 1.0;
         }
-
-        this->capture_snapshot(pop);
+    } else {
+        this->time_next_snapshot = 0.0;
+        this->iteration_next_snapshot = 0;
+        this->time_snapshot_factor = 1.0;
+        this->iteration_snapshot_factor = 1.0;
     }
 
     while(!this->are_termination_criteria_met()) {
@@ -58,17 +65,45 @@ void MHACO_Solver::solve() {
         pop = algo.evolve(pop);
         this->update_best_individuals(pop);
 
-        if(this->max_num_snapshots > 0 &&
-            this->num_snapshots < this->max_num_snapshots) {
-            if ((this->time_between_snapshots > 0.0 &&
-                this->elapsed_time() - this->time_last_snapshot
-                    >= this->time_between_snapshots) ||
-                (this->iterations_between_snapshots > 0 &&
-                       this->num_iterations - this->iteration_last_snapshot
-                           >= this->iterations_between_snapshots)) {
+        if(this->max_num_snapshots > this->num_snapshots + 1) {
+            if (this->iteration_next_snapshot > 0 && 
+                this->num_iterations >= this->iteration_next_snapshot) {
                 this->capture_snapshot(pop);
-                this->time_between_snapshots *= 2.0;
-                this->iterations_between_snapshots *= 2;
+
+                if (this->time_limit > 0.0) {
+                    this->time_next_snapshot = this->time_last_snapshot * this->time_snapshot_factor;
+                    this->time_snapshot_factor = std::pow(this->time_limit / this->time_last_snapshot, 1.0 / (this->max_num_snapshots - this->num_snapshots));
+                } else {
+                    this->time_next_snapshot = 0.0;
+                    this->time_snapshot_factor = 1.0;
+                }
+
+                if (this->iterations_limit > 0) {
+                    this->iteration_next_snapshot = unsigned(std::round(double(this->iteration_last_snapshot) * this->iteration_snapshot_factor));
+                    this->iteration_snapshot_factor = std::pow(this->iterations_limit / this->iteration_last_snapshot, 1.0 / (this->max_num_snapshots - this->num_snapshots));
+                } else {
+                    this->iteration_next_snapshot = 0;
+                    this->iteration_snapshot_factor = 1.0;
+                }
+            } else if (this->time_next_snapshot > 0.0 && 
+                this->elapsed_time() >= this->time_next_snapshot) {
+                this->capture_snapshot(pop);
+
+                if (this->time_limit > 0.0) {
+                    this->time_next_snapshot = this->time_last_snapshot * this->time_snapshot_factor;
+                    this->time_snapshot_factor = std::pow(this->time_limit / this->time_last_snapshot, 1.0 / (this->max_num_snapshots - this->num_snapshots));
+                } else {
+                    this->time_next_snapshot = 0.0;
+                    this->time_snapshot_factor = 1.0;
+                }
+
+                if (this->iterations_limit > 0) {
+                    this->iteration_next_snapshot = unsigned(std::round(double(this->iteration_last_snapshot) * this->iteration_snapshot_factor));
+                    this->iteration_snapshot_factor = std::pow(this->iterations_limit / this->iteration_last_snapshot, 1.0 / (this->max_num_snapshots - this->num_snapshots));
+                } else {
+                    this->iteration_next_snapshot = 0;
+                    this->iteration_snapshot_factor = 1.0;
+                }
             }
         }
     }
