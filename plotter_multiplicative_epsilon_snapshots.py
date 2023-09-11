@@ -35,13 +35,13 @@ time_per_solver = {}
 for solver in solvers:
     multiplicative_epsilon_per_solver[solver] = []
     time_per_solver[solver] = []
-    for i in range(num_snapshots + 1):
+    for i in range(num_snapshots):
         multiplicative_epsilon_per_solver[solver].append([])
         time_per_solver[solver].append([])
 
 multiplicative_epsilon_per_snapshot = []
 
-for i in range(num_snapshots + 1):
+for i in range(num_snapshots):
     multiplicative_epsilon_per_snapshot.append([])
     for solver in solvers:
         multiplicative_epsilon_per_snapshot[i].append([])
@@ -68,7 +68,7 @@ plt.ylabel("Multiplicative Epsilon", fontsize = "x-large")
 for i in range(len(solvers)):
     x = []
     y = []
-    for j in range(num_snapshots + 1):
+    for j in range(num_snapshots):
         x.append(stats.mean(time_per_solver[solvers[i]][j]))
         y.append(stats.mean(multiplicative_epsilon_per_solver[solvers[i]][j]))
     plt.plot(x, y, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.80)
@@ -89,7 +89,7 @@ for i in range(len(solvers)):
     x = []
     y0 = []
     y2 = []
-    for j in range(num_snapshots + 1):
+    for j in range(num_snapshots):
         x.append(stats.mean(time_per_solver[solvers[i]][j]))
         quantiles = stats.quantiles(multiplicative_epsilon_per_solver[solvers[i]][j])
         y0.append(quantiles[0])
@@ -98,7 +98,7 @@ for i in range(len(solvers)):
 for i in range(len(solvers)):
     x = []
     y1 = []
-    for j in range(num_snapshots + 1):
+    for j in range(num_snapshots):
         x.append(stats.mean(time_per_solver[solvers[i]][j]))
         quantiles = stats.quantiles(multiplicative_epsilon_per_solver[solvers[i]][j])
         y1.append(quantiles[1])
@@ -112,7 +112,7 @@ filename = os.path.join(dirname, "multiplicative_epsilon_snapshots/multiplicativ
 plt.savefig(filename, format = "png")
 plt.close()
 
-for snapshot in range(num_snapshots + 1):
+for snapshot in range(num_snapshots):
     plt.figure(figsize = (11, 11))
     plt.title("Multi-Objective Travelling Salesman Problem", fontsize = "xx-large")
     plt.xlabel("Multiplicative Epsilon", fontsize = "x-large")

@@ -11,7 +11,7 @@ metrics_labels = ["Hypervolume Ratio", "Modified Inverted Generational Distance"
 
 metrics_per_snapshot = [[], [], []]
 
-for i in range(num_snapshots + 1):
+for i in range(num_snapshots):
     metrics_per_snapshot[0].append([])
     metrics_per_snapshot[1].append([])
     metrics_per_snapshot[2].append([])
@@ -59,7 +59,7 @@ for instance in instances:
                         j += 1
                     csv_file.close()
 
-for snapshot in range(num_snapshots + 1):
+for snapshot in range(num_snapshots):
     fig, axs = plt.subplots(1, ncols = len(metrics_per_snapshot), figsize = (12.0 * len(metrics_per_snapshot), 12.0 * 1), squeeze = False, num = 1, clear = True)
     fig.suptitle("Multi-Objective Travelling Salesman Problem", fontsize = 42)
     for j in range(len(metrics_per_snapshot)):
@@ -73,7 +73,7 @@ for snapshot in range(num_snapshots + 1):
     filename = os.path.join(dirname, "metrics_snapshots/raincloud_" + str(snapshot) + ".png")
     plt.savefig(filename, format = "png")
 
-for snapshot in range(num_snapshots + 1):
+for snapshot in range(num_snapshots):
     fig, axs = plt.subplots(nrows = len(metrics_per_snapshot), ncols = len(metrics_per_snapshot), figsize = (8.0 * len(metrics_per_snapshot), 8.0 * len(metrics_per_snapshot)), squeeze = False, num = 1, clear = True)
     fig.set_size_inches(8.0 * len(metrics_per_snapshot), 8.0 * len(metrics_per_snapshot))
     fig.suptitle("Multi-Objective Travelling Salesman Problem", fontsize = 36)
