@@ -16,6 +16,7 @@ void NSBRKGA_Solver::capture_snapshot(
                 time_snapshot,
                 std::vector<std::vector<double>>(
                     this->best_individuals.size())));
+
     for(std::size_t i = 0; i < this->best_individuals.size(); i++) {
         std::get<2>(this->best_solutions_snapshots.back())[i] =
             this->best_individuals[i].first;
@@ -45,8 +46,10 @@ void NSBRKGA_Solver::capture_snapshot(
                 this->num_iterations,
                 time_snapshot,
                 std::vector<std::vector<std::vector<double>>>()));
+
     for(unsigned i = 0; i < this->num_populations; i++) {
         std::get<2>(this->populations_snapshots.back()).emplace_back();
+
         for(unsigned j = 0; j < this->population_size; j++) {
             std::get<2>(this->populations_snapshots.back()).back().push_back(
                     algorithm.getCurrentPopulation(i).getFitness(j));

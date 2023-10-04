@@ -153,6 +153,7 @@ void Solver::capture_snapshot(const pagmo::population & pop) {
                 time_snapshot,
                 std::vector<std::vector<double>>(
                     this->best_individuals.size())));
+
     for(std::size_t i = 0; i < this->best_individuals.size(); i++) {
         std::get<2>(this->best_solutions_snapshots.back())[i] =
             this->best_individuals[i].first;
