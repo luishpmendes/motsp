@@ -35,7 +35,7 @@ time_per_solver = {}
 for solver in solvers:
     hypervolume_per_solver[solver] = []
     time_per_solver[solver] = []
-    for i in range(num_snapshots + 1):
+    for i in range(num_snapshots):
         hypervolume_per_solver[solver].append([])
         time_per_solver[solver].append([])
 
@@ -72,8 +72,6 @@ for i in range(len(solvers)):
         x.append(stats.mean(time_per_solver[solvers[i]][j]))
         y.append(stats.mean(hypervolume_per_solver[solvers[i]][j]))
     plt.plot(x, y, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.80)
-# plt.xlim(left = 0.0, right = max_time)
-# plt.ylim(bottom = min_hypervolume, top = max_hypervolume)
 plt.xscale("log")
 plt.yscale("function", functions = (partial(np.power, 10.0), np.log10))
 plt.legend(loc = "best", fontsize = "large")
@@ -103,8 +101,6 @@ for i in range(len(solvers)):
         quantiles = stats.quantiles(hypervolume_per_solver[solvers[i]][j])
         y1.append(quantiles[1])
     plt.plot(x, y1, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.75)
-# plt.xlim(left = 0.0, right = max_time)
-# plt.ylim(bottom = min_hypervolume, top = max_hypervolume)
 plt.xscale("log")
 plt.yscale("function", functions = (partial(np.power, 10.0), np.log10))
 plt.legend(loc = "best", fontsize = "large")
