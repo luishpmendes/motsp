@@ -2,7 +2,7 @@ CPP=g++
 CARGS=-std=c++17 -Wall -Werror -O0 -g3 -m64
 BRKGAINC=-I ../nsbrkga/nsbrkga
 LEMONINC=-I /opt/lemon/include -L /opt/lemon/lib -lemon
-GRBINC=-I /opt/gurobi952/linux64/include/ -L /opt/gurobi952/linux64/lib -lgurobi_c++ -lgurobi95 -lm
+GRBINC=-I /opt/gurobi1003/linux64/include/ -L /opt/gurobi1003/linux64/lib -lgurobi_c++ -lgurobi100 -lm
 BOOSTINC=-I /opt/boost/include -L /opt/boost/lib -lboost_serialization
 PAGMOINC=-I /opt/pagmo/include -L /opt/pagmo/lib -Wl,-R/opt/pagmo/lib -lpagmo -ltbb -pthread
 INC=-I src $(BRKGAINC) $(LEMONINC) $(GRBINC) $(BOOSTINC) $(PAGMOINC)
