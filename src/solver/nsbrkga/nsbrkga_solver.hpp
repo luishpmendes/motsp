@@ -82,12 +82,12 @@ class NSBRKGA_Solver : public Solver {
      * Interval at which the path relink is applied
      * (0 means no path relinking).
      ***********************************************/
-    unsigned pr_interval = 500;
+    unsigned pr_interval = 0;
 
     /*********************************************************************
      * Interval at which the populations are shaken (0 means no shaking).
      *********************************************************************/
-    unsigned shake_interval = 200;
+    unsigned shake_interval = 0;
 
     /********************************
      * The intensity of the shaking.
@@ -97,7 +97,7 @@ class NSBRKGA_Solver : public Solver {
     /******************************************************************
      * Interval at which the populations are reset (0 means no reset).
      ******************************************************************/
-    unsigned reset_interval = 500;
+    unsigned reset_interval = 0;
 
     /******************************
      * The intensity of the reset.
