@@ -127,6 +127,11 @@ int main (int argc, char * argv[]) {
                     "--num-exchange-individuals"));
         }
 
+        if(arg_parser.option_exists("--pr-percentage")) {
+            solver.pr_percentage =
+                std::stod(arg_parser.option_value("--pr-percentage"));
+        }
+
         if(arg_parser.option_exists("--pr-interval")) {
             solver.pr_interval =
                 std::stoul(arg_parser.option_value("--pr-interval"));
@@ -627,6 +632,7 @@ int main (int argc, char * argv[]) {
                   << "--num-populations <num_populations> "
                   << "--exchange-interval <exchange_interval> "
                   << "--num-exchange-individuals <num_exchange_individuals> "
+                  << "--pr-percentage <pr_percentage> "
                   << "--pr-interval <pr_interval> "
                   << "--shake-interval <shake_interval> "
                   << "--shake-intensity <shake_intensity> "

@@ -73,6 +73,11 @@ class NSBRKGA_Solver : public Solver {
      *******************************************************************/
     unsigned num_exchange_individuals = 30;
 
+    /*****************************************
+     * Percentage of the path to be computed.
+     *****************************************/
+    double pr_percentage = 0.20;
+
     /***********************************************
      * Interval at which the path relink is applied
      * (0 means no path relinking).

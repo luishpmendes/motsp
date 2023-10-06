@@ -85,6 +85,7 @@ void NSBRKGA_Solver::solve() {
     params.diversity_type = this->diversity_type;
     params.num_independent_populations = this->num_populations;
     params.pr_type = NSBRKGA::PathRelinking::Type::PERMUTATION;
+    params.pr_percentage = this->pr_percentage;
 
     NSBRKGA::NSBRKGA algorithm(decoder,
                              this->instance.senses,
@@ -115,19 +116,19 @@ void NSBRKGA_Solver::solve() {
     if(this->max_num_snapshots > this->num_snapshots + 1) {
         this->capture_snapshot(algorithm);
 
-        if (this->time_limit > 0.0) {
+        if (this->time_limit < std::numeric_limits<double>::max()) {
             this->time_snapshot_factor = std::pow(this->time_limit / this->time_last_snapshot, 1.0 / (this->max_num_snapshots - this->num_snapshots));
             this->time_next_snapshot = this->time_last_snapshot * this->time_snapshot_factor;
         } else {
-            this->time_next_snapshot = 0.0;
+            this->time_next_snapshot = std::numeric_limits<double>::max();
             this->time_snapshot_factor = 1.0;
         }
 
-        if (this->iterations_limit > 0) {
+        if (this->iterations_limit < std::numeric_limits<unsigned>::max()) {
             this->iteration_snapshot_factor = std::pow(this->iterations_limit / (this->iteration_last_snapshot + 1.0), 1.0 / (this->max_num_snapshots - this->num_snapshots));
             this->iteration_next_snapshot = unsigned(std::round(double(this->iteration_last_snapshot) * this->iteration_snapshot_factor));
         } else {
-            this->iteration_next_snapshot = 0;
+            this->iteration_next_snapshot = std::numeric_limits<unsigned>::max();
             this->iteration_snapshot_factor = 1.0;
         }
     } else {
@@ -155,43 +156,29 @@ void NSBRKGA_Solver::solve() {
         }
 
         if(this->max_num_snapshots > this->num_snapshots + 1) {
-            if (this->iteration_next_snapshot > 0 && 
-                this->num_iterations >= this->iteration_next_snapshot) {
+            if (this->num_iterations >= this->iteration_next_snapshot) {
                 this->capture_snapshot(algorithm);
 
-                if (this->time_limit > 0.0) {
+                if (this->time_limit < std::numeric_limits<double>::max()) {
                     this->time_next_snapshot = this->time_last_snapshot * this->time_snapshot_factor;
                     this->time_snapshot_factor = std::pow(this->time_limit / this->time_last_snapshot, 1.0 / (this->max_num_snapshots - this->num_snapshots));
-                } else {
-                    this->time_next_snapshot = 0.0;
-                    this->time_snapshot_factor = 1.0;
                 }
 
-                if (this->iterations_limit > 0) {
+                if (this->iterations_limit < std::numeric_limits<unsigned>::max()) {
                     this->iteration_next_snapshot = unsigned(std::round(double(this->iteration_last_snapshot) * this->iteration_snapshot_factor));
                     this->iteration_snapshot_factor = std::pow(this->iterations_limit / this->iteration_last_snapshot, 1.0 / (this->max_num_snapshots - this->num_snapshots));
-                } else {
-                    this->iteration_next_snapshot = 0;
-                    this->iteration_snapshot_factor = 1.0;
                 }
-            } else if (this->time_next_snapshot > 0.0 && 
-                this->elapsed_time() >= this->time_next_snapshot) {
+            } else if (this->elapsed_time() >= this->time_next_snapshot) {
                 this->capture_snapshot(algorithm);
 
-                if (this->time_limit > 0.0) {
+                if (this->time_limit < std::numeric_limits<double>::max()) {
                     this->time_next_snapshot = this->time_last_snapshot * this->time_snapshot_factor;
                     this->time_snapshot_factor = std::pow(this->time_limit / this->time_last_snapshot, 1.0 / (this->max_num_snapshots - this->num_snapshots));
-                } else {
-                    this->time_next_snapshot = 0.0;
-                    this->time_snapshot_factor = 1.0;
                 }
 
-                if (this->iterations_limit > 0) {
+                if (this->iterations_limit < std::numeric_limits<unsigned>::max()) {
                     this->iteration_next_snapshot = unsigned(std::round(double(this->iteration_last_snapshot) * this->iteration_snapshot_factor));
                     this->iteration_snapshot_factor = std::pow(this->iterations_limit / this->iteration_last_snapshot, 1.0 / (this->max_num_snapshots - this->num_snapshots));
-                } else {
-                    this->iteration_next_snapshot = 0;
-                    this->iteration_snapshot_factor = 1.0;
                 }
             }
         }
@@ -212,10 +199,17 @@ void NSBRKGA_Solver::solve() {
                 (this->num_iterations % this->pr_interval == 0)) {
             this->num_path_relink_calls++;
             const auto pr_start_time = std::chrono::steady_clock::now();
+            double pr_time_limit = this->time_limit;
+
+            if (pr_time_limit > this->time_next_snapshot) {
+                pr_time_limit = this->time_next_snapshot;
+            }
+
             auto result = algorithm.pathRelink(
                     params.pr_type,
                     dist_func,
-                    this->time_limit - this->elapsed_time());
+                    pr_time_limit - this->elapsed_time(),
+                    params.pr_percentage);
 
             const auto pr_time = Solver::elapsed_time(pr_start_time);
             this->path_relink_time += pr_time;
@@ -223,7 +217,9 @@ void NSBRKGA_Solver::solve() {
             switch(result) {
                 case NSBRKGA::PathRelinking::PathRelinkingResult::ELITE_IMPROVEMENT: {
                     this->num_elite_improvments++;
+                    break;
                 }
+
                 case NSBRKGA::PathRelinking::PathRelinkingResult::BEST_IMPROVEMENT: {
                     this->num_best_improvements++;
                     this->last_update_time = this->elapsed_time();
@@ -300,6 +296,8 @@ std::ostream & operator <<(std::ostream & os, const NSBRKGA_Solver & solver) {
        << solver.exchange_interval << std::endl
        << "Number of elite individuals to be exchanged between populations: "
        << solver.num_exchange_individuals << std::endl
+       << "Percentage of the path to be computed: " << solver.pr_percentage	
+       << std::endl
        << "Interval at which the path relink is applied: "
        << solver.pr_interval << std::endl
        << "Interval at which the populations are shaken: "
