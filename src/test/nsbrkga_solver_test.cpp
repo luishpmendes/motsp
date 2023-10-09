@@ -47,11 +47,11 @@ int main() {
     assert(solver.exchange_interval == 200);
     assert(solver.num_exchange_individuals == 3);
     assert(solver.pr_interval == 0);
-    assert(solver.shake_interval == 0);
-    assert(fabs(solver.shake_intensity - 0.5) < 
+    assert(solver.shake_interval == 200);
+    assert(fabs(solver.shake_intensity - 0.33) < 
             std::numeric_limits<double>::epsilon());
-    assert(solver.reset_interval == 0);
-    assert(fabs(solver.reset_intensity - 0.5) <
+    assert(solver.reset_interval == 500);
+    assert(fabs(solver.reset_intensity - 0.20) <
             std::numeric_limits<double>::epsilon());
     assert(solver.num_threads == 1);
 
@@ -280,11 +280,11 @@ int main() {
     assert(solver.exchange_interval == 200);
     assert(solver.num_exchange_individuals == 3);
     assert(solver.pr_interval == 0);
-    assert(solver.shake_interval == 0);
-    assert(fabs(solver.shake_intensity - 0.5) < 
+    assert(solver.shake_interval == 200);
+    assert(fabs(solver.shake_intensity - 0.33) < 
             std::numeric_limits<double>::epsilon());
-    assert(solver.reset_interval == 0);
-    assert(fabs(solver.reset_intensity - 0.5) <
+    assert(solver.reset_interval == 500);
+    assert(fabs(solver.reset_intensity - 0.20) <
             std::numeric_limits<double>::epsilon());
     assert(solver.num_threads == 1);
 
@@ -513,11 +513,11 @@ int main() {
     assert(solver.exchange_interval == 200);
     assert(solver.num_exchange_individuals == 3);
     assert(solver.pr_interval == 0);
-    assert(solver.shake_interval == 0);
-    assert(fabs(solver.shake_intensity - 0.5) < 
+    assert(solver.shake_interval == 200);
+    assert(fabs(solver.shake_intensity - 0.33) < 
             std::numeric_limits<double>::epsilon());
-    assert(solver.reset_interval == 0);
-    assert(fabs(solver.reset_intensity - 0.5) <
+    assert(solver.reset_interval == 500);
+    assert(fabs(solver.reset_intensity - 0.20) <
             std::numeric_limits<double>::epsilon());
     assert(solver.num_threads == 1);
 

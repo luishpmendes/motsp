@@ -87,22 +87,22 @@ class NSBRKGA_Solver : public Solver {
     /*********************************************************************
      * Interval at which the populations are shaken (0 means no shaking).
      *********************************************************************/
-    unsigned shake_interval = 0;
+    unsigned shake_interval = 200;
 
     /********************************
      * The intensity of the shaking.
      ********************************/
-    double shake_intensity = 0.5;
+    double shake_intensity = 0.33;
 
     /******************************************************************
      * Interval at which the populations are reset (0 means no reset).
      ******************************************************************/
-    unsigned reset_interval = 0;
+    unsigned reset_interval = 500;
 
     /******************************
      * The intensity of the reset.
      ******************************/
-    double reset_intensity = 0.5;
+    double reset_intensity = 0.20;
 
     /*********************************************************
      * Number of threads to be used during parallel decoding.
