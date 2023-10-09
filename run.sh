@@ -1,7 +1,8 @@
 #!/bin/bash
 
 instances=(kroAB100 kroAB200 kroAB500 kroAB1000 kroABC100 kroABC200 kroABC500 kroABC1000 kroABCD100 kroABCD200 kroABCD500 kroABCD1000)
-solvers=(nsga2 nspso moead mhaco ihs nsbrkga)
+# solvers=(nsga2 nspso moead mhaco ihs nsbrkga)
+solvers=(nsbrkga)
 seeds=(355841728 682375620 147607335 606401489 935899510)
 versions=(best median)
 
