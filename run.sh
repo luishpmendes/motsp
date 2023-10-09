@@ -447,3 +447,7 @@ rm ${path}/igd_plus_snapshots/snapshot_*.png &
 rm ${path}/multiplicative_epsilon_snapshots/snapshot_*.png &
 rm ${path}/metrics_snapshots/raincloud_*.png &
 rm ${path}/metrics_snapshots/scatter_*.png
+
+wait
+
+python ${path}/metrics_stats.py > ${path}/metrics_stats.txt
