@@ -6,16 +6,16 @@ Iterations limit: 4294967295
 Initial individuals: 0
 Maximum number of solutions: 500
 Maximum number of snapshots: 60
-Factor at which the time between snapshots are increased: 1.13208
+Factor at which the time between snapshots are increased: 1.13022
 Factor at which the iterations between snapshots are increased: 1
-Number of iterations: 10488
-Solutions obtained: 109
-Solving time: 600.049
+Number of iterations: 14544
+Solutions obtained: 84
+Solving time: 600.027
 Number of snapshots: 60
-Time next snapshot: 600.041
-Time when the last snapshot was taken: 600.045
+Time next snapshot: 600.028
+Time when the last snapshot was taken: 600.023
 Number of iteration of the next snapshot: 4294967295
-Iteration when the last snapshot was taken: 10488
+Iteration when the last snapshot was taken: 14544
 Number of individuals in each population: 300
 Minimum percentage of individuals to become the elite set: 0.1
 Maximum percentage of individuals to become the elite set: 0.5
@@ -30,17 +30,17 @@ Interval at which the elite solutions are exchanged between populations: 200
 Number of elite individuals to be exchanged between populations: 30
 Percentage of the path to be computed: 0.2
 Interval at which the path relink is applied: 0
-Interval at which the populations are shaken: 0
-The intensity of the shaking: 0.5
-Interval at which the populations are reset: 0
-The intensity of the reset: 0.5
+Interval at which the populations are shaken: 200
+The intensity of the shaking: 0.33
+Interval at which the populations are reset: 500
+The intensity of the reset: 0.2
 Number of threads to be used during parallel decoding: 1
-Last update generation: 10196
-Last update time: 584.103
-Largest number of generations between improvements: 2569
+Last update generation: 14533
+Last update time: 599.523
+Largest number of generations between improvements: 300
 Total path relink time: 0
 Total path relink calls: 0
 Improvements in the elite set: 0
 Best individual improvements: 0
-Total shakings calls: 0
+Total shakings calls: 5
 Total resets calls: 0
