@@ -39,12 +39,12 @@ class NSBRKGA_Solver : public Solver {
     /**************************************
      * Number of total parents for mating.
      **************************************/
-    unsigned num_total_parents = 5;
+    unsigned num_total_parents = 3;
 
     /**************************************
      * Number of elite parents for mating.
      **************************************/
-    unsigned num_elite_parents = 3;
+    unsigned num_elite_parents = 2;
 
     /****************************************************************************
      * Type of bias that will be used.
