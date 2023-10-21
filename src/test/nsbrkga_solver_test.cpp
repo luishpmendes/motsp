@@ -40,7 +40,7 @@ int main() {
             std::numeric_limits<double>::epsilon());
     assert(solver.num_total_parents == 3);
     assert(solver.num_elite_parents == 2);
-    assert(solver.bias_type == NSBRKGA::BiasFunctionType::LOGINVERSE);
+    assert(solver.bias_type == NSBRKGA::BiasFunctionType::SQRT);
     assert(solver.diversity_type ==
             NSBRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID);
     assert(solver.num_populations == 3);
@@ -273,7 +273,7 @@ int main() {
             std::numeric_limits<double>::epsilon());
     assert(solver.num_total_parents == 3);
     assert(solver.num_elite_parents == 2);
-    assert(solver.bias_type == NSBRKGA::BiasFunctionType::LOGINVERSE);
+    assert(solver.bias_type == NSBRKGA::BiasFunctionType::SQRT);
     assert(solver.diversity_type ==
             NSBRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID);
     assert(solver.num_populations == 3);
@@ -506,7 +506,7 @@ int main() {
             std::numeric_limits<double>::epsilon());
     assert(solver.num_total_parents == 3);
     assert(solver.num_elite_parents == 2);
-    assert(solver.bias_type == NSBRKGA::BiasFunctionType::LOGINVERSE);
+    assert(solver.bias_type == NSBRKGA::BiasFunctionType::SQRT);
     assert(solver.diversity_type ==
             NSBRKGA::DiversityFunctionType::AVERAGE_DISTANCE_TO_CENTROID);
     assert(solver.num_populations == 3);

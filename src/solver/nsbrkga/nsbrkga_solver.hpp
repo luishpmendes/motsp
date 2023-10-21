@@ -46,10 +46,10 @@ class NSBRKGA_Solver : public Solver {
      **************************************/
     unsigned num_elite_parents = 2;
 
-    /****************************************************************************
+    /**********************************************************************
      * Type of bias that will be used.
-     ****************************************************************************/
-    NSBRKGA::BiasFunctionType bias_type = NSBRKGA::BiasFunctionType::LOGINVERSE;
+     **********************************************************************/
+    NSBRKGA::BiasFunctionType bias_type = NSBRKGA::BiasFunctionType::SQRT;
 
     /*****************************************************************
      * Type of diversity that will be used.
