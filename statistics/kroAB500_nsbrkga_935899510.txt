@@ -6,24 +6,24 @@ Iterations limit: 4294967295
 Initial individuals: 0
 Maximum number of solutions: 500
 Maximum number of snapshots: 60
-Factor at which the time between snapshots are increased: 1.12498
+Factor at which the time between snapshots are increased: 1.1292
 Factor at which the iterations between snapshots are increased: 1
-Number of iterations: 8716
-Solutions obtained: 81
-Solving time: 600.042
+Number of iterations: 12431
+Solutions obtained: 92
+Solving time: 600.015
 Number of snapshots: 60
-Time next snapshot: 600.058
-Time when the last snapshot was taken: 600.04
+Time next snapshot: 600.025
+Time when the last snapshot was taken: 600.013
 Number of iteration of the next snapshot: 4294967295
-Iteration when the last snapshot was taken: 8716
+Iteration when the last snapshot was taken: 12431
 Number of individuals in each population: 300
 Minimum percentage of individuals to become the elite set: 0.1
 Maximum percentage of individuals to become the elite set: 0.5
 Mutation probability: 0.01
 Mutation distribution: 50
-Number of total parents for mating: 5
-Number of elite parents for mating: 3
-Type of bias that will be used: LOGINVERSE
+Number of total parents for mating: 3
+Number of elite parents for mating: 2
+Type of bias that will be used: SQRT
 Type of diversity that will be used: AVERAGE_DISTANCE_TO_CENTROID
 Number of independent parallel populations: 3
 Interval at which the elite solutions are exchanged between populations: 200
@@ -35,12 +35,12 @@ The intensity of the shaking: 0.33
 Interval at which the populations are reset: 500
 The intensity of the reset: 0.2
 Number of threads to be used during parallel decoding: 1
-Last update generation: 8705
-Last update time: 599.333
-Largest number of generations between improvements: 469
+Last update generation: 12390
+Last update time: 598.381
+Largest number of generations between improvements: 234
 Total path relink time: 0
 Total path relink calls: 0
 Improvements in the elite set: 0
 Best individual improvements: 0
-Total shakings calls: 3
+Total shakings calls: 2
 Total resets calls: 0
