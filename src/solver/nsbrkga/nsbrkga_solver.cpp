@@ -84,7 +84,7 @@ void NSBRKGA_Solver::solve() {
     params.bias_type = this->bias_type;
     params.diversity_type = this->diversity_type;
     params.num_independent_populations = this->num_populations;
-    params.pr_type = NSBRKGA::PathRelinking::Type::PERMUTATION;
+    params.pr_type = this->pr_type;
     params.pr_percentage = this->pr_percentage;
 
     NSBRKGA::NSBRKGA algorithm(decoder,
@@ -109,9 +109,6 @@ void NSBRKGA_Solver::solve() {
     algorithm.initialize();
 
     this->update_best_individuals(algorithm.getIncumbentSolutions());
-
-    std::shared_ptr<NSBRKGA::DistanceFunctionBase> dist_func(
-            new NSBRKGA::KendallTauDistance());
 
     if(this->max_num_snapshots > this->num_snapshots + 1) {
         this->capture_snapshot(algorithm);
@@ -207,7 +204,7 @@ void NSBRKGA_Solver::solve() {
 
             auto result = algorithm.pathRelink(
                     params.pr_type,
-                    dist_func,
+                    this->pr_dist_func,
                     pr_time_limit - this->elapsed_time(),
                     params.pr_percentage);
 
@@ -296,6 +293,9 @@ std::ostream & operator <<(std::ostream & os, const NSBRKGA_Solver & solver) {
        << solver.exchange_interval << std::endl
        << "Number of elite individuals to be exchanged between populations: "
        << solver.num_exchange_individuals << std::endl
+       << "Type of path relink that will be used: "
+       << EnumIO<NSBRKGA::PathRelinking::Type>::enum_names().at(
+               static_cast<int>(solver.pr_type)) << std::endl
        << "Percentage of the path to be computed: " << solver.pr_percentage	
        << std::endl
        << "Interval at which the path relink is applied: "

@@ -127,6 +127,30 @@ int main (int argc, char * argv[]) {
                     "--num-exchange-individuals"));
         }
 
+        if(arg_parser.option_exists("--pr-type")) {
+            std::stringstream ss(arg_parser.option_value("--pr-type"));
+            ss >> solver.pr_type;
+        }
+
+        if(arg_parser.option_exists("--pr-dist-func")) {
+            std::string s = arg_parser.option_value("--pr-dist-func");
+            std::transform(s.begin(), s.end(), s.begin(), ::toupper);
+
+            if (s.compare("HAMMING") == 0) {
+                solver.pr_dist_func =
+                    std::shared_ptr<NSBRKGA::DistanceFunctionBase>(
+                        new NSBRKGA::KendallTauDistance());
+            } else if (s.compare("KENDALL_TAU") == 0) {
+                solver.pr_dist_func =
+                    std::shared_ptr<NSBRKGA::DistanceFunctionBase>(
+                        new NSBRKGA::KendallTauDistance());
+            } else if (s.compare("EUCLIDEAN") == 0) {
+                solver.pr_dist_func =
+                    std::shared_ptr<NSBRKGA::DistanceFunctionBase>(
+                        new NSBRKGA::EuclideanDistance());
+            }
+        }
+
         if(arg_parser.option_exists("--pr-percentage")) {
             solver.pr_percentage =
                 std::stod(arg_parser.option_value("--pr-percentage"));
@@ -632,6 +656,8 @@ int main (int argc, char * argv[]) {
                   << "--num-populations <num_populations> "
                   << "--exchange-interval <exchange_interval> "
                   << "--num-exchange-individuals <num_exchange_individuals> "
+                  << "--pr-type <pr_type> "
+                  << "--pr-dist-func <pr_dist_func> "
                   << "--pr-percentage <pr_percentage> "
                   << "--pr-interval <pr_interval> "
                   << "--shake-interval <shake_interval> "

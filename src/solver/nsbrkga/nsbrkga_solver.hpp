@@ -73,6 +73,19 @@ class NSBRKGA_Solver : public Solver {
      *******************************************************************/
     unsigned num_exchange_individuals = 30;
 
+    /**********************************************
+     * Type of path relinking that will be used.
+     **********************************************/
+    NSBRKGA::PathRelinking::Type pr_type =
+        NSBRKGA::PathRelinking::Type::PERMUTATION;
+
+    /*************************************************************
+     * Distance function that will be used in the path relinking.
+     *************************************************************/
+    std::shared_ptr<NSBRKGA::DistanceFunctionBase> pr_dist_func =
+        std::shared_ptr<NSBRKGA::DistanceFunctionBase>(
+            new NSBRKGA::KendallTauDistance());
+
     /*****************************************
      * Percentage of the path to be computed.
      *****************************************/
