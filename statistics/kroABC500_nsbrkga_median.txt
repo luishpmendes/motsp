@@ -1,21 +1,21 @@
 Number of objectives: 3
 Number of vertices: 500
-Seed: 682375620
+Seed: 147607335
 Time limit: 600
 Iterations limit: 4294967295
 Initial individuals: 0
 Maximum number of solutions: 500
 Maximum number of snapshots: 60
-Factor at which the time between snapshots are increased: 1.13179
+Factor at which the time between snapshots are increased: 1.13253
 Factor at which the iterations between snapshots are increased: 1
-Number of iterations: 11816
-Solutions obtained: 116
-Solving time: 600.019
+Number of iterations: 15901
+Solutions obtained: 192
+Solving time: 600.012
 Number of snapshots: 60
-Time next snapshot: 600.05
-Time when the last snapshot was taken: 600.015
+Time next snapshot: 600.043
+Time when the last snapshot was taken: 600.007
 Number of iteration of the next snapshot: 4294967295
-Iteration when the last snapshot was taken: 11816
+Iteration when the last snapshot was taken: 15901
 Number of individuals in each population: 300
 Minimum percentage of individuals to become the elite set: 0.1
 Maximum percentage of individuals to become the elite set: 0.5
@@ -28,19 +28,20 @@ Type of diversity that will be used: AVERAGE_DISTANCE_TO_CENTROID
 Number of independent parallel populations: 3
 Interval at which the elite solutions are exchanged between populations: 200
 Number of elite individuals to be exchanged between populations: 30
+Type of path relink that will be used: BINARY_SEARCH
 Percentage of the path to be computed: 0.2
-Interval at which the path relink is applied: 0
+Interval at which the path relink is applied: 500
 Interval at which the populations are shaken: 200
 The intensity of the shaking: 0.33
 Interval at which the populations are reset: 500
 The intensity of the reset: 0.2
 Number of threads to be used during parallel decoding: 1
-Last update generation: 11813
-Last update time: 599.909
-Largest number of generations between improvements: 531
-Total path relink time: 0
-Total path relink calls: 0
+Last update generation: 15877
+Last update time: 599.161
+Largest number of generations between improvements: 375
+Total path relink time: 2.04031
+Total path relink calls: 31
 Improvements in the elite set: 0
 Best individual improvements: 0
-Total shakings calls: 7
-Total resets calls: 1
+Total shakings calls: 8
+Total resets calls: 0
