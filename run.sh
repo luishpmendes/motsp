@@ -1,17 +1,16 @@
 #!/bin/bash
 
 instances=(kroAB100 kroAB200 kroAB500 kroAB1000 kroABC100 kroABC200 kroABC500 kroABC1000 kroABCD100 kroABCD200 kroABCD500 kroABCD1000)
-# solvers=(nsga2 nspso moead mhaco ihs nsbrkga)
-solvers=(nsbrkga)
-seeds=(355841728 682375620 147607335 606401489 935899510)
+solvers=(nsga2 nspso moead mhaco ihs nsbrkga)
+seeds=(305089489 511812191 608055156 467424509 944441939 414977408 819312498 562386085 287613914 755772793)
 versions=(best median)
 
 num_processes=6
 
-time_limit=600
+time_limit=1800
 population_size=300
 max_num_solutions=500
-max_num_snapshots=60
+max_num_snapshots=30
 max_ref_solutions=800
 
 path=$(dirname $(realpath $0))
