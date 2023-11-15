@@ -198,9 +198,9 @@ void NSBRKGA_Solver::solve() {
             const auto pr_start_time = std::chrono::steady_clock::now();
             double pr_time_limit = this->time_limit;
 
-            if (pr_time_limit > this->time_next_snapshot) {
-                pr_time_limit = this->time_next_snapshot;
-            }
+            // if (pr_time_limit > this->time_next_snapshot) {
+            //     pr_time_limit = this->time_next_snapshot;
+            // }
 
             auto result = algorithm.pathRelink(
                     params.pr_type,
