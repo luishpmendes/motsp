@@ -50,7 +50,7 @@ int main() {
     assert(typeid(*solver.pr_dist_func) == typeid(NSBRKGA::EuclideanDistance));
     assert(fabs(solver.pr_percentage - 0.20) <
             std::numeric_limits<double>::epsilon());
-    assert(solver.pr_interval == 500);
+    assert(solver.pr_interval == 0);
     assert(solver.shake_interval == 200);
     assert(fabs(solver.shake_intensity - 0.33) < 
             std::numeric_limits<double>::epsilon());
@@ -287,7 +287,7 @@ int main() {
     assert(typeid(*solver.pr_dist_func) == typeid(NSBRKGA::EuclideanDistance));
     assert(fabs(solver.pr_percentage - 0.20) <
             std::numeric_limits<double>::epsilon());
-    assert(solver.pr_interval == 500);
+    assert(solver.pr_interval == 0);
     assert(solver.shake_interval == 200);
     assert(fabs(solver.shake_intensity - 0.33) < 
             std::numeric_limits<double>::epsilon());
@@ -524,7 +524,7 @@ int main() {
     assert(typeid(*solver.pr_dist_func) == typeid(NSBRKGA::EuclideanDistance));
     assert(fabs(solver.pr_percentage - 0.20) <
             std::numeric_limits<double>::epsilon());
-    assert(solver.pr_interval == 500);
+    assert(solver.pr_interval == 0);
     assert(solver.shake_interval == 200);
     assert(fabs(solver.shake_intensity - 0.33) < 
             std::numeric_limits<double>::epsilon());
