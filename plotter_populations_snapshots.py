@@ -7,6 +7,8 @@ import seaborn as sns
 from math import ceil, floor, sqrt
 from plotter_definitions import *
 
+solvers = ["nsga2", "nspso", "moead", "mhaco", "ihs", "nsbrkga"]
+
 matplotlib.use("agg")
 
 dirname = os.path.dirname(__file__)

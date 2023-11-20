@@ -1,13 +1,14 @@
 instances = ["kroAB100",   "kroAB200",   "kroAB500",   "kroAB1000",
              "kroABC100",  "kroABC200",  "kroABC500",  "kroABC1000",
              "kroABCD100", "kroABCD200", "kroABCD500", "kroABCD1000"]
-solvers = ["nsga2", "nspso", "moead", "mhaco", "ihs", "nsbrkga"]
+solvers = ["nsga2", "nspso", "moead", "mhaco", "ihs", "nsbrkga", "nsbrkga-pr"]
 solver_labels = {"nsga2": "NSGA-II",
                  "nspso": "NSPSO",
                  "moead": "MOEA/D-DE",
                  "mhaco": "MHACO",
                  "ihs": "IHS",
-                 "nsbrkga": "NS-BRKGA"}
+                 "nsbrkga": "NS-BRKGA",
+                 "nsbrkga-pr": "NS-BRKGA + IPR"}
 seeds = [305089489, 511812191, 608055156, 467424509, 944441939, 414977408, 819312498, 562386085, 287613914, 755772793]
 versions = ["best", "median"]
 colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf", "#8c7e6e", "#738191"]

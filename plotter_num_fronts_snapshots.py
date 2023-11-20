@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import os
 from plotter_definitions import *
 
+solvers = ["nsga2", "nspso", "moead", "mhaco", "ihs", "nsbrkga"]
+
 dirname = os.path.dirname(__file__)
 
 for instance in instances:

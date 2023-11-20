@@ -4,6 +4,8 @@ import os
 import seaborn as sns
 from plotter_definitions import *
 
+solvers = ["nsga2", "nspso", "moead", "mhaco", "ihs", "nsbrkga"]
+
 dirname = os.path.dirname(__file__)
 
 for m in ms:

@@ -86,6 +86,7 @@ do
             then
                 command+="--num-elites-snapshots ${path}/num_elites_snapshots/${instance}_nsbrkga_${seed}.txt "
                 command+="--pr-interval 500 "
+                command+="--max-num-snapshots 0 "
             fi
             if [ $i -lt $num_processes ]
             then

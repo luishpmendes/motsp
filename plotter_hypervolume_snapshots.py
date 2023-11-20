@@ -9,6 +9,8 @@ from plotter_definitions import *
 from functools import partial
 import numpy as np
 
+solvers = ["nsga2", "nspso", "moead", "mhaco", "ihs", "nsbrkga"]
+
 dirname = os.path.dirname(__file__)
 
 min_hypervolume = 1.0

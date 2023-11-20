@@ -7,6 +7,8 @@ import statistics as stats
 from math import ceil, floor, sqrt
 from plotter_definitions import *
 
+solvers = ["nsga2", "nspso", "moead", "mhaco", "ihs", "nsbrkga"]
+
 dirname = os.path.dirname(__file__)
 
 min_igd_plus = 1.0
