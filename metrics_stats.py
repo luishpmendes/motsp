@@ -23,6 +23,8 @@ for solver in solvers:
                     hypervolume_per_solver_per_instance[solver][instance].append(float(row[0]))
                     hypervolume_per_solver[solver].append(float(row[0]))
                 csv_file.close()
+        else:
+            print("File not found: " + filename)
 
 print("Hypervolume:")
 
@@ -62,6 +64,8 @@ for solver in solvers:
                     igd_plus_per_solver_per_instance[solver][instance].append(float(row[0]))
                     igd_plus_per_solver[solver].append(float(row[0]))
                 csv_file.close()
+        else:
+            print("File not found: " + filename)
 
 print("IGD+:")
 
@@ -101,6 +105,8 @@ for solver in solvers:
                     multiplicative_epsilon_per_solver_per_instance[solver][instance].append(float(row[0]))
                     multiplicative_epsilon_per_solver[solver].append(float(row[0]))
                 csv_file.close()
+        else:
+            print("File not found: " + filename)
 
 print("Multiplicative Epsilon:")
 
