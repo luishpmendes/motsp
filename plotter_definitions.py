@@ -17,9 +17,15 @@ ms = [2, 3, 4]
 instances_per_m = {2 : ["kroAB100",   "kroAB200",   "kroAB500",   "kroAB1000"],
                    3 : ["kroABC100",  "kroABC200",  "kroABC500",  "kroABC1000"],
                    4 : ["kroABCD100", "kroABCD200", "kroABCD500", "kroABCD1000"]}
+m_per_instance = {"kroAB100"   : 2, "kroAB200"   : 2, "kroAB500"   : 2, "kroAB1000"   : 2,
+                  "kroABC100"  : 3, "kroABC200"  : 3, "kroABC500"  : 3, "kroABC1000"  : 3,
+                  "kroABCD100" : 4, "kroABCD200" : 4, "kroABCD500" : 4, "kroABCD1000" : 4}
 sizes = [100, 200, 500, 1000]
 instances_per_size = {100  : ["kroAB100",  "kroABC100",  "kroABCD100"],
                       200  : ["kroAB200",  "kroABC200",  "kroABCD200"],
                       500  : ["kroAB500",  "kroABC500",  "kroABCD500"],
                       1000 : ["kroAB1000", "kroABC1000", "kroABCD1000"]}
+size_per_instance = {"kroAB100"   : 100, "kroAB200"   : 200, "kroAB500"   : 500, "kroAB1000"   : 1000,
+                     "kroABC100"  : 100, "kroABC200"  : 200, "kroABC500"  : 500, "kroABC1000"  : 1000,
+                     "kroABCD100" : 100, "kroABCD200" : 200, "kroABCD500" : 500, "kroABCD1000" : 1000}
 num_snapshots = 30
