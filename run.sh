@@ -1,7 +1,8 @@
 #!/bin/bash
 
 instances=(kroAB100 kroAB200 kroAB500 kroAB1000 kroABC100 kroABC200 kroABC500 kroABC1000 kroABCD100 kroABCD200 kroABCD500 kroABCD1000)
-solvers=(nsga2 nspso moead mhaco ihs nsbrkga nsbrkga-pr)
+# solvers=(nsga2 nspso moead mhaco ihs nsbrkga nsbrkga-pr)
+solvers=(nsbrkga nsbrkga-pr)
 seeds=(305089489 511812191 608055156 467424509 944441939 414977408 819312498 562386085 287613914 755772793)
 versions=(best median)
 
@@ -86,7 +87,6 @@ do
             then
                 command+="--num-elites-snapshots ${path}/num_elites_snapshots/${instance}_${solver}_${seed}.txt "
                 command+="--pr-interval 500 "
-                command+="--max-num-snapshots 0 "
             fi
             if [ $i -lt $num_processes ]
             then
