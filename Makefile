@@ -1,5 +1,5 @@
 CPP=g++
-CARGS=-std=c++17 -Wall -Werror -O0 -g3 -m64
+CARGS=-std=c++17 -O3 -g0 -m64
 BRKGAINC=-I ../nsbrkga/nsbrkga
 LEMONINC=-I /opt/lemon/include -L /opt/lemon/lib -lemon
 GRBINC=-I /opt/gurobi1003/linux64/include/ -L /opt/gurobi1003/linux64/lib -lgurobi_c++ -lgurobi100 -lm

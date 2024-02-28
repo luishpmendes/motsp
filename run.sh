@@ -33,90 +33,90 @@ mkdir -p ${path}/multiplicative_epsilon_snapshots
 mkdir -p ${path}/metrics
 mkdir -p ${path}/metrics_snapshots
 
-commands=()
+# commands=()
 
-for ((i=0;i<num_processes;i++))
-do
-    commands[$i]="("
-done
+# for ((i=0;i<num_processes;i++))
+# do
+#     commands[$i]="("
+# done
 
-i=0
+# i=0
 
-for instance in ${instances[@]}
-do
-    for solver in ${solvers[@]}
-    do
-        for seed in ${seeds[@]}
-        do
-            if [ $solver = "nsbrkga-pr" ]
-            then
-                command="${path}/bin/exec/nsbrkga_solver_exec "
-            else
-                command="${path}/bin/exec/${solver}_solver_exec "
-            fi
-            command+="--instance ${path}/instances/${instance}.txt "
-            command+="--seed ${seed} "
-            command+="--time-limit ${time_limit} "
-            command+="--max-num-solutions ${max_num_solutions} "
-            command+="--max-num-snapshots ${max_num_snapshots} "
-            command+="--population-size ${population_size} "
-            command+="--statistics ${path}/statistics/${instance}_${solver}_${seed}.txt "
-            command+="--solutions ${path}/solutions/${instance}_${solver}_${seed}_ "
-            command+="--pareto ${path}/pareto/${instance}_${solver}_${seed}.txt "
-            command+="--best-solutions-snapshots ${path}/best_solutions_snapshots/${instance}_${solver}_${seed}_ "
-            command+="--num-non-dominated-snapshots ${path}/num_non_dominated_snapshots/${instance}_${solver}_${seed}.txt "
-            command+="--num-fronts-snapshots ${path}/num_fronts_snapshots/${instance}_${solver}_${seed}.txt "
-            command+="--populations-snapshots ${path}/populations_snapshots/${instance}_${solver}_${seed}_ "
-            if [ $solver = "nspso" ]
-            then
-                command+="--memory "
-            fi
-            if [ $solver = "moead" ]
-            then
-                command+="--preserve-diversity "
-            fi
-            if [ $solver = "mhaco" ]
-            then
-                command+="--memory "
-            fi
-            if [ $solver = "nsbrkga" ]
-            then
-                command+="--num-elites-snapshots ${path}/num_elites_snapshots/${instance}_${solver}_${seed}.txt "
-            fi
-            if [ $solver = "nsbrkga-pr" ]
-            then
-                command+="--num-elites-snapshots ${path}/num_elites_snapshots/${instance}_${solver}_${seed}.txt "
-                command+="--pr-interval 500 "
-            fi
-            if [ $i -lt $num_processes ]
-            then
-                commands[$i]+="$command"
-            else
-                commands[$((i%num_processes))]+=" && $command"
-            fi
-            i=$((i+1))
-        done
-    done
-done
+# for instance in ${instances[@]}
+# do
+#     for solver in ${solvers[@]}
+#     do
+#         for seed in ${seeds[@]}
+#         do
+#             if [ $solver = "nsbrkga-pr" ]
+#             then
+#                 command="${path}/bin/exec/nsbrkga_solver_exec "
+#             else
+#                 command="${path}/bin/exec/${solver}_solver_exec "
+#             fi
+#             command+="--instance ${path}/instances/${instance}.txt "
+#             command+="--seed ${seed} "
+#             command+="--time-limit ${time_limit} "
+#             command+="--max-num-solutions ${max_num_solutions} "
+#             command+="--max-num-snapshots ${max_num_snapshots} "
+#             command+="--population-size ${population_size} "
+#             command+="--statistics ${path}/statistics/${instance}_${solver}_${seed}.txt "
+#             command+="--solutions ${path}/solutions/${instance}_${solver}_${seed}_ "
+#             command+="--pareto ${path}/pareto/${instance}_${solver}_${seed}.txt "
+#             command+="--best-solutions-snapshots ${path}/best_solutions_snapshots/${instance}_${solver}_${seed}_ "
+#             command+="--num-non-dominated-snapshots ${path}/num_non_dominated_snapshots/${instance}_${solver}_${seed}.txt "
+#             command+="--num-fronts-snapshots ${path}/num_fronts_snapshots/${instance}_${solver}_${seed}.txt "
+#             command+="--populations-snapshots ${path}/populations_snapshots/${instance}_${solver}_${seed}_ "
+#             if [ $solver = "nspso" ]
+#             then
+#                 command+="--memory "
+#             fi
+#             if [ $solver = "moead" ]
+#             then
+#                 command+="--preserve-diversity "
+#             fi
+#             if [ $solver = "mhaco" ]
+#             then
+#                 command+="--memory "
+#             fi
+#             if [ $solver = "nsbrkga" ]
+#             then
+#                 command+="--num-elites-snapshots ${path}/num_elites_snapshots/${instance}_${solver}_${seed}.txt "
+#             fi
+#             if [ $solver = "nsbrkga-pr" ]
+#             then
+#                 command+="--num-elites-snapshots ${path}/num_elites_snapshots/${instance}_${solver}_${seed}.txt "
+#                 command+="--pr-interval 500 "
+#             fi
+#             if [ $i -lt $num_processes ]
+#             then
+#                 commands[$i]+="$command"
+#             else
+#                 commands[$((i%num_processes))]+=" && $command"
+#             fi
+#             i=$((i+1))
+#         done
+#     done
+# done
 
-for ((i=0;i<num_processes;i++))
-do
-    commands[$i]+=") &> ${path}/log_${i}.txt"
-done
+# for ((i=0;i<num_processes;i++))
+# do
+#     commands[$i]+=") &> ${path}/log_${i}.txt"
+# done
 
-final_command=""
+# final_command=""
 
-for ((i=0;i<num_processes;i++))
-do 
-    command=${commands[$i]}
-    final_command+="$command & "
-done
+# for ((i=0;i<num_processes;i++))
+# do 
+#     command=${commands[$i]}
+#     final_command+="$command & "
+# done
 
-eval $final_command
+# eval $final_command
 
-wait
+# wait
 
-solvers=(nsga2 nspso moead mhaco ihs nsbrkga nsbrkga-pr)
+solvers=(nsga2 nspso moead mhaco ihs nsbrkga-pr)
 
 commands=()
 

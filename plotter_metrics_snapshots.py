@@ -5,7 +5,7 @@ import seaborn as sns
 import ptitprince as pt
 from plotter_definitions import *
 
-solvers = ["nsga2", "nspso", "moead", "mhaco", "ihs", "nsbrkga"]
+# solvers = ["nsga2", "nspso", "moead", "mhaco", "ihs", "nsbrkga"]
 
 dirname = os.path.dirname(__file__)
 

@@ -7,7 +7,7 @@ import seaborn as sns
 from math import ceil, floor, sqrt
 from plotter_definitions import *
 
-solvers = ["nsga2", "nspso", "moead", "mhaco", "ihs", "nsbrkga"]
+# solvers = ["nsga2", "nspso", "moead", "mhaco", "ihs", "nsbrkga"]
 
 matplotlib.use("agg")
 
