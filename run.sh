@@ -1,8 +1,7 @@
 #!/bin/bash
 
 instances=(kroAB100 kroAB200 kroAB500 kroAB1000 kroAB2000 kroABC100 kroABC200 kroABC500 kroABC1000 kroABC2000 kroABCD100 kroABCD200 kroABCD500 kroABCD1000 kroABCD2000)
-# solvers=(nsga2 nspso moead mhaco ihs nsbrkga)
-solvers=(nsbrkga)
+solvers=(nsga2 nspso moead mhaco ihs nsbrkga)
 seeds=(305089489 511812191 608055156 467424509 944441939 414977408 819312498 562386085 287613914 755772793)
 versions=(best median)
 
@@ -16,7 +15,7 @@ max_ref_solutions=800
 path=$(dirname $(realpath $0))
 
 mkdir -p ${path}/statistics
-mkdir -p ${path}/solutions
+# mkdir -p ${path}/solutions
 mkdir -p ${path}/pareto
 mkdir -p ${path}/best_solutions_snapshots
 mkdir -p ${path}/num_non_dominated_snapshots
@@ -55,7 +54,7 @@ do
             command+="--max-num-solutions ${max_num_solutions} "
             command+="--max-num-snapshots ${max_num_snapshots} "
             command+="--statistics ${path}/statistics/${instance}_${solver}_${seed}.txt "
-            command+="--solutions ${path}/solutions/${instance}_${solver}_${seed}_ "
+            # command+="--solutions ${path}/solutions/${instance}_${solver}_${seed}_ "
             command+="--pareto ${path}/pareto/${instance}_${solver}_${seed}.txt "
             command+="--best-solutions-snapshots ${path}/best_solutions_snapshots/${instance}_${solver}_${seed}_ "
             command+="--num-non-dominated-snapshots ${path}/num_non_dominated_snapshots/${instance}_${solver}_${seed}.txt "
