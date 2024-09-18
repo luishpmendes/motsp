@@ -1,0 +1,27 @@
+Number of objectives: 4
+Number of vertices: 500
+Seed: 305089489
+Time limit: 900
+Iterations limit: 4294967295
+Initial individuals: 0
+Maximum number of solutions: 500
+Maximum number of snapshots: 30
+Factor at which the time between snapshots are increased: 1.37114
+Factor at which the iterations between snapshots are increased: 1
+Number of iterations: 20419
+Solutions obtained: 497
+Solving time: 900.037
+Number of snapshots: 30
+Time next snapshot: 900.091
+Time when the last snapshot was taken: 900.013
+Number of iteration of the next snapshot: 4294967295
+Iteration when the last snapshot was taken: 20419
+Population size: 300
+Omega: 0.6
+C1: 2
+C2: 2
+Chi: 1
+vCoeff: 0.5
+Leader selection range: 60
+Diversity mechanism: crowding distance
+Memory: 1

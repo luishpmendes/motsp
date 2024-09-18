@@ -1,0 +1,27 @@
+Number of objectives: 4
+Number of vertices: 2000
+Seed: 511812191
+Time limit: 900
+Iterations limit: 4294967295
+Initial individuals: 0
+Maximum number of solutions: 500
+Maximum number of snapshots: 30
+Factor at which the time between snapshots are increased: 1.25377
+Factor at which the iterations between snapshots are increased: 1
+Number of iterations: 2585
+Solutions obtained: 437
+Solving time: 900.3
+Number of snapshots: 30
+Time next snapshot: 900.137
+Time when the last snapshot was taken: 900.118
+Number of iteration of the next snapshot: 4294967295
+Iteration when the last snapshot was taken: 2585
+Population size: 300
+Method used to generate the weights: random
+Decomposition method: tchebycheff
+Size of the weight’s neighborhood: 20
+Crossover parameter in the Differential Evolution operator: 1
+Parameter for the Differential Evolution operator: 0.5
+Chance that the neighbourhood is considered at each generation, rather than the whole population: 0.9
+Maximum number of copies reinserted in the population: 2
+Diversity preservation mechanisms activated: 1

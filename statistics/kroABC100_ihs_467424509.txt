@@ -1,0 +1,24 @@
+Number of objectives: 3
+Number of vertices: 100
+Seed: 467424509
+Time limit: 900
+Iterations limit: 4294967295
+Initial individuals: 0
+Maximum number of solutions: 500
+Maximum number of snapshots: 30
+Factor at which the time between snapshots are increased: 1.49402
+Factor at which the iterations between snapshots are increased: 1
+Number of iterations: 394291
+Solutions obtained: 76
+Solving time: 900.004
+Number of snapshots: 30
+Time next snapshot: 900.005
+Time when the last snapshot was taken: 900.002
+Number of iteration of the next snapshot: 4294967295
+Iteration when the last snapshot was taken: 394291
+Population size: 300
+Probability of choosing from memory: 0.85
+Minimum pitch adjustment rate: 0.35
+Maximum pitch adjustment rate: 0.99
+Minimum distance bandwidth: 1e-05
+Maximum distance bandwidth: 1

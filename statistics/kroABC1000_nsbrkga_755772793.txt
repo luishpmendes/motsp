@@ -1,0 +1,49 @@
+Number of objectives: 3
+Number of vertices: 1000
+Seed: 755772793
+Time limit: 900
+Iterations limit: 4294967295
+Initial individuals: 0
+Maximum number of solutions: 500
+Maximum number of snapshots: 30
+Factor at which the time between snapshots are increased: 1.29529
+Factor at which the iterations between snapshots are increased: 1
+Number of iterations: 6674
+Solutions obtained: 105
+Solving time: 900.012
+Number of snapshots: 30
+Time next snapshot: 900.203
+Time when the last snapshot was taken: 900.004
+Number of iteration of the next snapshot: 4294967295
+Iteration when the last snapshot was taken: 6674
+Number of individuals in each population: 300
+Minimum percentage of individuals to become the elite set: 0.1
+Maximum percentage of individuals to become the elite set: 0.3
+Mutation probability: 0.01
+Mutation distribution: 50
+Number of total parents for mating: 3
+Number of elite parents for mating: 2
+Type of bias that will be used: SQRT
+Type of diversity that will be used: AVERAGE_DISTANCE_TO_CENTROID
+Number of independent parallel populations: 3
+Interval at which the elite solutions are exchanged between populations: 200
+Number of elite individuals to be exchanged between populations: 30
+Type of path relink that will be used: BINARY_SEARCH
+Percentage of the path to be computed: 0.2
+Interval at which the path relink is applied: 500
+Interval at which the populations are shaken: 200
+The intensity of the shaking: 0.33
+The distribution of the shaking: 20
+Interval at which the populations are reset: 500
+The intensity of the reset: 0.2
+Number of threads to be used during parallel decoding: 1
+Maximum number of local search iterations: 0
+Last update generation: 6672
+Last update time: 899.756
+Largest number of generations between improvements: 557
+Total path relink time: 0.378572
+Total path relink calls: 13
+Improvements in the elite set: 0
+Best individual improvements: 1
+Total shakings calls: 9
+Total resets calls: 2
