@@ -1,10 +1,10 @@
 import csv
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FormatStrFormatter
 import seaborn as sns
 import ptitprince as pt
 import os
 import statistics as stats
-from math import ceil, floor, sqrt
 from plotter_definitions import *
 
 dirname = os.path.dirname(__file__)
@@ -60,9 +60,9 @@ for instance in instances:
                     csv_file.close()
 
 plt.figure()
-plt.title("MOTSP", fontsize = "xx-large")
-plt.xlabel("Time (s)", fontsize = "x-large")
-plt.ylabel("IGD+", fontsize = "x-large")
+plt.xlabel("Time (s)")
+plt.ylabel("Modified Inverted Generational Distance")
+plt.grid(alpha=0.5, color='gray', linestyle='dashed', linewidth=0.5, which='both')
 for i in range(len(solvers)):
     x = []
     y = []
@@ -70,19 +70,21 @@ for i in range(len(solvers)):
         x.append(stats.mean(time_per_solver[solvers[i]][j]))
         y.append(stats.mean(igd_plus_per_solver[solvers[i]][j]))
     plt.plot(x, y, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.80)
-# plt.xlim(left = 0.0, right = max_time)
-# plt.ylim(bottom = min_igd_plus, top = max_igd_plus)
 plt.xscale("log")
 plt.yscale("log")
-plt.legend(loc = "best", fontsize = "large")
+plt.legend(loc = "best")
+plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+plt.gca().yaxis.set_minor_formatter(FormatStrFormatter('%.2f'))
+plt.tight_layout()
 filename = os.path.join(dirname, "igd_plus_snapshots/igd_plus_mean_snapshots.png")
 plt.savefig(filename, format = "png")
 plt.close()
 
 plt.figure()
-plt.title("MOTSP", fontsize = "xx-large")
-plt.xlabel("Time (s)", fontsize = "x-large")
-plt.ylabel("IGD+", fontsize = "x-large")
+plt.xlabel("Time (s)")
+plt.ylabel("Modified Inverted Generational Distance")
+plt.grid(alpha=0.5, color='gray', linestyle='dashed', linewidth=0.5, which='both')
 for i in range(len(solvers)):
     x = []
     y0 = []
@@ -101,11 +103,13 @@ for i in range(len(solvers)):
         quantiles = stats.quantiles(igd_plus_per_solver[solvers[i]][j])
         y1.append(quantiles[1])
     plt.plot(x, y1, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.75)
-# plt.xlim(left = 0.0, right = max_time)
-# plt.ylim(bottom = min_igd_plus, top = max_igd_plus)
 plt.xscale("log")
 plt.yscale("log")
-plt.legend(loc = "best", fontsize = "large")
+plt.legend(loc = "best")
+plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+plt.gca().yaxis.set_minor_formatter(FormatStrFormatter('%.2f'))
+plt.tight_layout()
 filename = os.path.join(dirname, "igd_plus_snapshots/igd_plus_quartiles_snapshots.png")
 plt.savefig(filename, format = "png")
 plt.close()

@@ -1,10 +1,12 @@
 import csv
+from functools import partial
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FormatStrFormatter
+import numpy as np
 import seaborn as sns
 import ptitprince as pt
 import os
 import statistics as stats
-from math import ceil, floor, sqrt
 from plotter_definitions import *
 
 dirname = os.path.dirname(__file__)
@@ -60,13 +62,13 @@ for instance in instances:
                         hypervolume[i].append(float(row[0]))
                     csv_file.close()
 
-plt.figure(figsize = (11, 11))
-plt.title("Multi-Objective Travelling Salesman Problem", fontsize = "xx-large")
-plt.xlabel("Hypervolume Ratio", fontsize = "x-large")
+plt.figure()
+plt.xlabel("Hypervolume Ratio")
 pt.half_violinplot(data = hypervolume, palette = colors, orient = "h", width = 0.6, cut = 0.0, inner = None)
 sns.stripplot(data = hypervolume, palette = colors, orient = "h", size = 2, zorder = 0)
 sns.boxplot(data = hypervolume, orient = "h", width = 0.20, color = "black", zorder = 10, showcaps = True, boxprops = {'facecolor' : 'none', "zorder" : 10}, showfliers = True, whiskerprops = {'linewidth' : 2, "zorder" : 10}, flierprops = {'markersize' : 2})
-plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers], fontsize = "large")
+plt.yticks(ticks = list(range(len(solvers))), labels = [solver_labels[solver] for solver in solvers])
+plt.tight_layout()
 filename = os.path.join(dirname, "hypervolume/hypervolume.png")
 plt.savefig(filename, format = "png")
 plt.close()
@@ -91,27 +93,30 @@ for m in ms:
                         csv_file.close()
 
 plt.figure()
-plt.title("MOTSP", fontsize = "xx-large")
-plt.xlabel("Number of Objectives", fontsize = "x-large")
-plt.ylabel("Hypervolume Ratio", fontsize = "x-large")
+plt.xlabel("Number of Objectives")
+plt.ylabel("Hypervolume Ratio")
 plt.xticks(ms)
+plt.grid(alpha=0.5, color='gray', linestyle='dashed', linewidth=0.5, which='both')
 for i in range(len(solvers)):
     y = []
     for m in ms:
         y.append(stats.mean(hypervolume_per_m[solvers[i]][m]))
     plt.plot(ms, y, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.80)
-plt.xlim(left = max(min(ms) - 1, 0), right = max(ms) + 1)
-plt.ylim(bottom = min_hypervolume, top = max_hypervolume)
-plt.legend(loc = "best", fontsize = "large")
+plt.yscale("function", functions=(partial(np.power, 10.0), np.log10))
+plt.legend(loc = "lower left")
+plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%d'))
+plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+plt.gca().yaxis.set_minor_formatter(FormatStrFormatter('%.2f'))
+plt.tight_layout()
 filename = os.path.join(dirname, "hypervolume/hypervolume_mean_per_m.png")
 plt.savefig(filename, format = "png")
 plt.close()
 
 plt.figure()
-plt.title("MOTSP", fontsize = "xx-large")
-plt.xlabel("Number of Objectives", fontsize = "x-large")
-plt.ylabel("Hypervolume Ratio", fontsize = "x-large")
+plt.xlabel("Number of Objectives")
+plt.ylabel("Hypervolume Ratio")
 plt.xticks(ms)
+plt.grid(alpha=0.5, color='gray', linestyle='dashed', linewidth=0.5, which='both')
 for i in range(len(solvers)):
     y0 = []
     y2 = []
@@ -126,9 +131,12 @@ for i in range(len(solvers)):
         quantiles = stats.quantiles(hypervolume_per_m[solvers[i]][m])
         y1.append(quantiles[1])
     plt.plot(ms, y1, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.75)
-plt.xlim(left = max(min(ms) - 1, 0), right = max(ms) + 1)
-plt.ylim(bottom = min_hypervolume, top = max_hypervolume)
-plt.legend(loc = "best", fontsize = "large")
+plt.yscale("function", functions=(partial(np.power, 10.0), np.log10))
+plt.legend(loc = "lower left")
+plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%d'))
+plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+plt.gca().yaxis.set_minor_formatter(FormatStrFormatter('%.2f'))
+plt.tight_layout()
 filename = os.path.join(dirname, "hypervolume/hypervolume_quartiles_per_m.png")
 plt.savefig(filename, format = "png")
 plt.close()
@@ -153,27 +161,28 @@ for size in sizes:
                         csv_file.close()
 
 plt.figure()
-plt.title("MOTSP", fontsize = "xx-large")
-plt.xlabel("Number of Vertices", fontsize = "x-large")
-plt.ylabel("Hypervolume Ratio", fontsize = "x-large")
-plt.xticks(sizes)
+plt.xlabel("Number of Vertices")
+plt.ylabel("Hypervolume Ratio")
+plt.grid(alpha=0.5, color='gray', linestyle='dashed', linewidth=0.5, which='both')
 for i in range(len(solvers)):
     y = []
     for size in sizes:
         y.append(stats.mean(hypervolume_per_size[solvers[i]][size]))
     plt.plot(sizes, y, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.80)
-plt.xlim(left = max(min(sizes) - 1, 0), right = max(sizes) + 1)
-plt.ylim(bottom = min_hypervolume, top = max_hypervolume)
-plt.legend(loc = "best", fontsize = "large")
+plt.xscale("log")
+plt.yscale("function", functions=(partial(np.power, 10.0), np.log10))
+plt.legend(loc = "best")
+plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%d'))
+plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+plt.tight_layout()
 filename = os.path.join(dirname, "hypervolume/hypervolume_mean_per_size.png")
 plt.savefig(filename, format = "png")
 plt.close()
 
 plt.figure()
-plt.title("MOTSP", fontsize = "xx-large")
-plt.xlabel("Number of Vertices", fontsize = "x-large")
-plt.ylabel("Hypervolume Ratio", fontsize = "x-large")
-plt.xticks(sizes)
+plt.xlabel("Number of Vertices")
+plt.ylabel("Hypervolume Ratio")
+plt.grid(alpha=0.5, color='gray', linestyle='dashed', linewidth=0.5, which='both')
 for i in range(len(solvers)):
     y0 = []
     y2 = []
@@ -188,9 +197,12 @@ for i in range(len(solvers)):
         quantiles = stats.quantiles(hypervolume_per_size[solvers[i]][size])
         y1.append(quantiles[1])
     plt.plot(sizes, y1, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.75)
-plt.xlim(left = max(min(sizes) - 1, 0), right = max(sizes) + 1)
-plt.ylim(bottom = min_hypervolume, top = max_hypervolume)
-plt.legend(loc = "best", fontsize = "large")
+plt.xscale("log")
+plt.yscale("function", functions=(partial(np.power, 10.0), np.log10))
+plt.legend(loc = "lower right")
+plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%d'))
+plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+plt.tight_layout()
 filename = os.path.join(dirname, "hypervolume/hypervolume_quartiles_per_size.png")
 plt.savefig(filename, format = "png")
 plt.close()

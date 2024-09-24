@@ -1,5 +1,6 @@
 import csv
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FormatStrFormatter
 import seaborn as sns
 import ptitprince as pt
 import os
@@ -61,9 +62,9 @@ for instance in instances:
                     csv_file.close()
 
 plt.figure()
-plt.title("MOTSP", fontsize = "xx-large")
-plt.xlabel("Time (s)", fontsize = "x-large")
-plt.ylabel("Hypervolume Ratio", fontsize = "x-large")
+plt.xlabel("Time (s)")
+plt.ylabel("Hypervolume Ratio")
+plt.grid(alpha=0.5, color='gray', linestyle='dashed', linewidth=0.5, which='both')
 for i in range(len(solvers)):
     x = []
     y = []
@@ -73,15 +74,19 @@ for i in range(len(solvers)):
     plt.plot(x, y, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.80)
 plt.xscale("log")
 plt.yscale("function", functions = (partial(np.power, 10.0), np.log10))
-plt.legend(loc = "best", fontsize = "large")
+plt.legend(loc = "best")
+plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+plt.gca().yaxis.set_minor_formatter(FormatStrFormatter('%.2f'))
+plt.tight_layout()
 filename = os.path.join(dirname, "hypervolume_snapshots/hypervolume_mean_snapshots.png")
 plt.savefig(filename, format = "png")
 plt.close()
 
 plt.figure()
-plt.title("MOTSP", fontsize = "xx-large")
-plt.xlabel("Time (s)", fontsize = "x-large")
-plt.ylabel("Hypervolume Ratio", fontsize = "x-large")
+plt.xlabel("Time (s)")
+plt.ylabel("Hypervolume Ratio")
+plt.grid(alpha=0.5, color='gray', linestyle='dashed', linewidth=0.5, which='both')
 for i in range(len(solvers)):
     x = []
     y0 = []
@@ -102,7 +107,11 @@ for i in range(len(solvers)):
     plt.plot(x, y1, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.75)
 plt.xscale("log")
 plt.yscale("function", functions = (partial(np.power, 10.0), np.log10))
-plt.legend(loc = "best", fontsize = "large")
+plt.legend(loc = "best")
+plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+plt.gca().yaxis.set_minor_formatter(FormatStrFormatter('%.1f'))
+plt.tight_layout()
 filename = os.path.join(dirname, "hypervolume_snapshots/hypervolume_quartiles_snapshots.png")
 plt.savefig(filename, format = "png")
 plt.close()

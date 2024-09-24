@@ -1,10 +1,10 @@
 import csv
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FormatStrFormatter
 import seaborn as sns
 import ptitprince as pt
 import os
 import statistics as stats
-from math import ceil, floor, sqrt
 from plotter_definitions import *
 from functools import partial
 import numpy as np
@@ -62,9 +62,9 @@ for instance in instances:
                     csv_file.close()
 
 plt.figure()
-plt.title("MOTSP", fontsize = "xx-large")
-plt.xlabel("Time (s)", fontsize = "x-large")
-plt.ylabel("Multiplicative Epsilon", fontsize = "x-large")
+plt.xlabel("Time (s)")
+plt.ylabel("Inverse Multiplicative Epsilon")
+plt.grid(alpha=0.5, color='gray', linestyle='dashed', linewidth=0.5, which='both')
 for i in range(len(solvers)):
     x = []
     y = []
@@ -72,19 +72,21 @@ for i in range(len(solvers)):
         x.append(stats.mean(time_per_solver[solvers[i]][j]))
         y.append(stats.mean(multiplicative_epsilon_per_solver[solvers[i]][j]))
     plt.plot(x, y, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.80)
-# plt.xlim(left = 0.0, right = max_time)
-# plt.ylim(bottom = min_multiplicative_epsilon, top = max_multiplicative_epsilon)
 plt.xscale("log")
 plt.yscale("function", functions = (partial(np.power, 10.0), np.log10))
-plt.legend(loc = "best", fontsize = "large")
+plt.legend(loc = "best")
+plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+plt.gca().yaxis.set_minor_formatter(FormatStrFormatter('%.2f'))
+plt.tight_layout()
 filename = os.path.join(dirname, "multiplicative_epsilon_snapshots/multiplicative_epsilon_mean_snapshots.png")
 plt.savefig(filename, format = "png")
 plt.close()
 
 plt.figure()
-plt.title("MOTSP", fontsize = "xx-large")
-plt.xlabel("Time (s)", fontsize = "x-large")
-plt.ylabel("Multiplicative Epsilon", fontsize = "x-large")
+plt.xlabel("Time (s)")
+plt.ylabel("Inverse Multiplicative Epsilon")
+plt.grid(alpha=0.5, color='gray', linestyle='dashed', linewidth=0.5, which='both')
 for i in range(len(solvers)):
     x = []
     y0 = []
@@ -103,11 +105,13 @@ for i in range(len(solvers)):
         quantiles = stats.quantiles(multiplicative_epsilon_per_solver[solvers[i]][j])
         y1.append(quantiles[1])
     plt.plot(x, y1, label = solver_labels[solvers[i]], marker = (i + 3, 2, 0), color = colors[i], alpha = 0.75)
-# plt.xlim(left = 0.0, right = max_time)
-# plt.ylim(bottom = min_multiplicative_epsilon, top = max_multiplicative_epsilon)
 plt.xscale("log")
 plt.yscale("function", functions = (partial(np.power, 10.0), np.log10))
-plt.legend(loc = "best", fontsize = "large")
+plt.legend(loc = "best")
+plt.gca().xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+plt.gca().yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+plt.gca().yaxis.set_minor_formatter(FormatStrFormatter('%.1f'))
+plt.tight_layout()
 filename = os.path.join(dirname, "multiplicative_epsilon_snapshots/multiplicative_epsilon_quartiles_snapshots.png")
 plt.savefig(filename, format = "png")
 plt.close()
